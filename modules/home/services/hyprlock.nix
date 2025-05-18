@@ -16,7 +16,7 @@
           monitor = "";
           text = "cmd[update:1000] echo \"$(date +\"%-I:%M%p\")\"";
           font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
-          position = 0, -300;
+          position = "0, -300";
           halign = center;
           valign = top;
         }
