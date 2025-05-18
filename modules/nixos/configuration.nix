@@ -29,7 +29,7 @@
   };
 
   networking = {
-    hostName = "SA-FRAMEWORK";
+    hostName = "SA-Framework";
     networkmanager.enable = true;
   };
 
