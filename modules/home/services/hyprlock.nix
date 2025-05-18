@@ -11,17 +11,27 @@
         vibrancy = 0.5;
         vibrancy_darkness = 0.0;
       }];
-      label = lib.mkDefault [{
-        monitor = "";
-        text = "$USER";
-        font_size = 25;
-        position = "0, -40";
-        halign = "center";
-        valign = "center";
-      }];
+      label = lib.mkDefault [
+        {
+          monitor = "";
+          text = "cmd[update:1000] echo \"$(date +\"%-I:%M%p\")\"";
+          font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
+          position = 0, -300;
+          halign = center;
+          valign = top;
+        }
+        {
+          monitor = "";
+          text = "welcome back, $USER";
+          font_size = 25;
+          position = "0, -40";
+          halign = "center";
+          valign = "center";
+        }
+      ];
       input-field = lib.mkDefault [{
         monitor = "";
-        size = "300, 40";
+        size = "150, 20";
         outline_thickness = 2;
         dots_size = 0.3;
         dots_spacing = 0.2;
