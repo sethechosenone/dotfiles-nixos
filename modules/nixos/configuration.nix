@@ -127,8 +127,8 @@
     rtkit.enable = true;
     sudo.package = pkgs.sudo.override { withInsults = true; };
     pam.services.hyprlock.text = ''
-      auth sufficient pam_unix.so try_first_pass likeauth nullok
-      auth sufficient pam_fprintd.so
+      auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
+      auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
       auth include login
     '';
     polkit.enable = true;

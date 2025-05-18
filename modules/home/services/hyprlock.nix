@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       general.ignore_empty_input = true;
-      background = lib.mkDefault [{
+      background = lib.mkForce [{
         monitor = "";
         blur_passes = 2;
         contrast = 0.8916;
@@ -11,7 +11,7 @@
         vibrancy = 0.5;
         vibrancy_darkness = 0.0;
       }];
-      label = lib.mkDefault [
+      label = lib.mkForce [
         {
           monitor = "";
           text = "cmd[update:1000] echo \"$(date +\"%-I:%M%p\")\"";
@@ -29,7 +29,7 @@
           valign = "center";
         }
       ];
-      input-field = lib.mkDefault [{
+      input-field = lib.mkForce [{
         monitor = "";
         size = "150, 20";
         outline_thickness = 2;

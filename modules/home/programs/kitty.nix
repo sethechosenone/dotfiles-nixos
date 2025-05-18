@@ -13,6 +13,7 @@
       cursor_shape = "underline";
       cursor_blink_interval = "0.2";
       cursor_stop_blinking_after = 0;
+      confirm_os_window_close = 2;
     };
   };
 }
