@@ -1,20 +1,28 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, self, ... }: {
   programs.hyprlock = {
     enable = true;
     settings = {
       general.ignore_empty_input = true;
       background = lib.mkForce [{
         monitor = "";
+        path = "${self}/modules/nixos/style/wallpaper.png";
         blur_passes = 2;
         contrast = 0.8916;
         brightness = 1.0;
         vibrancy = 0.5;
         vibrancy_darkness = 0.0;
       }];
+      auth = {
+        fingerprint = {
+          enabled = true;
+          ready_message = "or place fingerprint on reader";
+        };
+      }
       label = lib.mkForce [
         {
           monitor = "";
           text = "cmd[update:1000] echo \"$(date +\"%-I:%M%p\")\"";
+          font_size = 120;
           font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
           position = "0, -300";
           halign = "center";
@@ -31,7 +39,7 @@
       ];
       input-field = lib.mkForce [{
         monitor = "";
-        size = "150, 20";
+        size = "300, 40";
         outline_thickness = 2;
         dots_size = 0.3;
         dots_spacing = 0.2;
