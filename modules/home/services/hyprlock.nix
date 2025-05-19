@@ -17,7 +17,7 @@
           enabled = true;
           ready_message = "or place fingerprint on reader";
         };
-      }
+      };
       label = lib.mkForce [
         {
           monitor = "";
