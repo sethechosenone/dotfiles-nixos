@@ -18,7 +18,7 @@
         ms-python.debugpy
         vscodevim.vim
       ];
-      userSettings = { "window.menuBarVisibility" = "compact"; };
+      userSettings = { "window.titleBarStyle" = "custom"; };
     };
   };
 }
