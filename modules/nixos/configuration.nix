@@ -56,7 +56,7 @@
     greetd = {
       enable = true;
       settings.default_session.command = ''
-        ${pkgs.greetd.tuigreet}/bin/tuigreet \
+        ${pkgs.greetd.wlgreet}/bin/tuigreet \
         --time \
         --asterisks \
         --user-menu \
@@ -65,8 +65,10 @@
     };
   };
 
-  environment.etc."greetd/environments".text = "Hyprland";
-  environment.sessionVariables = { NIXOS_OZONE_WL = "1"; };
+  environment = {
+    etc."greetd/environments".text = "Hyprland";
+    sessionVariables = { NIXOS_OZONE_WL = "1"; };
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.seth = {
@@ -105,7 +107,6 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    greetd.tuigreet
     meson
     wayland-protocols
     wayland-utils
