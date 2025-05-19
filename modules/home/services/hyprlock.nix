@@ -1,4 +1,4 @@
-{ self, pkgs, config, lib, ... }: {
+{ self, pkgs, lib, ... }: {
   programs.hyprlock = {
     enable = true;
     settings = {
