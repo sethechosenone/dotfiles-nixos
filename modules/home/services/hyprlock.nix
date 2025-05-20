@@ -16,6 +16,7 @@
         fingerprint = {
           enabled = true;
           ready_message = "OR PLACE FINGERPRINT ON READER";
+          present_message = "ANALYZING...";
         };
       };
       label = lib.mkForce [
@@ -39,8 +40,8 @@
         {
           monitor = "";
           text = "$FPRINTPROMPT";
-          font_size = 15;
-          position = "0, -150";
+          font_size = 12;
+          position = "0, -170";
           halign = "center";
           valign = "center";
         }

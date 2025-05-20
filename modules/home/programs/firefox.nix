@@ -13,13 +13,15 @@ in {
       id = 0;
       isDefault = true;
       name = "default";
-      extensions.packages =
-        with inputs.firefox-addons.packages.${pkgs.system}; [
+      extensions = {
+        force = true;
+        packages = with inputs.firefox-addons.packages.${pkgs.system}; [
           bitwarden
           foxyproxy-standard
           tree-style-tab
           ublock-origin
         ];
+      };
       settings = {
         "extensions.allowPrivateBrowsingByDefault" = true;
         # TELEMETRY
@@ -90,5 +92,8 @@ in {
       userChrome = "#TabsToolbar { visibility: collapse; }";
     };
   };
-  stylix.targets.firefox.profileNames = [ "default" ];
+  stylix.targets.firefox = {
+    colorTheme.enable = true;
+    profileNames = [ "default" ];
+  };
 }

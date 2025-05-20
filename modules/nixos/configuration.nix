@@ -57,7 +57,14 @@
       sddm = {
         enable = true;
         wayland.enable = true;
-        theme = "sddm-astronaut";
+        package = pkgs.kdePackages.sddm;
+        theme = "sddm-astronaut-theme";
+        settings.Theme.CursorTheme = "Bibata-Modern-Ice";
+        extraPackages = with pkgs; [
+          kdePackages.qtmultimedia
+          kdePackages.qtsvg
+          kdePackages.qtvirtualkeyboard
+        ];
       };
       defaultSession = "hyprland";
     };
