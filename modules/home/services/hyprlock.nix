@@ -15,7 +15,7 @@
       auth = {
         fingerprint = {
           enabled = true;
-          ready_message = "or place fingerprint on reader";
+          ready_message = "OR PLACE FINGERPRINT ON READER";
         };
       };
       label = lib.mkForce [
@@ -36,6 +36,14 @@
           halign = "center";
           valign = "center";
         }
+        {
+          monitor = "";
+          text = "$FPRINTPROMPT";
+          font_size = 15;
+          position = "0, -150";
+          halign = "center";
+          valign = "center";
+        }
       ];
       input-field = lib.mkForce [{
         monitor = "";
@@ -44,8 +52,7 @@
         dots_size = 0.3;
         dots_spacing = 0.2;
         dots_center = true;
-        outer_color = "rgba(0, 0, 0, 0)";
-        inner_color = "rgba(0, 0, 0, 0.3)";
+        placeholder_text = "ENTER PASSWORD";
         fade_on_empty = false;
         hide_input = false;
         position = "0, -120";

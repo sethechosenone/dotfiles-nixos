@@ -18,7 +18,7 @@
         ms-python.debugpy
         vscodevim.vim
       ];
-      userSettings = { "window.titleBarStyle" = "custom"; };
+      userSettings = { "window.titleBarStyle" = "native"; };
     };
   };
 }

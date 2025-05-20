@@ -53,16 +53,30 @@
     gnome.gnome-keyring.enable = true;
     libinput.enable = true;
     fprintd.enable = true;
-    greetd = {
-      enable = true;
-      settings.default_session.command = ''
-        ${pkgs.greetd.wlgreet}/bin/tuigreet \
-        --time \
-        --asterisks \
-        --user-menu \
-        --cmd Hyprland
-      '';
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+        theme = "sddm-astronaut";
+      };
+      defaultSession = "hyprland";
     };
+    # greetd = {
+    #   enable = true;
+    #   settings = {
+    #     default_session = {
+    #       command = "${lib.getExe config.programs.hyprland.package}";
+    #       user = "seth";
+    #     };
+    #     initial_session = {
+    #       command = ''
+    #         ${lib.getExe config.programs.hyprland.package} \
+    #         --config /path/to/greetd/hyprland.conf
+    #       '';
+    #       user = "greeter";
+    #     };
+    #   };
+    # };
   };
 
   environment = {
@@ -94,6 +108,7 @@
   };
 
   programs = {
+    hyprland.enable = true; # this will allow us to actually log into a hyprland session from sddm
     zsh.enable = true; # this is also mentioned in the home-manager config, but it yells at you if this does not exist outside of it
     dconf.enable = true;
     gnupg.agent = {
@@ -108,7 +123,6 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     meson
-    greetd.wlgreet
     wayland-protocols
     wayland-utils
     wl-clipboard
@@ -119,16 +133,20 @@
     man-pages
     man-pages-posix
     brightnessctl
-    libsForQt5.polkit-kde-agent
     glib
     direnv
-    nixfmt-classic
+    sddm-astronaut
   ];
 
   security = {
     rtkit.enable = true;
     sudo.package = pkgs.sudo.override { withInsults = true; };
     pam.services.hyprlock.text = ''
+      auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
+      auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
+      auth include login
+    '';
+    pam.services.sddm-greeter.text = ''
       auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
       auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
       auth include login

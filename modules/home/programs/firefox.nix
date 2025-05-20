@@ -49,7 +49,7 @@ in {
         settings = [
           {
             name = "Nix";
-            toolbar = false;
+            toolbar = true;
             bookmarks = [
               {
                 name = "Nix Package";
@@ -64,14 +64,20 @@ in {
             ];
           }
           {
-            name = "ProtonMail";
-            keyword = "ma";
-            url = "https://mail.proton.me/";
-          }
-          {
-            name = "GitHub";
-            keyword = "gh";
-            url = "https://github.com";
+            name = "Personal";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "ProtonMail";
+                keyword = "ma";
+                url = "https://mail.proton.me/";
+              }
+              {
+                name = "GitHub";
+                keyword = "gh";
+                url = "https://github.com";
+              }
+            ];
           }
         ];
       };
