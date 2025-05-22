@@ -42,7 +42,10 @@
     useXkbConfig = true; # use xkb.options in tty.
   };
 
-  hardware.graphics.enable = true;
+  hardware = {
+    graphics.enable = true;
+    bluetooth.enable = true;
+  };
 
   services = {
     printing.enable = true;
@@ -53,41 +56,24 @@
     gnome.gnome-keyring.enable = true;
     libinput.enable = true;
     fprintd.enable = true;
-    displayManager = {
-      sddm = {
-        enable = true;
-        wayland.enable = true;
-        package = pkgs.kdePackages.sddm;
-        theme = "sddm-astronaut-theme";
-        settings.Theme.CursorTheme = "Bibata-Modern-Ice";
-        extraPackages = with pkgs; [
-          kdePackages.qtmultimedia
-          kdePackages.qtsvg
-          kdePackages.qtvirtualkeyboard
-        ];
-      };
-      defaultSession = "hyprland";
+    greetd = {
+      enable = true;
+      # settings.default_session = {
+      #   command = "Hyprland --config /etc/greetd/hyprland.conf";
+      #   user = "greeter";
+      # };
     };
-    # greetd = {
-    #   enable = true;
-    #   settings = {
-    #     default_session = {
-    #       command = "${lib.getExe config.programs.hyprland.package}";
-    #       user = "seth";
-    #     };
-    #     initial_session = {
-    #       command = ''
-    #         ${lib.getExe config.programs.hyprland.package} \
-    #         --config /path/to/greetd/hyprland.conf
-    #       '';
-    #       user = "greeter";
-    #     };
-    #   };
-    # };
   };
 
   environment = {
-    etc."greetd/environments".text = "Hyprland";
+    # etc."greetd/hyprland.conf".text = ''
+    #   exec-once = ${config.programs.regreet.package} && hyprctl dispatch exit"
+    #   misc {
+    #     disable_hyprland_logo = true
+    #     disable_splash_rendering = true
+    #     disable_hyprland_qtutils_check = true
+    #   }
+    # '';
     sessionVariables = { NIXOS_OZONE_WL = "1"; };
   };
 
@@ -118,6 +104,7 @@
     hyprland.enable = true; # this will allow us to actually log into a hyprland session from sddm
     zsh.enable = true; # this is also mentioned in the home-manager config, but it yells at you if this does not exist outside of it
     dconf.enable = true;
+    regreet.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -142,18 +129,12 @@
     brightnessctl
     glib
     direnv
-    sddm-astronaut
   ];
 
   security = {
     rtkit.enable = true;
     sudo.package = pkgs.sudo.override { withInsults = true; };
     pam.services.hyprlock.text = ''
-      auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
-      auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
-      auth include login
-    '';
-    pam.services.sddm-greeter.text = ''
       auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
       auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
       auth include login

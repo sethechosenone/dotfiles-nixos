@@ -18,7 +18,10 @@
         ms-python.debugpy
         vscodevim.vim
       ];
-      userSettings = { "window.titleBarStyle" = "native"; };
+      userSettings = {
+        "window.titleBarStyle" = "native";
+        "vim.smartRelativeLine" = true;
+      };
     };
   };
 }
