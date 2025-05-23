@@ -56,26 +56,35 @@
     gnome.gnome-keyring.enable = true;
     libinput.enable = true;
     fprintd.enable = true;
-    greetd = {
-      enable = true;
-      # settings.default_session = {
-      #   command = "Hyprland --config /etc/greetd/hyprland.conf";
-      #   user = "greeter";
-      # };
+    greetd.enable = true;
+  };
+
+  systemd.user = {
+    timers."blue-light-filter" = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "*-*-* 21:00:00";
+        Unit = "blue-light-filter.service";
+      };
+    };
+    services."blue-light-filter" = {
+      unitConfig = {
+        Description = "Blue light filter service to be used with the corresponding timer";
+        PartOf = "graphical-session.target";
+        After = "graphical-session.target";
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+      };
+      serviceConfig = {
+        Type = "simple";
+        RuntimeMaxSec = 32400;
+        ExecStart = "${lib.getExe pkgs.hyprsunset}";
+        Slice = "session.slice";
+        Restart = "on-failure";
+      };
     };
   };
 
-  environment = {
-    # etc."greetd/hyprland.conf".text = ''
-    #   exec-once = ${config.programs.regreet.package} && hyprctl dispatch exit"
-    #   misc {
-    #     disable_hyprland_logo = true
-    #     disable_splash_rendering = true
-    #     disable_hyprland_qtutils_check = true
-    #   }
-    # '';
-    sessionVariables = { NIXOS_OZONE_WL = "1"; };
-  };
+  environment.sessionVariables = { NIXOS_OZONE_WL = "1"; };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.seth = {

@@ -44,14 +44,12 @@
         box-shadow: none; 
         background-image: none;
       }
-      /*window { background-color: rgba(12, 12, 12, 0.9); }*/
+      window { background-color: rgba(51, 51, 51, 0.75); }
       button {
         margin: 5px;
         border-radius: 15px;
         border-width: 0;
-        background-color: @base02;
         font-size: 20px;
-        color: @base05;
         background-size: 25%;
         background-repeat: no-repeat;
         background-position: center;
@@ -63,7 +61,6 @@
       #poweroff { background-image: url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"); }
       #reboot { background-image: url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"); }
       button:hover { 
-        background-color: @base03;
         outline-style: none;
       }
     '';
