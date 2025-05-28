@@ -5,7 +5,10 @@
       monitor = "eDP-1, 2256x1504, auto, 1.566667";
       "$terminal" = "kitty";
       "$menu" = "pidof wofi || wofi --show drun";
-      exec-once = "nm-applet --indicator & waybar & hyprpaper";
+      exec-once = [
+        "nm-applet --indicator & waybar & hyprpaper"
+        "systemctl --user start hyprpolkitagent"
+      ];
       "$mod" = "SUPER";
       "$userConfigPath" = "/home/seth/.config/nixos";
       general = {

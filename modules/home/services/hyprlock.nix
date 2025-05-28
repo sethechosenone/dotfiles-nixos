@@ -5,7 +5,7 @@
       general.ignore_empty_input = true;
       background = lib.mkForce [{
         monitor = "";
-        path = "${self}/modules/nixos/style/wallpaper.png";
+        path = "screenshot";
         blur_passes = 2;
         contrast = 0.8916;
         brightness = 1.0;

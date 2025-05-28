@@ -101,8 +101,9 @@
       tree
       hyprpaper
       hyprpicker
+      hyprpolkitagent
       hyprshot
-      lxappearance
+      hyprsysteminfo
       dconf
       discord
       nixpkgs-fmt
