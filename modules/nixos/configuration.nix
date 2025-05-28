@@ -56,6 +56,7 @@
     gnome.gnome-keyring.enable = true;
     libinput.enable = true;
     fprintd.enable = true;
+    fwupd.enable = true;
     greetd.enable = true;
   };
 
@@ -113,6 +114,7 @@
     hyprland.enable = true; # this will allow us to actually log into a hyprland session from sddm
     zsh.enable = true; # this is also mentioned in the home-manager config, but it yells at you if this does not exist outside of it
     dconf.enable = true;
+    gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
     regreet.enable = true;
     gnupg.agent = {
       enable = true;

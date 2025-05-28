@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.wlogout = {
     enable = true;
     layout = [
@@ -39,12 +39,12 @@
         keybind = "r";
       }
     ];
-    style = ''
+    style = lib.mkAfter ''
       * { 
         box-shadow: none; 
         background-image: none;
       }
-      window { background-color: rgba(51, 51, 51, 0.75); }
+      window { background-color: rgba(20, 20, 20, 0.75); }
       button {
         margin: 5px;
         border-radius: 15px;
@@ -54,15 +54,13 @@
         background-repeat: no-repeat;
         background-position: center;
       }
-      #lock { background-image: url("${pkgs.wlogout}/share/wlogout/icons/lock.png"); }
-      #exit { background-image: url("${pkgs.wlogout}/share/wlogout/icons/logout.png"); }
-      #suspend { background-image: url("${pkgs.wlogout}/share/wlogout/icons/suspend.png"); }
-      #hibernate { background-image: url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png"); }
-      #poweroff { background-image: url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"); }
-      #reboot { background-image: url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"); }
-      button:hover { 
-        outline-style: none;
-      }
+      svg { color: @base05; }
+      #lock { background-image: url("${pkgs.wlogout}/share/wlogout/assets/lock.svg"); }
+      #exit { background-image: url("${pkgs.wlogout}/share/wlogout/assets/logout.svg"); }
+      #suspend { background-image: url("${pkgs.wlogout}/share/wlogout/assets/suspend.svg"); }
+      #hibernate { background-image: url("${pkgs.wlogout}/share/wlogout/assets/hibernate.svg"); }
+      #poweroff { background-image: url("${pkgs.wlogout}/share/wlogout/assets/shutdown.svg"); }
+      #reboot { background-image: url("${pkgs.wlogout}/share/wlogout/assets/reboot.svg"); }
     '';
   };
 }
