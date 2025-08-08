@@ -2,7 +2,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = "eDP-1, 2256x1504, auto, 1.566667";
+      monitor = "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
       "$menu" = "pidof wofi || wofi --show drun";
       exec-once = [ "nm-applet --indicator & waybar & hyprpaper" ];
