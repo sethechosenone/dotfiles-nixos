@@ -5,10 +5,7 @@
       monitor = "eDP-1, 2256x1504, auto, 1.566667";
       "$terminal" = "kitty";
       "$menu" = "pidof wofi || wofi --show drun";
-      exec-once = [
-        "nm-applet --indicator & waybar & hyprpaper"
-        "systemctl --user start hyprpolkitagent"
-      ];
+      exec-once = [ "nm-applet --indicator & waybar & hyprpaper" ];
       "$mod" = "SUPER";
       "$userConfigPath" = "/home/seth/.config/nixos";
       general = {
@@ -36,11 +33,20 @@
       bezier =
         [ "easeIn, 0.55, 0.085, 0.68, 0.53" "easeOut, 0.075, 0.82, 0.165, 1" ];
       animation = [
-        "layersIn, 1, 10, easeOut, slide"
-        "layersOut, 1, 10, easeIn, slide"
+        "layersIn, 1, 8, easeOut, slide"
+        "layersOut, 1, 8, easeIn, slide"
         "windowsMove, 1, 8, default"
       ];
-      layerrule = [ "animation fade, ^(logout_dialog)$" ];
+      windowrule = [
+        "float, class:org.pulseaudio.pavucontrol"
+        "float, title:^(Open Folder)$"
+        "float, class:nm-connection-editor"
+      ];
+      layerrule = [
+        "animation fade, ^(logout_dialog)$"
+        "animation fade, ^(selection)$"
+        "noanim, ^(hyprpicker)$"
+      ];
       dwindle = {
         pseudotile = true;
         preserve_split = true;
@@ -55,7 +61,6 @@
       };
       bind = [
         "$mod, F, exec, firefox"
-        "$mod, E, exec, code $userConfigPath"
         "$mod, return, exec, $terminal"
         "$mod, Q, killactive, "
         "$mod, V, toggleFloating, "
@@ -73,6 +78,8 @@
         "$mod SHIFT, up, movewindow, u"
         "$mod SHIFT, down, movewindow, d"
         "$mod, escape, exec, pidof wlogout || wlogout"
+        ", Print, exec, pidof hyprshot || hyprshot -m output -m eDP-1"
+        "$mod, Print, exec, pidof hyprshot || hyprshot -m region"
       ] ++ (builtins.concatLists (builtins.genList (x:
         let ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
         in [ "$mod, ${ws}, workspace, ${toString (x + 1)}" ]) 10))

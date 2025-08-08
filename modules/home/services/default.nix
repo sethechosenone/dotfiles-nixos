@@ -1,6 +1,6 @@
 config: {
   imports = [
-    ./hypridle.nix
+    ./hypr.nix
     ./hyprland.nix
     ./hyprlock.nix
     ./waybar.nix

@@ -31,7 +31,7 @@
       lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
-        SA-Framework = lib.nixosSystem {
+        SA-Framework13 = lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit self inputs;
@@ -41,6 +41,20 @@
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
             ./modules
+            ./hosts/SA-Framework13
+          ];
+        };
+        SA-Framework16 = lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit self inputs;
+          };
+          modules = [
+            nixos-hardware.nixosModules.framework-16-7040-amd
+            home-manager.nixosModules.home-manager
+            stylix.nixosModules.stylix
+            ./modules
+            ./hosts/SA-Framework16
           ];
         };
       };
