@@ -42,6 +42,7 @@
 
   services = {
     printing.enable = true;
+    blueman.enable = true;
     pipewire = {
       enable = true;
       wireplumber.enable = true;
@@ -55,7 +56,7 @@
 
   environment.sessionVariables = { 
     NIXOS_OZONE_WL = "1";
-    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

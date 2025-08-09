@@ -7,8 +7,8 @@
         position = "top";
         height = 30;
         output = [ "eDP-1" ];
-        modules-left = [ "custom/icon" "hyprland/workspaces" ];
-        modules-center = [ "clock" "hyprland/submap" ];
+        modules-left = [ "custom/icon" "hyprland/workspaces" "tray" ];
+        modules-center = [ "clock" ];
         modules-right = [ "temperature" "backlight" "network" "pulseaudio" "battery" ];
         "hyprland/workspaces" = {
           disable-scroll = true;
@@ -51,6 +51,10 @@
           critical-threshold = 90;
           format-critical = " {icon} {temperatureC}°C";
           format-icons = [ "" "" "" "" ];
+        };
+        "tray" = {
+          "blueman" = "bluetooth";
+          "discord" = "${pkgs.discord}/share/icons/hicolor/256x256/apps/discord.png";
         };
         "custom/icon" = {
           format = "  ";
@@ -95,10 +99,7 @@
         margin: 3px 3px;
       }
       #clock { padding: 0px 5px; }
-      #submap {
-        padding: 0px 10px;
-        border-radius: 15px;
-      }
+      #taskbar { padding: 0px 5px; }
       #battery { padding-right: 5px; }
     '';
   };
