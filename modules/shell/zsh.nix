@@ -11,6 +11,10 @@
       edit-system-config = "sudo -e /etc/nixos/configuration.nix";
       rebuild = "sudo nixos-rebuild switch";
     };
+    autosuggestions = {
+      enable = true;
+      strategy = [ "history" "completion" ];
+    };
     ohMyZsh = {
       enable = true;
       plugins = [ "git" ];

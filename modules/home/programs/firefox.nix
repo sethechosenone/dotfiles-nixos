@@ -18,7 +18,6 @@ in {
         packages = with inputs.firefox-addons.packages.${pkgs.system}; [
           bitwarden
           foxyproxy-standard
-          tree-style-tab
           ublock-origin
         ];
       };
@@ -89,7 +88,10 @@ in {
         ${builtins.readFile "${betterfox}/Peskyfox.js"}
         ${builtins.readFile "${betterfox}/Smoothfox.js"}
       '';
-      userChrome = "#TabsToolbar { visibility: collapse; }";
+      userChrome = ''
+        #TabsToolbar { visibility: collapse; }
+        .titlebar-close { display: none !important; }
+      '';
     };
   };
   stylix.targets.firefox = {

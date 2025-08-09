@@ -45,6 +45,7 @@
   hardware = {
     graphics.enable = true;
     bluetooth.enable = true;
+    inputmodule.enable = true;
   };
 
   services = {
@@ -88,6 +89,7 @@
   programs = {
     hyprland.enable = true; # this will allow us to actually log into a hyprland session from sddm
     zsh.enable = true; # this is also mentioned in the home-manager config, but it yells at you if this does not exist outside of it
+    git.enable = true;
     dconf.enable = true;
     gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
     regreet.enable = true;

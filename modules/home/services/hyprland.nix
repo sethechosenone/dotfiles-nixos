@@ -17,8 +17,8 @@
       };
       decoration = {
         rounding = 8;
-        active_opacity = 0.95;
-        inactive_opacity = 0.8;
+        active_opacity = 1;
+        inactive_opacity = 0.9;
         blur = {
           enabled = true;
           passes = 2;
@@ -97,8 +97,8 @@
         ", XF86AudioRaiseVolume, exec, pamixer --increase 5"
         ", XF86AudioLowerVolume, exec, pamixer --decrease 5"
         ", XF86AudioMute, exec, pamixer --toggle-mute"
-        ", XF86MonBrightnessDown, exec, brightnessctl -s set 10%-"
-        ", XF86MonBrightnessUp, exec, brightnessctl -s set 10%+"
+        ", XF86MonBrightnessDown, exec, brightnessctl -s set 5%-"
+        ", XF86MonBrightnessUp, exec, brightnessctl -s set 5%+"
       ];
       bindm = [ "$mod, mouse:272, movewindow" "$mod, mouse:273, resizewindow" ];
     };

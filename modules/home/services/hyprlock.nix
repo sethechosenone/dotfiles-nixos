@@ -60,6 +60,12 @@
         halign = "center";
         valign = "center";
       }];
+      shape = [{
+        monitor = "";
+        position = "0, -120";
+        size = "600, 500";
+        rounding = 15;
+      }];
     };
   };
 }

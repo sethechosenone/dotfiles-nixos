@@ -13,7 +13,7 @@
           {
             timeout = 150;
             on-timeout =
-              "brightnessctl -s set 10%; brightnessctl -sd framework_laptop::kbd_backlight set 0%";
+              "brightnessctl -s set 5%; brightnessctl -sd framework_laptop::kbd_backlight set 0%";
             on-resume =
               "brightnessctl -r; brightnessctl -sd framework_laptop::kbd_backlight set 100%";
           }
