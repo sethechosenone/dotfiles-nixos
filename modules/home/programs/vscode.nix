@@ -19,7 +19,7 @@
         vscodevim.vim
       ];
       userSettings = {
-        "window.titleBarStyle" = "native";
+        "window.controlsStyle" = "hidden";
         "vim.smartRelativeLine" = true;
       };
     };

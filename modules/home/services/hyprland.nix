@@ -69,6 +69,7 @@
         "$mod, J, togglesplit, "
         "$mod, S, togglespecialworkspace, magic"
         "$mod SHIFT, S, movetoworkspace, special:magic"
+        "$mod SHIFT, R, submap, resize"
         "$mod, left, movefocus, l"
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
@@ -88,6 +89,12 @@
             ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
           in [ "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}" ])
           10));
+      binde = [
+        "$mod CTRL, right, resizeactive, 10 0"
+        "$mod CTRL, left, resizeactive, -10 0"
+        "$mod CTRL, up, resizeactive, 0 -10"
+        "$mod CTRL, down, resizeactive, 0 10"
+      ];
       bindl = [
         ", switch:on:Lid Switch, exec, brightnessctl -s set 0%; brightnessctl -sd framework_laptop::kbd_backlight set 0%"
         ", switch:off:Lid Switch, exec, brightnessctl -r; brightnessctl -rd framework_laptop::kbd_backlight"

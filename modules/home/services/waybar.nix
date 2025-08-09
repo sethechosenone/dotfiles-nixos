@@ -8,9 +8,8 @@
         height = 30;
         output = [ "eDP-1" ];
         modules-left = [ "custom/icon" "hyprland/workspaces" ];
-        modules-center = [ "clock" ];
-        modules-right =
-          [ "temperature" "backlight" "network" "pulseaudio" "battery" ];
+        modules-center = [ "clock" "hyprland/submap" ];
+        modules-right = [ "temperature" "backlight" "network" "pulseaudio" "battery" ];
         "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
