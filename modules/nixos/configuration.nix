@@ -24,10 +24,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  networking = {
-    hostName = "SA-Framework16";
-    networkmanager.enable = true;
-  };
+  networking.networkmanager.enable = true;
 
   time.timeZone = "America/New_York";
 
@@ -41,7 +38,6 @@
   hardware = {
     graphics.enable = true;
     bluetooth.enable = true;
-    inputmodule.enable = true;
   };
 
   services = {
