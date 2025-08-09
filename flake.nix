@@ -11,7 +11,7 @@
     nixcord = {
       url = "github:kaylorben/nixcord";
       inputs.nixpkgs.follows = "home-manager";
-    }
+    };
     stylix = {
       url = "github:danth/stylix";
       inputs = {
