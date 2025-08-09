@@ -80,7 +80,6 @@
       hyprshot
       hyprsysteminfo
       dconf
-      discord
       nixpkgs-fmt
     ];
     shell = pkgs.zsh;

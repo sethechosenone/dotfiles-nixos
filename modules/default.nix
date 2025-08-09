@@ -9,5 +9,8 @@
     useGlobalPkgs = true;
     users.seth = import ./home;
     backupFileExtension = "hm-backup";
+    sharedModules = [
+      inputs.nixcord.homeModules.nixcord
+    ];
   };
 }

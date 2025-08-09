@@ -21,6 +21,7 @@
       userSettings = {
         "window.controlsStyle" = "hidden";
         "vim.smartRelativeLine" = true;
+        "git.autofetch" = true;
       };
     };
   };
