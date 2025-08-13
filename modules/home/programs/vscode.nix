@@ -18,12 +18,13 @@
         ms-python.debugpy
         rust-lang.rust-analyzer
         vscodevim.vim
-        21zz.vscord
+        leonardssh.vscord
       ];
       userSettings = {
         "window.controlsStyle" = "hidden";
         "vim.smartRelativeLine" = true;
         "git.autofetch" = true;
+        "vscord.app.name" = "VSCodium"
       };
     };
   };
