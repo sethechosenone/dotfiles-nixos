@@ -24,7 +24,7 @@
         "window.controlsStyle" = "hidden";
         "vim.smartRelativeLine" = true;
         "git.autofetch" = true;
-        "vscord.app.name" = "VSCodium"
+        "vscord.app.name" = "VSCodium";
       };
     };
   };
