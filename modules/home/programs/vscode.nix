@@ -18,6 +18,7 @@
         ms-python.debugpy
         rust-lang.rust-analyzer
         vscodevim.vim
+        21zz.vscord
       ];
       userSettings = {
         "window.controlsStyle" = "hidden";

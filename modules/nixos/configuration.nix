@@ -2,14 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
-let 
-  polkitFprintFix = ''
-    auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
-    auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
-    auth include login
-  '';
-in {
+{ config, lib, pkgs, ... }: {
   nix = {
     package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
@@ -152,4 +145,3 @@ in {
   system.stateVersion = "23.11"; # Did you read the comment?
 
 }
-
