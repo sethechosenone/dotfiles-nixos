@@ -3,8 +3,13 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, pkgs, ... }:
-
-{
+let 
+  polkitFprintFix = ''
+    auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
+    auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
+    auth include login
+  '';
+in {
   nix = {
     package = pkgs.nixVersions.stable;
     extraOptions = "experimental-features = nix-command flakes";
@@ -82,7 +87,7 @@
   };
 
   programs = {
-    hyprland.enable = true; # this will allow us to actually log into a hyprland session from sddm
+    hyprland.enable = true; # this will allow us to actually log into a hyprland session
     zsh.enable = true; # this is also mentioned in the home-manager config, but it yells at you if this does not exist outside of it
     git.enable = true;
     dconf.enable = true;
@@ -117,11 +122,14 @@
   security = {
     rtkit.enable = true;
     sudo.package = pkgs.sudo.override { withInsults = true; };
-    pam.services.hyprlock.text = ''
-      auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
-      auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
-      auth include login
-    '';
+    pam.services = {
+      hyprlock.text = ''
+        auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
+        auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
+        auth include login
+      '';
+      polkit-1.fprintAuth = false; # really wonky with hyprpolkitagent unfortunately :(
+    };
     polkit.enable = true;
   };
 

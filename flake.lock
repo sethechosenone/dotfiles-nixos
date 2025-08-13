@@ -237,11 +237,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1755047669,
-        "narHash": "sha256-d0LO8VEwBcpoFKhCt+9leiQ7Pge2eYjStdtPTDsrLHo=",
+        "lastModified": 1755097448,
+        "narHash": "sha256-W3vK+UTcEREkOYvRdScelXxGa8mQH5xxRKQ7w7hx0ks=",
         "owner": "sethechosenone",
         "repo": "led-matrix-sysinfo",
-        "rev": "b392acc4e4b5aa92f8a1f6883bf3ccbf07ad783f",
+        "rev": "1a2474a6f65821975d947f12c80bc95d3681a190",
         "type": "github"
       },
       "original": {
@@ -259,11 +259,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754986808,
-        "narHash": "sha256-0hirQhqU4TlIf6qIUJnEJRUKIafPi8EEdsFriR20kTs=",
+        "lastModified": 1755088829,
+        "narHash": "sha256-z6RssoO7GhncjOmInnj2QuQBRgxwfKPbijZsjlvXQ6k=",
         "owner": "kaylorben",
         "repo": "nixcord",
-        "rev": "525b87b42285e5a88db1e746426554efb326e081",
+        "rev": "439db15d7e7d19261a7a593627cd11b36818680b",
         "type": "github"
       },
       "original": {
