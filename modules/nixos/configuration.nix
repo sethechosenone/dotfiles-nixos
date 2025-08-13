@@ -52,7 +52,6 @@
     fprintd.enable = true;
     fwupd.enable = true;
     greetd.enable = true;
-    led-matrix-sysinfo.enable = true;
   };
 
   environment.sessionVariables = { 

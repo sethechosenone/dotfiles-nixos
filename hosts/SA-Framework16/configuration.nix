@@ -6,4 +6,8 @@
   imports = [ ./hardware-configuration.nix ];
   networking.hostName = "SA-Framework16";
   hardware.inputmodule.enable = true;
+  services.led-matrix-sysinfo = {
+    enable = true;
+    interval = 250;
+  };
 }
