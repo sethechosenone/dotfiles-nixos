@@ -5,7 +5,7 @@
       monitor = "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
       "$menu" = "pidof wofi || wofi --show drun";
-      exec-once = [ "nm-applet --indicator & waybar & hyprpaper" ];
+      exec-once = [ "nm-applet --indicator & blueman-applet & waybar & hyprpaper" ];
       "$mod" = "SUPER";
       "$userConfigPath" = "/home/seth/.config/nixos";
       general = {
@@ -41,6 +41,7 @@
         "float, class:org.pulseaudio.pavucontrol"
         "float, title:^(Open Folder)$"
         "float, class:nm-connection-editor"
+        "float, class:.blueman-manager-wrapped"
       ];
       layerrule = [
         "animation fade, ^(logout_dialog)$"

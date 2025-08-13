@@ -16,6 +16,7 @@
         ms-python.python
         ms-python.vscode-pylance
         ms-python.debugpy
+        rust-lang.rust-analyzer
         vscodevim.vim
       ];
       userSettings = {

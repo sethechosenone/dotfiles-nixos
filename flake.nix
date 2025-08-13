@@ -10,7 +10,7 @@
     };
     nixcord = {
       url = "github:kaylorben/nixcord";
-      inputs.nixpkgs.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     stylix = {
       url = "github:danth/stylix";
@@ -23,6 +23,7 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    led-matrix-sysinfo.url = "github:sethechosenone/led-matrix-sysinfo";
   };
 
   outputs = { self, nixpkgs, home-manager, nixos-hardware, stylix, ... } @ inputs:
@@ -57,6 +58,7 @@
             nixos-hardware.nixosModules.framework-16-7040-amd
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
+            inputs.led-matrix-sysinfo.nixosModules.default
             ./modules
             ./hosts/SA-Framework16
           ];

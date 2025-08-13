@@ -9,7 +9,7 @@
         output = [ "eDP-1" ];
         modules-left = [ "custom/icon" "hyprland/workspaces" "tray" ];
         modules-center = [ "clock" ];
-        modules-right = [ "temperature" "backlight" "network" "pulseaudio" "battery" ];
+        modules-right = [ "temperature" "backlight" "pulseaudio" "battery" ];
         "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
@@ -37,14 +37,6 @@
           format-icons = [ "" " " " " ];
           on-click = "pavucontrol";
         };
-        "network" = {
-          format-wifi = "{icon}";
-          format-ethernet = "󰈀 ";
-          format-disconnected = "󰤭 ";
-          format-icons = [ "󰤯 " "󰤟 " "󰤢 " "󰤥 " "󰤨 " ];
-          on-click = "nm-connection-editor";
-          tooltip-format = "{essid} {ipaddr}";
-        };
         "backlight".format = "󰃠 {percent}%";
         "temperature" = {
           format = "{icon} {temperatureC}°C";
@@ -53,8 +45,9 @@
           format-icons = [ "" "" "" "" ];
         };
         "tray" = {
-          "blueman" = "bluetooth";
+          "blueman-applet" = "bluetooth";
           "discord" = "${pkgs.discord}/share/icons/hicolor/256x256/apps/discord.png";
+          "spacing" = 10;
         };
         "custom/icon" = {
           format = "  ";
@@ -101,6 +94,7 @@
       #clock { padding: 0px 5px; }
       #taskbar { padding: 0px 5px; }
       #battery { padding-right: 5px; }
+      #tray { padding: 0px 5px; }
     '';
   };
 }
