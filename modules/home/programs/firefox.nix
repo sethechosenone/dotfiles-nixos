@@ -39,6 +39,9 @@ in {
         "network.dns.echconfig.enabled" = true;
         "browser.tabs.loadBookmarksInTabs" = true;
         "browser.urlbar.maxRichResults" = true;
+        # SIDEBAR
+        "sidebar.verticalTabs" = true;
+        "sidebar.revamp.round-content-area" = true;
         # PRIVACY
         "privacy.donottrackheader.enabled" = true;
         "privacy.trackingprotection.enabled" = true;
@@ -61,6 +64,11 @@ in {
                 name = "Nix Options";
                 keyword = "no";
                 url = "https://search.nixos.org/options?channel=unstable";
+              }
+              {
+                name = "Home Manager";
+                keyword = "hm";
+                url = "https://nix-community.github.io/home-manager/options.xhtml";
               }
             ];
           }
