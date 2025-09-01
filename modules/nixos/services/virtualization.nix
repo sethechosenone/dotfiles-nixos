@@ -7,4 +7,5 @@
       ovmf.packages = [ pkgs.OVMFFull.fd ];
     };
   };
+  programs.virt-manager.enable = true;
 }
