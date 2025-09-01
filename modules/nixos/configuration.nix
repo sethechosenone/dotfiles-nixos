@@ -78,6 +78,7 @@
       hyprsysteminfo
       dconf
       nixpkgs-fmt
+      claude-code
     ];
     shell = pkgs.zsh;
   };

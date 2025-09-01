@@ -1,3 +1,6 @@
 { pkgs, config, ... }: {
-  services.swaync.enable = true;
+  services = {
+    swaync.enable = true;
+    swayosd.enable = true;
+  };
 }
