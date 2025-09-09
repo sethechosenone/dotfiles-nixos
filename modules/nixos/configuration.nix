@@ -80,6 +80,7 @@
       dconf
       nixpkgs-fmt
       claude-code
+      libreoffice
     ];
     shell = pkgs.zsh;
   };
@@ -114,7 +115,7 @@
     man-pages-posix
     brightnessctl
     glib
-    direnv
+    sl
   ];
 
   security = {
