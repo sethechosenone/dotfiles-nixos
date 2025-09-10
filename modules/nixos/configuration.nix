@@ -82,6 +82,7 @@
       nixpkgs-fmt
       claude-code
       libreoffice
+      exegol
     ];
     shell = pkgs.zsh;
   };

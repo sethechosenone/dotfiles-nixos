@@ -61,10 +61,9 @@
         workspace_swipe_fingers = 3;
       };
       bind = [
-        "$mod, F, exec, firefox"
+        "$mod, F, toggleFloating, "
         "$mod, return, exec, $terminal"
         "$mod, Q, killactive, "
-        "$mod, V, toggleFloating, "
         "$mod, R, exec, $menu"
         "$mod, P, pseudo, "
         "$mod, J, togglesplit, "
