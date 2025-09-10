@@ -102,23 +102,31 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    meson
-    wayland-protocols
-    wayland-utils
-    wl-clipboard
-    wlroots
-    networkmanagerapplet
-    pavucontrol
-    pamixer
-    man-pages
-    man-pages-posix
-    brightnessctl
-    glib
-    sl
-  ];
+  environment = {
+    defaultPackages = with pkgs; [
+      rsync
+      strace
+      python3
+      pipx
+    ];
+    systemPackages = with pkgs; [
+      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      wget
+      meson
+      wayland-protocols
+      wayland-utils
+      wl-clipboard
+      wlroots
+      networkmanagerapplet
+      pavucontrol
+      pamixer
+      man-pages
+      man-pages-posix
+      brightnessctl
+      glib
+      sl
+    ];
+  };
 
   security = {
     rtkit.enable = true;
