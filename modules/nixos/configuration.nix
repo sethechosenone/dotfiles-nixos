@@ -42,6 +42,11 @@
   };
 
   services = {
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     printing.enable = true;
     blueman.enable = true;
     pipewire = {
@@ -82,7 +87,7 @@
       nixpkgs-fmt
       claude-code
       libreoffice
-      exegol
+      nmap
     ];
     shell = pkgs.zsh;
   };
