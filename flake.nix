@@ -30,7 +30,7 @@
     led-matrix-sysinfo.url = "github:sethechosenone/led-matrix-sysinfo";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, stylix, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, lanzaboote, ... } @ inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -63,12 +63,21 @@
             nixos-hardware.nixosModules.framework-16-7040-amd
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
-            inputs.lanzaboote.nixosModules.lanzaboote
-            inputs.led-matrix-sysinfo.nixosModules.default
+            lanzaboote.nixosModules.lanzaboote
+            led-matrix-sysinfo.nixosModules.default
             ./modules
             ./hosts/SA-Framework16
           ];
         };
+        installer = lib.nixosSystem {
+          inherit system;
+          modules = [
+            (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            ./hosts/live
+            ./modules/shell
+          ];
+        };
       };
+      packages.${system}.installer = self.nixosConfigurations.installer.config.system.build.isoImage;
     };
 }
