@@ -141,6 +141,8 @@
       glib
       sl
       sbctl
+      file
+      usbutils
     ];
   };
 

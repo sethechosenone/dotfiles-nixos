@@ -30,7 +30,7 @@
     led-matrix-sysinfo.url = "github:sethechosenone/led-matrix-sysinfo";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, lanzaboote, ... } @ inputs:
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, lanzaboote, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
