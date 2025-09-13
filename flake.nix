@@ -76,7 +76,7 @@
             (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
             ./hosts/live
             ./modules/shell
-            ./modules/nixos/styleun
+            ./modules/nixos/style
           ];
         };
       };
