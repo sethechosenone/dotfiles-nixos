@@ -73,30 +73,33 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.seth = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "video"
-      "audio"
-      "networkmanager"
-      "lp"
-      "libvirtd"
-      "docker"
-    ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      tree
-      hyprland-qtutils
-      hyprpicker
-      hyprshot
-      hyprsysteminfo
-      dconf
-      nixpkgs-fmt
-      claude-code
-      libreoffice
-      nmap
-    ];
-    shell = pkgs.zsh;
+  users.users = {
+    seth = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "video"
+        "audio"
+        "networkmanager"
+        "lp"
+        "libvirtd"
+        "docker"
+      ]; # Enable ‘sudo’ for the user.
+      packages = with pkgs; [
+        tree
+        hyprland-qtutils
+        hyprpicker
+        hyprshot
+        hyprsysteminfo
+        dconf
+        nixpkgs-fmt
+        claude-code
+        libreoffice
+        nmap
+      ];
+      shell = pkgs.zsh;
+    };
+    root.shell = pkgs.zsh;
   };
 
   programs = {

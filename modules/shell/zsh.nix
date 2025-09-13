@@ -7,8 +7,6 @@
       ls = "eza --icons -hl";
       view = "bat";
       edit = "nvim";
-      edit-user-config = "nvim ~/.config/nixos/home.nix";
-      edit-system-config = "sudo -e /etc/nixos/configuration.nix";
       rebuild = "sudo nixos-rebuild switch";
     };
     autosuggestions = {
