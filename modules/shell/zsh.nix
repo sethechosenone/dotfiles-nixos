@@ -18,7 +18,7 @@
     ohMyZsh = {
       enable = true;
       plugins = [ "git" ];
-      theme = "agnoster";
+      theme = if builtins.getEnv "TERM" == "linux" then "cypher" else "agnoster";
     };
   };
 }

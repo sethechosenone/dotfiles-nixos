@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,6 +49,7 @@
             nixos-hardware.nixosModules.framework-13th-gen-intel
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
+            inputs.lanzaboote.nixosModules.lanzaboote
             ./modules
             ./hosts/SA-Framework13
           ];
@@ -58,6 +63,7 @@
             nixos-hardware.nixosModules.framework-16-7040-amd
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
+            inputs.lanzaboote.nixosModules.lanzaboote
             inputs.led-matrix-sysinfo.nixosModules.default
             ./modules
             ./hosts/SA-Framework16

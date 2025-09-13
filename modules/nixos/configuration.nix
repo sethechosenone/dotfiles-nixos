@@ -17,10 +17,14 @@
   boot = {
     loader = {
       systemd-boot = {
-        enable = true;
+        enable = lib.mkForce false;
         edk2-uefi-shell.enable = true;
       };
       efi.canTouchEfiVariables = true;
+    };
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
     };
     kernelPackages = pkgs.linuxPackages_latest;
   };
@@ -47,7 +51,10 @@
       nssmdns4 = true;
       openFirewall = true;
     };
-    printing.enable = true;
+    printing = {
+      enable = true;
+      drivers = with pkgs; [ hplipWithPlugin ];
+    };
     blueman.enable = true;
     pipewire = {
       enable = true;
@@ -130,6 +137,7 @@
       brightnessctl
       glib
       sl
+      sbctl
     ];
   };
 
