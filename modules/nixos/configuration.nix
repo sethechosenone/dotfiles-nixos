@@ -26,6 +26,7 @@
       enable = true;
       pkiBundle = "/var/lib/sbctl";
     };
+    kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
@@ -65,6 +66,7 @@
     fprintd.enable = true;
     fwupd.enable = true;
     greetd.enable = true;
+    udev.packages = with pkgs; [ swayosd ];
   };
 
   environment.sessionVariables = { 
