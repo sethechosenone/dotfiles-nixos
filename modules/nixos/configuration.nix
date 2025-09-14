@@ -145,6 +145,7 @@
       sbctl
       file
       usbutils
+      swayosd
     ];
   };
 
