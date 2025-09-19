@@ -111,6 +111,7 @@
     dconf.enable = true;
     gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
     regreet.enable = true;
+    ghidra.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
@@ -146,6 +147,8 @@
       file
       usbutils
       swayosd
+      mpv
+      imv
     ];
   };
 
