@@ -9,7 +9,7 @@
         pihole = {
           autoStart = true;
           image = "pihole/pihole:latest";
-          ports = [ "0.0.0.0:53:53/tcp" "0.0.0.0:53:53/udp" "0.0.0.0:8080:80/tcp" ];
+          extraOptions = [ "--network=host" ];
         };
       };
     };
@@ -47,7 +47,7 @@
     nameservers = [ "192.168.1.1" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 53 8080 ]; # SSH, DNS, Pi-hole web interface
+      allowedTCPPorts = [ 22 53 80 ]; # SSH, DNS, Pi-hole web interface
       allowedUDPPorts = [ 53 ]; # DNS
     };
   };
