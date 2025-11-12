@@ -53,4 +53,12 @@
       PermitRootLogin = "no";
     };
   };
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+  };
+  environment.systemPackages = with pkgs; [
+    eza
+    bat
+  ];
 }
