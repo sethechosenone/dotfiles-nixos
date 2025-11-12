@@ -1,11 +1,17 @@
 { config, lib, pkgs, ... }: {
   boot.loader.generic-extlinux-compatible.enable = true;
-  virtualisation.oci-containers.containers = {
-    pihole = {
-      autoStart = true;
-      image = "pihole/pihole:latest";
-      ports = [ "53:53" "8080:8080" ];
-      extraOptions = [ "--network=host" ];
+  virtualisation = {
+    docker.enable = true;
+    oci-containers = {
+      backend = "docker";
+      containers = {
+        pihole = {
+          autoStart = true;
+          image = "pihole/pihole:latest";
+          ports = [ "53:53" "8080:8080" ];
+          extraOptions = [ "--network=host" ];
+        };
+      };
     };
   };
   users.users = {
