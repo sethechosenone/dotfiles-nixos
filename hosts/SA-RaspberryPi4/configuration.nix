@@ -1,5 +1,6 @@
 { config, lib, pkgs, ... }: {
   boot.loader.generic-extlinux-compatible.enable = true;
+  nix.settings.trusted-users = [ "root" "seth" ];
   virtualisation = {
     docker.enable = true;
     oci-containers = {
@@ -8,8 +9,7 @@
         pihole = {
           autoStart = true;
           image = "pihole/pihole:latest";
-          ports = [ "53:53" "8080:8080" ];
-          extraOptions = [ "--network=host" ];
+          ports = [ "0.0.0.0:53:53/tcp" "0.0.0.0:53:53/udp" "0.0.0.0:8080:80/tcp" ];
         };
       };
     };
