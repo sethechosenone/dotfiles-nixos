@@ -28,6 +28,7 @@
     };
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   networking.networkmanager.enable = true;
@@ -44,6 +45,10 @@
   hardware = {
     graphics.enable = true;
     bluetooth.enable = true;
+    sane = {
+      enable = true;
+      extraBackends = with pkgs; [ hplipWithPlugin ];
+    };
   };
 
   services = {
@@ -54,6 +59,7 @@
     };
     printing = {
       enable = true;
+      openFirewall = true;
       drivers = with pkgs; [ hplipWithPlugin ];
     };
     blueman.enable = true;
@@ -67,6 +73,7 @@
     fwupd.enable = true;
     greetd.enable = true;
     udev.packages = with pkgs; [ swayosd ];
+    tailscale.enable = true;
   };
 
   environment.sessionVariables = { 
@@ -84,8 +91,10 @@
         "audio"
         "networkmanager"
         "lp"
+        "scanner"
         "libvirtd"
         "docker"
+        "adbusers"
       ]; # Enable ‘sudo’ for the user.
       packages = with pkgs; [
         tree
@@ -112,6 +121,7 @@
     gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
     regreet.enable = true;
     ghidra.enable = true;
+    adb.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;

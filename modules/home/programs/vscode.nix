@@ -19,6 +19,7 @@
         rust-lang.rust-analyzer
         vscodevim.vim
         leonardssh.vscord
+        anthropic.claude-code
       ];
       userSettings = {
         "window.controlsStyle" = "hidden";

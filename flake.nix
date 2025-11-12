@@ -4,9 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    rust-overlay.url = "github:oxalica/rust-overlay";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.rust-overlay.follows = "rust-overlay";
     };
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -18,10 +20,7 @@
     };
     stylix = {
       url = "github:danth/stylix";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
-      };
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -35,7 +34,10 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        config = { allowUnfree = true; };
+        config = { 
+          allowUnfree = true;
+          allowUnsupportedSystem = true;
+        };
       };
       lib = nixpkgs.lib;
     in {
@@ -49,7 +51,7 @@
             nixos-hardware.nixosModules.framework-13th-gen-intel
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
-            inputs.lanzaboote.nixosModules.lanzaboote
+            lanzaboote.nixosModules.lanzaboote
             ./modules
             ./hosts/SA-Framework13
           ];
@@ -64,9 +66,20 @@
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
             lanzaboote.nixosModules.lanzaboote
-            led-matrix-sysinfo.nixosModules.default
+            led-matrix-sysinfo.nixosModules.led-matrix-sysinfo
             ./modules
             ./hosts/SA-Framework16
+          ];
+        };
+        SA-RaspberryPi4 = lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            inherit self inputs;
+          };
+          modules = [
+            (nixpkgs + "/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
+            ./modules/shell
+            ./hosts/SA-RaspberryPi4
           ];
         };
         installer = lib.nixosSystem {
@@ -81,5 +94,6 @@
         };
       };
       packages.${system}.installer = self.nixosConfigurations.installer.config.system.build.isoImage;
+      packages.aarch64-linux.sd-image = self.nixosConfigurations.SA-RaspberryPi4.config.system.build.sdImage;
     };
 }
