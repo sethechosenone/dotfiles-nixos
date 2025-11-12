@@ -66,5 +66,6 @@
   environment.systemPackages = with pkgs; [
     eza
     bat
+    kitty.terminfo
   ];
 }
