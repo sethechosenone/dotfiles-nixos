@@ -6,9 +6,12 @@
       set relativenumber
       set number
       set splitright
+      set cursorlineopt "number"
+      set cursorline
       set tabstop=4
       set shiftwidth=4
       set noexpandtab
+      set noequalalways
       set showtabline=1
       set guicursor=
       lua << EOF
@@ -28,7 +31,8 @@
           full_name = true,
         },
         view = {
-          cursorline = true,
+          cursorlineopt = "screenline",
+          preserve_window_proportions = true,
         },
       })
       require('lualine').setup()

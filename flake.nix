@@ -32,13 +32,6 @@
   outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, lanzaboote, ... }:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config = { 
-          allowUnfree = true;
-          allowUnsupportedSystem = true;
-        };
-      };
       lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
