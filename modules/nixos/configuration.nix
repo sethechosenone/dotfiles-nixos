@@ -159,6 +159,7 @@
       swayosd
       mpv
       imv
+      nodejs-slim_24
     ];
   };
 

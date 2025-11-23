@@ -20,6 +20,7 @@
         vscodevim.vim
         leonardssh.vscord
         anthropic.claude-code
+        hashicorp.terraform
       ];
       userSettings = {
         "window.controlsStyle" = "hidden";

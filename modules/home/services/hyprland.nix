@@ -56,10 +56,7 @@
         natural_scroll = true;
         clickfinger_behavior = true;
       };
-      gestures = {
-        workspace_swipe = true;
-        workspace_swipe_fingers = 3;
-      };
+      gesture = "3, horizontal, workspace";
       bind = [
         "$mod, F, toggleFloating, "
         "$mod, return, exec, $terminal"
