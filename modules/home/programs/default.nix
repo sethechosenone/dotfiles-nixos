@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }: {
+{
   imports = [
     ./kitty.nix
     ./neovim.nix

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ pkgs, ... }: {
   users.users = {
     nixos.shell = pkgs.zsh;
     root.shell = pkgs.zsh;

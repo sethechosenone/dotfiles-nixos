@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ config, ... }: {
   programs.hyprpanel = {
     enable = true;
     settings = {

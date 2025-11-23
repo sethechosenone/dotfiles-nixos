@@ -1,4 +1,4 @@
-{ config, ... }: {
+{
   services = {
     hyprpolkitagent.enable = true;
     hypridle = {

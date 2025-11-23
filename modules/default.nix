@@ -1,4 +1,4 @@
-{ self, inputs, config, ... }: {
+{ self, inputs, ... }: {
   imports = [
     ./nixos
     ./shell

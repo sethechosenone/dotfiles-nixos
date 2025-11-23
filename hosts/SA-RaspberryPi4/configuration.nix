@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ pkgs, ... }: {
   boot.loader.generic-extlinux-compatible.enable = true;
   nix.settings.trusted-users = [ "root" "seth" ];
   virtualisation = {
