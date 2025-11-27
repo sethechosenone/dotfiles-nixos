@@ -1,6 +1,9 @@
 { pkgs, ... }: {
   boot.loader.generic-extlinux-compatible.enable = true;
-  nix.settings.trusted-users = [ "root" "seth" ];
+  nix = {
+    settings.trusted-users = [ "root" "seth" ];
+    extraOptions = "experimental-features = nix-command flakes";
+  };
   nixpkgs = {
     overlays =
       [ (final: prev: { sudo = prev.sudo.override { withInsults = true; }; }) ];
@@ -18,6 +21,17 @@
           autoStart = true;
           image = "pihole/pihole:latest";
           extraOptions = [ "--network=host" ];
+        };
+        theinfinitewebsite = {
+          autoStart = true;
+          image = "192.168.1.100:5000/infinitewebsite:latest";
+          environmentFiles = [ "/run/secrets/theinfinitewebsite_env" ];
+          extraOptions = [
+            "--cap-drop=ALL"
+            "--security-opt=no-new-privileges"
+            "--read-only"
+            "--pids-limit=100"
+          ];
         };
       };
     };
@@ -57,9 +71,21 @@
       enable = true;
       allowedTCPPorts = [ 22 53 80 ];
       allowedUDPPorts = [ 53 ];
+      extraCommands = ''
+        iptables -I DOCKER-USER -s 172.17.0.0/16 -d 192.168.1.0/24 -j DROP
+        iptables -I DOCKER-USER -s 172.17.0.0/16 -j ACCEPT
+      '';
     };
   };
   system.stateVersion = "25.11";
+  sops = {
+    defaultSopsFile = ./secrets/environment.yaml;
+    age.keyFile = "/var/lib/sops-nix/keys.txt";
+    secrets.theinfinitewebsite_env = {
+      mode = "0400";
+      owner = "root";
+    };
+  };
   services = {
     dockerRegistry = {
       enable = true;

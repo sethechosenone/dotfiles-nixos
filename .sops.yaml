@@ -1,0 +1,8 @@
+keys:
+  - &pi age140vtdn6kd0mzm6r086xc24p2fq4rv4fh44lhelh60zr75d433s7svuvh77
+
+creation_rules:
+  - path_regex: hosts/SA-RaspberryPi4/secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *pi

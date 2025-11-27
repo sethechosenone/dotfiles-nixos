@@ -27,9 +27,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     led-matrix-sysinfo.url = "github:sethechosenone/led-matrix-sysinfo";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, lanzaboote, ... }:
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, lanzaboote, sops-nix, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -71,6 +75,7 @@
           };
           modules = [
             (nixpkgs + "/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
+            sops-nix.nixosModules.sops
             ./modules/shell
             ./hosts/SA-RaspberryPi4
           ];
