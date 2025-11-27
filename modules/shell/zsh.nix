@@ -9,6 +9,7 @@
       edit = "nvim";
       edit-system = "edit /etc/nixos";
       rebuild = "sudo nixos-rebuild switch";
+      rebuild-raspi = "nixos-rebuild switch --flake /etc/nixos#SA-RaspberryPi4 --target-host seth@192.168.1.100 --sudo --ask-sudo-password"; 
     };
     autosuggestions = {
       enable = true;

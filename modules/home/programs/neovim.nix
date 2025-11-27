@@ -6,7 +6,7 @@
       set relativenumber
       set number
       set splitright
-      set cursorlineopt "number"
+      set cursorlineopt=number
       set cursorline
       set tabstop=4
       set shiftwidth=4
@@ -26,6 +26,9 @@
         end,
       })
       require('nvim-tree').setup({
+        diagnostics = {
+          enable = true
+        },
         renderer = {
           highlight_opened_files = "name",
           full_name = true,
@@ -99,14 +102,15 @@
         }
       })
       vim.api.nvim_set_keymap('n', '<leader>f', ':NvimTreeToggle<CR>', { noremap = true, silent = true })
-      vim.api.nvim_set_keymap('n', '<leader>c', ':ClaudeCode<CR>', { noremap = true, silent = true})
-      vim.api.nvim_set_keymap('n', '<leader>s', ':Telescope<CR>', { noremap = true, silent = true})
-      vim.api.nvim_set_keymap('n', '<leader>t', ':belowright 15split | terminal<CR>', { noremap = true, silent = true})
-      vim.api.nvim_set_keymap('n', '<leader>d', ':lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true})
-      vim.api.nvim_set_keymap('n', '<leader>e', ':lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true})
-      vim.api.nvim_set_keymap('n', '[d', ':lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true})
-      vim.api.nvim_set_keymap('n', ']d', ':lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true})
-      vim.api.nvim_set_keymap('t', '<C-n>', '<C-\\><C-n>', { noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>c', ':ClaudeCode<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>s', ':Telescope<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>t', ':belowright 15split | terminal<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>d', ':lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<leader>e', ':lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '[d', ':lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', ']d', ':lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('t', '<C-n>', '<C-\\><C-n>', { noremap = true })
+      vim.api.nvim_set_keymap('n', '<leader><space>', ':noh<CR>', { noremap = true, silent = true })
       EOF
     '';
     plugins = with pkgs.vimPlugins; [

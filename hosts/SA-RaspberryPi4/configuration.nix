@@ -1,8 +1,16 @@
 { pkgs, ... }: {
   boot.loader.generic-extlinux-compatible.enable = true;
   nix.settings.trusted-users = [ "root" "seth" ];
+  nixpkgs = {
+    overlays =
+      [ (final: prev: { sudo = prev.sudo.override { withInsults = true; }; }) ];
+    config.allowUnfree = true;
+  };
   virtualisation = {
-    docker.enable = true;
+    docker = {
+      enable = true;
+      daemon.settings.insecure-registries = [ "192.168.1.100:5000" ];
+    };
     oci-containers = {
       backend = "docker";
       containers = {
@@ -47,21 +55,34 @@
     nameservers = [ "192.168.1.1" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 53 80 ]; # SSH, DNS, Pi-hole web interface
-      allowedUDPPorts = [ 53 ]; # DNS
+      allowedTCPPorts = [ 22 53 80 ];
+      allowedUDPPorts = [ 53 ];
     };
   };
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      PasswordAuthentication = false;
-      PermitRootLogin = "no";
+  system.stateVersion = "25.11";
+  services = {
+    dockerRegistry = {
+      enable = true;
+      openFirewall = true;
+      listenAddress = "0.0.0.0";
+      port = 5000;
+      storagePath = "/var/lib/docker-registry";
+    };
+    openssh = {
+      enable = true;
+      openFirewall = true;
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
     };
   };
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
+  programs = {
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
+    direnv.enable = true;
   };
   environment.systemPackages = with pkgs; [
     eza

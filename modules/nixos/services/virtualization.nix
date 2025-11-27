@@ -7,7 +7,10 @@
         swtpm.enable = true;
       };
     };
-    docker.enable = true;
+    docker = { 
+      enable = true;
+      daemon.settings.insecure-registries = [ "192.168.1.100:5000" ];
+    };
   };
   programs.virt-manager.enable = true;
 }
