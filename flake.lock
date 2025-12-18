@@ -340,11 +340,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1756738308,
-        "narHash": "sha256-Vo+xQW+x5gmxqQtu5pWywQFa0Y/1V6Pe9nRjDXj9sSw=",
+        "lastModified": 1764274374,
+        "narHash": "sha256-VI+OAfsjxpt+IpCi+YZ9JbtZ0kXyi5X1DwOLnLJaC5Y=",
         "owner": "sethechosenone",
         "repo": "led-matrix-sysinfo",
-        "rev": "1fb7afb6c67e9b722eb787e8232b2039df92f19e",
+        "rev": "f796cab78e4d34a73ec146da251831bffba86260",
         "type": "github"
       },
       "original": {

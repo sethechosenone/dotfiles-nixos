@@ -1,5 +1,8 @@
 { pkgs, ... }: {
-  boot.loader.generic-extlinux-compatible.enable = true;
+  boot = {
+    loader.generic-extlinux-compatible.enable = true;
+    kernel.sysctl."net.ipv4.ip_forward" = 1;
+  };
   nix = {
     settings.trusted-users = [ "root" "seth" ];
     extraOptions = "experimental-features = nix-command flakes";
@@ -76,6 +79,27 @@
         iptables -I DOCKER-USER -s 172.17.0.0/16 -j ACCEPT
       '';
     };
+    wireguard.interfaces.wg0 = {
+      ips = [ "10.0.0.2/24" ];
+      listenPort = 51280;
+      privateKeyFile = "/root/wireguard-private.key";
+      peers = [{
+        publicKey = "JpallhuDYWJzuwMG7gDk0BOy0kayLeIR06Rch8e9EmI=";
+        endpoint = "150.136.168.118:51820";
+        allowedIPs = [ "10.0.0.0/24" ];
+        persistentKeepalive = 25;
+      }];
+      postSetup = ''
+        ${pkgs.iptables}/bin/iptables -A FORWARD -i wg0 -j ACCEPT
+        ${pkgs.iptables}/bin/iptables -A FORWARD -o wg0 -j ACCEPT
+        ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+      '';
+      postShutdown = ''
+        ${pkgs.iptables}/bin/iptables -D FORWARD -i wg0 -j ACCEPT || true
+        ${pkgs.iptables}/bin/iptables -D FORWARD -o wg0 -j ACCEPT || true
+        ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE || true
+      '';
+    };
   };
   system.stateVersion = "25.11";
   sops = {
@@ -111,8 +135,10 @@
     direnv.enable = true;
   };
   environment.systemPackages = with pkgs; [
+    sl
     eza
     bat
     kitty.terminfo
+    wireguard-tools
   ];
 }

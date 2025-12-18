@@ -13,6 +13,7 @@
     defaultEditor = true;
   };
   environment.systemPackages = with pkgs; [
+    sl
     eza
     bat
     sbctl

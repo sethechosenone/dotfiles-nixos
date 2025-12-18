@@ -5,7 +5,22 @@
 { lib, pkgs, ... }: {
   nix = {
     package = pkgs.nixVersions.stable;
-    extraOptions = "experimental-features = nix-command flakes";
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "@wheel" ];
+      substituters = [ "https://cache.nixos.org" ];
+      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+      builders-use-substitutes = true;
+    };
+    buildMachines = [{
+      hostName = "arm-builder";
+      system = "aarch64-linux";
+      maxJobs = 4;
+      speedFactor = 10;
+      supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+      mandatoryFeatures = [];
+    }];
+    distributedBuilds = true;
   };
   nixpkgs = {
     overlays =
@@ -126,6 +141,12 @@
       enable = true;
       enableSSHSupport = true;
     };
+    ssh.extraConfig = ''
+      Host arm-builder
+        HostName 129.80.42.135
+        User opc
+        StrictHostKeyChecking accept-new
+    '';
   };
 
   # List packages installed in system profile. To search, run:
