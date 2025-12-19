@@ -75,16 +75,23 @@
           };
           modules = [
             (nixpkgs + "/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
+            stylix.nixosModules.stylix # for neovim
+            home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
             ./modules/shell
+            ./modules/nixos/style
             ./hosts/SA-RaspberryPi4
           ];
         };
         installer = lib.nixosSystem {
           inherit system;
+          specialArgs = {
+            inherit self inputs;
+          };
           modules = [
             stylix.nixosModules.stylix
             (nixpkgs + "/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
+            home-manager.nixosModules.home-manager
             ./hosts/live
             ./modules/shell
             ./modules/nixos/style

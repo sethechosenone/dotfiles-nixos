@@ -5,5 +5,6 @@
       defaultEditor = true;
     };
     direnv.enable = true;
+    git.enable = true;
   };
 }

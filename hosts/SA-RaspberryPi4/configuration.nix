@@ -3,9 +3,9 @@
     loader.generic-extlinux-compatible.enable = true;
     kernel.sysctl."net.ipv4.ip_forward" = 1;
   };
-  nix = {
-    settings.trusted-users = [ "root" "seth" ];
-    extraOptions = "experimental-features = nix-command flakes";
+  nix.settings = {
+    trusted-users = [ "root" "seth" ];
+    experimental-features = [ "nix-command" "flakes"];
   };
   nixpkgs = {
     overlays =
@@ -58,6 +58,15 @@
       shell = pkgs.zsh;
     };
     root.shell = pkgs.zsh;
+  };
+  home-manager = {
+    useUserPackages = true;
+    useGlobalPkgs = true;
+    backupFileExtension = "hm-backup";
+    users = {
+      seth = import ./home.nix;
+      root = import ./home.nix;
+    };
   };
   networking = {
     hostName = "SA-RaspberryPi4";
