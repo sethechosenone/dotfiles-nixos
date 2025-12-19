@@ -136,6 +136,7 @@
       mpv
       imv
       nodejs-slim_24
+      wireguard-tools
     ];
   };
 
