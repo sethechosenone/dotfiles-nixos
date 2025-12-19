@@ -43,7 +43,6 @@
     };
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
 
   networking.networkmanager.enable = true;
@@ -66,31 +65,7 @@
     };
   };
 
-  services = {
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
-    printing = {
-      enable = true;
-      openFirewall = true;
-      drivers = with pkgs; [ hplipWithPlugin ];
-    };
-    blueman.enable = true;
-    pipewire = {
-      enable = true;
-      wireplumber.enable = true;
-    };
-    gnome.gnome-keyring.enable = true;
-    libinput.enable = true;
-    fprintd.enable = true;
-    fwupd.enable = true;
-    greetd.enable = true;
-    udev.packages = with pkgs; [ swayosd ];
-    tailscale.enable = true;
-  };
-
+  
   environment.sessionVariables = { 
     NIXOS_OZONE_WL = "1";
     ELECTRON_OZONE_PLATFORM_HINT = "wayland";
@@ -127,28 +102,7 @@
     };
     root.shell = pkgs.zsh;
   };
-
-  programs = {
-    hyprland.enable = true; # this will allow us to actually log into a hyprland session
-    zsh.enable = true; # this is also mentioned in the home-manager config, but it yells at you if this does not exist outside of it
-    git.enable = true;
-    dconf.enable = true;
-    gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
-    regreet.enable = true;
-    ghidra.enable = true;
-    adb.enable = true;
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-    };
-    ssh.extraConfig = ''
-      Host arm-builder
-        HostName 129.80.42.135
-        User opc
-        StrictHostKeyChecking accept-new
-    '';
-  };
-
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment = {

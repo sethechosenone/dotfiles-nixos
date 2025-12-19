@@ -8,9 +8,12 @@
     nixos.shell = pkgs.zsh;
     root.shell = pkgs.zsh;
   };
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
+  programs = {
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+    };
+    direnv.enable = true;
   };
   environment.systemPackages = with pkgs; [
     sl
