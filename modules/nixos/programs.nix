@@ -8,6 +8,10 @@
     regreet.enable = true;
     ghidra.enable = true;
     adb.enable = true;
+    wireshark = {
+      enable = true;
+      package = pkgs.wireshark-qt;
+    };
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;

@@ -3,6 +3,7 @@
     avahi = {
       enable = true;
       nssmdns4 = true;
+      nssmdns6 = true;
       openFirewall = true;
     };
     printing = {
@@ -18,6 +19,8 @@
     gnome.gnome-keyring.enable = true;
     libinput.enable = true;
     fprintd.enable = true;
+    upower.enable = true;
+    gvfs.enable = true;
     fwupd.enable = true;
     greetd.enable = true;
     udev.packages = with pkgs; [ swayosd ];

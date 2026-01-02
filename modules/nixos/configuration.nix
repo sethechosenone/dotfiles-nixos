@@ -85,18 +85,20 @@
         "libvirtd"
         "docker"
         "adbusers"
+        "wireshark"
+        "i2c"
       ]; # Enable ‘sudo’ for the user.
       packages = with pkgs; [
         tree
         hyprland-qtutils
         hyprpicker
-        hyprshot
         hyprsysteminfo
         dconf
         nixpkgs-fmt
         claude-code
         libreoffice
         nmap
+        metasploit
       ];
       shell = pkgs.zsh;
     };
@@ -114,13 +116,13 @@
       pipx
     ];
     systemPackages = with pkgs; [
-      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
       wget
       meson
       wayland-protocols
       wayland-utils
       wl-clipboard
       wlroots
+      wf-recorder
       networkmanagerapplet
       pavucontrol
       pamixer
@@ -132,11 +134,10 @@
       sbctl
       file
       usbutils
-      swayosd
       mpv
       imv
       nodejs-slim_24
-      wireguard-tools
+      ags
     ];
   };
 

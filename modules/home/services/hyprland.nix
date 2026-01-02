@@ -4,8 +4,8 @@
     settings = {
       monitor = "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
-      "$menu" = "pidof wofi || wofi --show drun";
-      exec-once = [ "nm-applet --indicator & blueman-applet & waybar & hyprpaper" ];
+      "$menu" = "hyprlauncher";
+      exec-once = [ "hyprpanel & hyprpaper" ];
       "$mod" = "SUPER";
       "$userConfigPath" = "/home/seth/.config/nixos";
       general = {
@@ -42,10 +42,12 @@
         "float, title:^(Open Folder)$"
         "float, class:nm-connection-editor"
         "float, class:.blueman-manager-wrapped"
+        "float, class:.virt-manager-wrapped"
       ];
       layerrule = [
         "animation fade, ^(logout_dialog)$"
         "animation fade, ^(selection)$"
+        "animation fade, ^(verification)$"
         "noanim, ^(hyprpicker)$"
       ];
       dwindle = {
@@ -76,7 +78,7 @@
         "$mod SHIFT, up, movewindow, u"
         "$mod SHIFT, down, movewindow, d"
         #", Caps_Lock, exec, swayosd-client --caps-lock"
-        "$mod, escape, exec, pidof wlogout || wlogout"
+        "$mod, escape, exec, hyprpanel t powerdropdownmenu"
         ", Print, exec, pidof hyprshot || hyprshot -m output -m eDP-1"
         "$mod, Print, exec, pidof hyprshot || hyprshot -m region"
       ] ++ (builtins.concatLists (builtins.genList (x:
@@ -99,17 +101,17 @@
       ];
       # "bindle" doesn't mean anything as a word, it just means "bind + (l)ock + r(e)peat"
       bindle = [
-        ", XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
-        ", XF86AudioLowerVolume, exec, swayosd-client --output-volume lower"
-        ", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
-        ", XF86MonBrightnessDown, exec, swayosd-client --brightness -5"
-        ", XF86MonBrightnessUp, exec, swayosd-client --brightness +5"
+        #", XF86AudioRaiseVolume, exec, swayosd-client --output-volume raise"
+        #", XF86AudioLowerVolume, exec, swayosd-client --output-volume lower"
+        #", XF86AudioMute, exec, swayosd-client --output-volume mute-toggle"
+        #", XF86MonBrightnessDown, exec, swayosd-client --brightness -5"
+        #", XF86MonBrightnessUp, exec, swayosd-client --brightness +5"
         # swayosd does all of this, but it's still here in case we want to use something else
-        #", XF86AudioRaiseVolume, exec, pamixer --increase 5"
-        #", XF86AudioLowerVolume, exec, pamixer --decrease 5"
-        #", XF86AudioMute, exec, pamixer --toggle-mute"
-        #", XF86MonBrightnessDown, exec, brightnessctl -s set 5%-"
-        #", XF86MonBrightnessUp, exec, brightnessctl -s set 5%+"
+        ", XF86AudioRaiseVolume, exec, pamixer --increase 5"
+        ", XF86AudioLowerVolume, exec, pamixer --decrease 5"
+        ", XF86AudioMute, exec, pamixer --toggle-mute"
+        ", XF86MonBrightnessDown, exec, brightnessctl -s set 5%-"
+        ", XF86MonBrightnessUp, exec, brightnessctl -s set 5%+"
       ];
       bindm = [ "$mod, mouse:272, movewindow" "$mod, mouse:273, resizewindow" ];
     };

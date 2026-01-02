@@ -3,8 +3,9 @@ config: {
     ./hypr.nix
     ./hyprland.nix
     ./hyprlock.nix
-    ./waybar.nix
-    ./wlogout.nix
-    ./swaync.nix
+    ./hyprpanel.nix
+#    ./waybar.nix
+#    ./wlogout.nix
+#    ./swaync.nix
   ];
 }

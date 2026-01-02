@@ -1,6 +1,16 @@
 {
   services = {
     hyprpolkitagent.enable = true;
+    hyprlauncher = {
+      enable = true;
+      settings = {
+        finders = {
+          desktop_icons = true;
+          math_prefix = "=";
+        };
+        ui.window_size = "400 260";
+      };
+    };
     hypridle = {
       enable = true;
       settings = {
@@ -48,4 +58,5 @@
       ];
     };
   };
+  programs.hyprshot.enable = true;
 }
