@@ -43,6 +43,7 @@
     };
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "drm.panic_screen=qr_code" ];
   };
 
   networking.networkmanager.enable = true;
@@ -52,6 +53,8 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
+    packages = [ pkgs.powerline-fonts ];
+    font = "ter-powerline-v24b";
     keyMap = lib.mkDefault "us";
     useXkbConfig = true; # use xkb.options in tty.
   };
@@ -138,6 +141,7 @@
       imv
       nodejs-slim_24
       ags
+      ripgrep
     ];
   };
 

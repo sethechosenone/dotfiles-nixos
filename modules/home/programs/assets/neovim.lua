@@ -145,26 +145,24 @@ require('dap-python').setup('python')
 -- Go DAP (will use delve from project environment)
 require('dap-go').setup()
 
--- Rust DAP (will use codelldb from project environment)
-dap.adapters.codelldb = {
-  type = 'server',
-  port = '${port}',
-  executable = {
-    command = 'codelldb',
-    args = { '--port', '${port}' },
-  }
+-- Rust DAP (will use lldb-dap from project environment)
+dap.adapters.lldb = {
+  type = 'executable',
+  command = 'lldb-dap',
+  name = 'lldb'
 }
 
 dap.configurations.rust = {
   {
     name = 'Launch',
-    type = 'codelldb',
+    type = 'lldb',
     request = 'launch',
     program = function()
       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
+    args = {},
   },
 }
 
@@ -212,6 +210,7 @@ vim.api.nvim_set_keymap('n', '<leader>sb', ':Telescope buffers<CR>', { noremap =
 vim.api.nvim_set_keymap('n', '<leader>sh', ':Telescope help_tags<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>sr', ':Telescope lsp_references<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ss', ':Telescope lsp_document_symbols<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sw', ':Telescope lsp_workspace_symbols<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>s', ':Telescope<CR>', { noremap = true, silent = true })
 
 -- t = terminal

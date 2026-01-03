@@ -2,7 +2,7 @@
   stylix = {
     enable = true;
     polarity = "dark";
-    image = "${self}/modules/nixos/style/wallpaper.png";
+    image = "${self}/modules/nixos/style/assets/wallpaper.png";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tokyo-city-dark.yaml";
     fonts = {
       monospace = {
