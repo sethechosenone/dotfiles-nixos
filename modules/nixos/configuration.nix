@@ -57,6 +57,7 @@
     font = "ter-powerline-v24b";
     keyMap = lib.mkDefault "us";
     useXkbConfig = true; # use xkb.options in tty.
+    earlySetup = true;
   };
 
   hardware = {
@@ -116,32 +117,11 @@
       rsync
       strace
       python3
-      pipx
     ];
     systemPackages = with pkgs; [
-      wget
-      meson
-      wayland-protocols
-      wayland-utils
-      wl-clipboard
-      wlroots
-      wf-recorder
-      networkmanagerapplet
-      pavucontrol
-      pamixer
-      man-pages
-      man-pages-posix
-      brightnessctl
-      glib
-      sl
-      sbctl
-      file
-      usbutils
-      mpv
-      imv
-      nodejs-slim_24
-      ags
-      ripgrep
+      wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
+      networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
+      glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus
     ];
   };
 

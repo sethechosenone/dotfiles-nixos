@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   nixpkgs = {
     overlays =
       [ (final: prev: { sudo = prev.sudo.override { withInsults = true; }; }) ];
@@ -21,6 +21,21 @@
     useGlobalPkgs = true;
     backupFileExtension = "hm-backup";
   };
+  boot = {
+    kernel.sysctl."kernel.sysrq" = 1;
+    kernelParams = [ "drm.panic_screen=qr_code" ];
+  };
+  console = {
+    packages = [ pkgs.powerline-fonts ];
+    font = "ter-powerline-v24b";
+    useXkbConfig = true;
+    earlySetup = true;
+  };
+  systemd.services.reload-systemd-vconsole-setup.serviceConfig.ExecStart =
+    lib.mkForce (pkgs.writeShellScript "reset-console" ''
+      until test -c /dev/dri/card1; do sleep 1; done
+      ${pkgs.systemd}/lib/systemd/systemd-vconsole-setup
+    '');
   programs = {
     neovim = {
       enable = true;
