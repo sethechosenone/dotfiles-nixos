@@ -1,4 +1,4 @@
-{
+{ ... }: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -16,20 +16,7 @@
       enable = true;
       strategy = [ "history" "completion" ];
     };
-    #ohMyZsh = {
-    #  enable = true;
-    #  plugins = [ "git" ];
-    #};
-    shellInit = ''
-      zsh-newuser-install() { :; }
-      #if [[ "$TERM" == "linux" ]] || [[ $(tty 2>/dev/null) =~ /dev/tty[0-9]+ ]]; then
-      #  export ZSH_THEME="cypher"
-      #else
-      #  export ZSH_THEME="agnoster"
-      #fi
-    '';
-    interactiveShellInit = ''
-      eval "$(direnv hook zsh)"
-    '';
+    shellInit = "zsh-newuser-install() { :; }";
+    interactiveShellInit = "eval \"$(direnv hook zsh)\"";
   };
 }

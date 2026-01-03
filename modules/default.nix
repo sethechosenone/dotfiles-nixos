@@ -10,7 +10,10 @@
     users = {
       seth = import ./home;
       root = {
-        imports = [ home/programs/neovim.nix ];
+        imports = [
+          home/programs/neovim.nix
+          shell/starship-tty.nix
+        ];
         home.stateVersion = "23.11";
         programs = {
           eza.enable = true;
