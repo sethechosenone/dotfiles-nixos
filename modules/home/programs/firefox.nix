@@ -15,7 +15,7 @@ in {
       name = "default";
       extensions = {
         force = true;
-        packages = with inputs.firefox-addons.packages.${pkgs.system}; [
+        packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
           bitwarden
           foxyproxy-standard
           ublock-origin

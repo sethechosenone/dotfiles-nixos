@@ -2,7 +2,7 @@
   imports = [
     ./kitty.nix
     ./neovim.nix
-    ./wofi.nix
+#    ./wofi.nix
     ./firefox.nix
 #    ./vscode.nix
     ./discord.nix

@@ -5,6 +5,7 @@
   programs.starship = {
     enable = true;
     settings = {
+      add_newline = false;
       format = "[ ](fg:#7AA2F7)[](fg:#7AA2F7)$username[@](fg:#171D23 bg:#7AA2F7)$hostname[](fg:#7AA2F7 bg:#D8E2EC)$directory$nix_shell$direnv[](fg:#D8E2EC bg:#B7C5D3)$git_branch$git_status[](fg:#B7C5D3 bg:#526270)$python$rust$golang$nodejs$status[ ](fg:#526270)";
       username = {
         show_always = true;
