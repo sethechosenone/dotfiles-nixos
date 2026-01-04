@@ -8,7 +8,10 @@
     ./discord.nix
   ];
   programs = {
-    eza.enable = true;
+    eza = {
+      enable = true;
+      enableZshIntegration = false;
+    };
     bat.enable = true;
   };
 }

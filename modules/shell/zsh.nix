@@ -4,7 +4,7 @@
     enableCompletion = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-      ls = "eza --icons -hl";
+      ls = "eza --icons -l";
       view = "bat";
       edit = "nvim";
       edit-system = "edit /etc/nixos";

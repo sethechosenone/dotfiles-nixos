@@ -13,6 +13,7 @@
     };
     zsh = {
       enable = true;
+      defaultKeymap = "emacs";
       initContent = ''
         # Override Starship config for TTY (runs after promptInit)
         if [[ "$TERM" == "linux" ]] || [[ $(tty 2>/dev/null) =~ /dev/tty[0-9]+ ]]; then
