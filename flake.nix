@@ -74,6 +74,7 @@
             inherit self inputs;
           };
           modules = [
+            nixos-hardware.nixosModules.gigabyte-b650
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
             lanzaboote.nixosModules.lanzaboote
