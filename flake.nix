@@ -68,6 +68,19 @@
             ./hosts/SA-Framework16
           ];
         };
+        SA-PowerTower = lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit self inputs;
+          };
+          modules = [
+            home-manager.nixosModules.home-manager
+            stylix.nixosModules.stylix
+            lanzaboote.nixosModules.lanzaboote
+            ./modules
+            ./hosts/SA-PowerTower
+          ];
+        };
         SA-RaspberryPi4 = lib.nixosSystem {
           system = "aarch64-linux";
           specialArgs = {

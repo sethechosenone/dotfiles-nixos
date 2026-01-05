@@ -1,8 +1,18 @@
-{
+{ config, ... }: let
+  hostname = config.networking.hostName or "unknown";
+  monitorConfig = {
+    "SA-PowerTower" = [
+      "DP-1, 3840x2160@144, 0x0, 1.5"
+      "HDMI-A-1, 1920x1080@75, 3840x540, 1.0"
+    ];
+    "SA-Framework16" = "eDP-1, 2560x1600@165, auto, 1.25";
+    "SA-Framework13" = "eDP-1, 2256x1504@60, auto, 1.25";
+  };
+in {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = "eDP-1, 2560x1600@165, auto, 1.25";
+      monitor = monitorConfig.${hostname} or "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
       "$menu" = "hyprlauncher";
       exec-once = [ "hyprpanel & hyprpaper" ];
