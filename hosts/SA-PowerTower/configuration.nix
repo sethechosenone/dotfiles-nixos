@@ -1,4 +1,4 @@
-{ config, pkgs }: {
+{ config, pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
   networking.hostName = "SA-PowerTower";
   services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
