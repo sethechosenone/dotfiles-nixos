@@ -7,16 +7,16 @@
     enable32Bit = true;
     extraPackages = with pkgs; [
       nvidia-vaapi-driver
-      vaapiVdpau
+      libva-vdpau-driver
       libvdpau-va-gl
     ];
-  };
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    open = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      open = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
   };
   boot.kernelParams = [ "nvidia-drm.modeset=1" ];
   powerManagement.cpuFreqGovernor = "performance";
