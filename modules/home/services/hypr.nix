@@ -1,6 +1,7 @@
 {
   services = {
     hyprpolkitagent.enable = true;
+    hyprpaper.enable = true;
     hyprlauncher = {
       enable = true;
       settings = {

@@ -7,7 +7,6 @@
     gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
     regreet.enable = true;
     ghidra.enable = true;
-    adb.enable = true;
     wireshark = {
       enable = true;
       package = pkgs.wireshark-qt;

@@ -121,7 +121,7 @@
     systemPackages = with pkgs; [
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
-      glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus
+      glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus android-tools
     ];
   };
 

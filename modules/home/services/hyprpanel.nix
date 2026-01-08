@@ -1,16 +1,21 @@
-{ config, lib, ... }: {
+{ config, lib, ... }: let
+  hostname = config.networking.hostName or "unknown";
+  rightBarLayouts = {
+    "SA-Framework16" = [ "cputemp" "network" "bluetooth" "battery" "notifications" ];
+    "SA-Framework13" = [ "cputemp" "network" "bluetooth" "battery" "notifications" ]; 
+    "SA-PowerTower" = [ "cputemp" "network" "bluetooth" "notifications" ];
+  };
+in {
   programs.hyprpanel = {
     enable = true;
     systemd.enable = true;
     settings = {
       scalingPriority = "hyprland";
       bar = {
-        layouts = {
-          "0" = {
-            left = [ "dashboard" "workspaces" "systray" ];
-            middle = [ "clock" "weather" ];
-            right = [ "cputemp" "network" "bluetooth" "battery" "notifications" ];    
-          };
+        layouts."0" = {
+          left = [ "dashboard" "workspaces" "systray" ];
+          middle = [ "clock" "weather" ];
+          right = rightBarLayouts.${hostname} or [ "cputemp" "network" "bluetooth" "battery" "notifications" ];
         };
         workspaces = {
           show_numbered = true;
@@ -29,7 +34,7 @@
         };
       };
       wallpaper = {
-        enable = false;
+        enable = true;
         image = "${config.stylix.image}";
         pywal = false;
       };

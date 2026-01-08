@@ -48,17 +48,17 @@ in {
         "windowsMove, 1, 8, default"
       ];
       windowrule = [
-        "float, class:org.pulseaudio.pavucontrol"
-        "float, title:^(Open Folder)$"
-        "float, class:nm-connection-editor"
-        "float, class:.blueman-manager-wrapped"
-        "float, class:.virt-manager-wrapped"
+        "float on, match:class org.pulseaudio.pavucontrol"
+        "float on, match:title ^(Open Folder)$"
+        "float on, match:class nm-connection-editor"
+        "float on, match:class .blueman-manager-wrapped"
+        "float on, match:class .virt-manager-wrapped"
       ];
       layerrule = [
-        "animation fade, ^(logout_dialog)$"
-        "animation fade, ^(selection)$"
-        "animation fade, ^(verification)$"
-        "noanim, ^(hyprpicker)$"
+        "animation fade, match:namespace ^(logout_dialog)$"
+        "animation fade, match:namespace ^(selection)$"
+        "animation fade, match:namespace ^(verification)$"
+        "no_anim on, match:namespace ^(hyprpicker)$"
       ];
       dwindle = {
         pseudotile = true;

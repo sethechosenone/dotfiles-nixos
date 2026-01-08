@@ -4,6 +4,5 @@ config: {
     ./services
     ./configuration.nix
     ./programs.nix
-    ./services.nix
   ];
 }
