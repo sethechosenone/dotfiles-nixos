@@ -15,9 +15,8 @@ in {
       monitor = monitorConfig.${hostname} or "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
       "$menu" = "hyprlauncher";
-      exec-once = [ "hyprpanel & hyprpaper" ];
+      exec-once = "hyprpanel";
       "$mod" = "SUPER";
-      "$userConfigPath" = "/home/seth/.config/nixos";
       general = {
         gaps_in = 2;
         gaps_out = 5;

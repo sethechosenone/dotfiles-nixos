@@ -34,7 +34,7 @@ in {
         };
       };
       wallpaper = {
-        enable = true;
+        enable = false;
         image = "${config.stylix.image}";
         pywal = false;
       };

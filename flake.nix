@@ -5,11 +5,6 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     rust-overlay.url = "github:oxalica/rust-overlay";
-    lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.rust-overlay.follows = "rust-overlay";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,7 +28,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, lanzaboote, sops-nix, ... }:
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, sops-nix, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -48,7 +43,6 @@
             nixos-hardware.nixosModules.framework-13th-gen-intel
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
-            lanzaboote.nixosModules.lanzaboote
             ./modules
             ./hosts/SA-Framework13
           ];
@@ -62,7 +56,6 @@
             nixos-hardware.nixosModules.framework-16-7040-amd
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
-            lanzaboote.nixosModules.lanzaboote
             led-matrix-sysinfo.nixosModules.led-matrix-sysinfo
             ./modules
             ./hosts/SA-Framework16
@@ -77,7 +70,6 @@
             nixos-hardware.nixosModules.gigabyte-b650
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
-            lanzaboote.nixosModules.lanzaboote
             ./modules
             ./hosts/SA-PowerTower
           ];

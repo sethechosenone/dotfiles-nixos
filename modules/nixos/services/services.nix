@@ -22,7 +22,13 @@
     upower.enable = true;
     gvfs.enable = true;
     fwupd.enable = true;
-    greetd.enable = true;
+    greetd = {
+      enable = true;
+      settings.default_session = {
+        command = "${pkgs.dbus}/bin/dbus-run-session ${pkgs.cage}/bin/cage -s -d -- ${pkgs.regreet}/bin/regreet";
+        user = "greeter";
+      };
+    };
     udev.packages = with pkgs; [ swayosd ];
     tailscale.enable = true;
   };

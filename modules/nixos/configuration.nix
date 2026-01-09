@@ -31,15 +31,19 @@
   # Use the systemd-boot EFI boot loader.
   boot = {
     loader = {
-      systemd-boot = {
-        enable = lib.mkForce false;
-        edk2-uefi-shell.enable = true;
+      limine = {
+        enable = true;
+        secureBoot.enable = true;
+        maxGenerations = 20;
+        extraEntries = ''
+          /+Utilities
+          //UEFI Shell
+          protocol: efi
+          comment: UEFI Shell
+          image_path: boot():/EFI/edk2-uefi-shell/shell.efi
+        '';
       };
       efi.canTouchEfiVariables = true;
-    };
-    lanzaboote = {
-      enable = true;
-      pkiBundle = "/var/lib/sbctl";
     };
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;

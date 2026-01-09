@@ -5,7 +5,10 @@
     git.enable = true;
     dconf.enable = true;
     gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
-    regreet.enable = true;
+    regreet = {
+      enable = true;
+      settings.widget.clock.format = "%a %b %d - %I:%M %p";
+    };
     ghidra.enable = true;
     wireshark = {
       enable = true;
