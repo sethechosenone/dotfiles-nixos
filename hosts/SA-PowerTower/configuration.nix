@@ -14,16 +14,17 @@
     };
     nvidia = {
       modesetting.enable = true;
-      powerManagement.enable = false;
+      powerManagement.enable = true;
       open = false;
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
+    i2c.enable = true;
   };
   powerManagement.cpuFreqGovernor = "performance";
   environment.systemPackages = with pkgs; [
     looking-glass-client
-    openrgb
+    openrgb-unstable
     mangohud
     goverlay
     protonup-qt

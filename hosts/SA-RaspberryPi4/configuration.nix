@@ -42,7 +42,7 @@
   users.users = {
     seth = {
       isNormalUser = true;
-      initialPassword = "nixos"; # Change this after first login!
+      initialPassword = "change-me-after-install!"; # change this after first login!
       extraGroups = [
         "wheel"
         "networkmanager"

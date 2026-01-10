@@ -1,9 +1,9 @@
-{ config, ... }: let
-  hostname = config.networking.hostName or "unknown";
+{ osConfig, ... }: let
+  hostname = osConfig.networking.hostName or "unknown";
   monitorConfig = {
     "SA-PowerTower" = [
-      "DP-1, 3840x2160@144, 0x0, 1.5"
-      "HDMI-A-1, 1920x1080@75, 3840x540, 1.0"
+      "DP-6, 3840x2160@144, 0x0, 1.5"
+      "HDMI-A-1, 1920x1080@75, 2560x180, 1.0"
     ];
     "SA-Framework16" = "eDP-1, 2560x1600@165, auto, 1.25";
     "SA-Framework13" = "eDP-1, 2256x1504@60, auto, 1.25";
@@ -72,6 +72,7 @@ in {
         "$mod, F, toggleFloating, "
         "$mod, return, exec, $terminal"
         "$mod, Q, killactive, "
+        "$mod, L, exec, pidof hyprlock || loginctl lock-session"
         "$mod, R, exec, $menu"
         "$mod, P, pseudo, "
         "$mod, J, togglesplit, "
@@ -123,6 +124,10 @@ in {
         ", XF86MonBrightnessUp, exec, brightnessctl -s set 5%+"
       ];
       bindm = [ "$mod, mouse:272, movewindow" "$mod, mouse:273, resizewindow" ];
+      misc = {
+        mouse_move_enables_dpms = true;
+        key_press_enables_dpms = true;
+      };
     };
   };
 }

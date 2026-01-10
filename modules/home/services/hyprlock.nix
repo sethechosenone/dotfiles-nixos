@@ -1,17 +1,43 @@
-{ lib, ... }: {
+{ lib, osConfig, ... }: let
+  hostname = osConfig.networking.hostName or "unknown";
+  isPowerTower = hostname == "SA-PowerTower";
+
+  backgroundConfig = if isPowerTower then [
+    {
+      monitor = "DP-6";
+      path = "screenshot";
+      blur_passes = 2;
+      contrast = 0.8916;
+      brightness = 1.0;
+      vibrancy = 0.5;
+      vibrancy_darkness = 0.0;
+    }
+    {
+      monitor = "HDMI-A-1";
+      path = "screenshot";
+      blur_passes = 2;
+      contrast = 0.8916;
+      brightness = 1.0;
+      vibrancy = 0.5;
+      vibrancy_darkness = 0.0;
+    }
+  ] else [{
+    monitor = "";
+    path = "screenshot";
+    blur_passes = 2;
+    contrast = 0.8916;
+    brightness = 1.0;
+    vibrancy = 0.5;
+    vibrancy_darkness = 0.0;
+  }];
+
+  uiMonitor = if isPowerTower then "DP-6" else "";
+in {
   programs.hyprlock = {
     enable = true;
     settings = {
       general.ignore_empty_input = true;
-      background = lib.mkForce [{
-        monitor = "";
-        path = "screenshot";
-        blur_passes = 2;
-        contrast = 0.8916;
-        brightness = 1.0;
-        vibrancy = 0.5;
-        vibrancy_darkness = 0.0;
-      }];
+      background = lib.mkForce backgroundConfig;
       auth = {
         fingerprint = {
           enabled = true;
@@ -21,7 +47,7 @@
       };
       label = lib.mkForce [
         {
-          monitor = "";
+          monitor = uiMonitor;
           text = "cmd[update:1000] echo \"$(date +\"%-I:%M%p\")\"";
           font_size = 120;
           font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
@@ -30,7 +56,7 @@
           valign = "top";
         }
         {
-          monitor = "";
+          monitor = uiMonitor;
           text = "welcome back, $USER";
           font_size = 25;
           position = "0, -40";
@@ -38,7 +64,7 @@
           valign = "center";
         }
         {
-          monitor = "";
+          monitor = uiMonitor;
           text = "$FPRINTPROMPT";
           font_size = 12;
           position = "0, -170";
@@ -47,7 +73,7 @@
         }
       ];
       input-field = lib.mkForce [{
-        monitor = "";
+        monitor = uiMonitor;
         size = "300, 40";
         outline_thickness = 2;
         dots_size = 0.3;
@@ -61,7 +87,7 @@
         valign = "center";
       }];
       shape = [{
-        monitor = "";
+        monitor = uiMonitor;
         position = "0, -120";
         size = "600, 500";
         rounding = 15;

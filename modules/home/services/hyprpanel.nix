@@ -1,5 +1,5 @@
-{ config, lib, ... }: let
-  hostname = config.networking.hostName or "unknown";
+{ config, lib, osConfig, ... }: let
+  hostname = osConfig.networking.hostName or "unknown";
   rightBarLayouts = {
     "SA-Framework16" = [ "cputemp" "network" "bluetooth" "battery" "notifications" ];
     "SA-Framework13" = [ "cputemp" "network" "bluetooth" "battery" "notifications" ]; 
@@ -12,10 +12,17 @@ in {
     settings = {
       scalingPriority = "hyprland";
       bar = {
-        layouts."0" = {
-          left = [ "dashboard" "workspaces" "systray" ];
-          middle = [ "clock" "weather" ];
-          right = rightBarLayouts.${hostname} or [ "cputemp" "network" "bluetooth" "battery" "notifications" ];
+        layouts = {
+          "0" = {
+            left = [ "dashboard" "workspaces" "systray" "volume" ];
+            middle = [ "clock" "weather" ];
+            right = rightBarLayouts.${hostname} or [ "cputemp" "network" "bluetooth" "notifications" ];
+          };
+          "1" = {
+            left = [];
+            middle = [];
+            right = [];
+          };
         };
         workspaces = {
           show_numbered = true;
@@ -132,6 +139,7 @@ in {
               status = lib.mkForce "#89DDFF";
               scaling = 65;
             };
+            volume.scaling = 65;
             network = {
               label.color = lib.mkForce "#7AA2F7";
               switch.enabled = lib.mkForce "#7AA2F7";

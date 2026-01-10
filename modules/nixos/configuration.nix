@@ -83,6 +83,7 @@
   users.users = {
     seth = {
       isNormalUser = true;
+      initialPassword = "change-me-after-install!"; # change this after first login!
       extraGroups = [
         "wheel"
         "video"
@@ -126,6 +127,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
       glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus android-tools
+      dmidecode  i2c-tools  zip  unzip
     ];
   };
 
