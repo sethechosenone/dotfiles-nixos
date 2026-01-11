@@ -12,6 +12,7 @@ in {
     settings = {
       scalingPriority = "hyprland";
       bar = {
+        autoHide = "fullscreen";
         layouts = {
           "0" = {
             left = [ "dashboard" "workspaces" "systray" "volume" ];
@@ -46,11 +47,16 @@ in {
         pywal = false;
       };
       menus = {
-        clock.time = {
-          military = false;
-          hideSeconds = true;
+        clock = {
+          time = {
+            military = false;
+            hideSeconds = true;
+          };
+          weather = {
+            key = "adc29dab4102a55634c21f471c3b5c14";
+            unit = "imperial";
+          };
         };
-        weather.unit = "imperial";
         dashboard= {
           directories = {
             left = {
@@ -177,7 +183,7 @@ in {
           };
           buttons = {
             radius = "0.7em";
-            verticalPadding = "0.1em";
+            padding_y = "0.1em";
             dashboard = {
               background = lib.mkForce "#62A0EA";
               icon = lib.mkForce "#171D23";
@@ -213,14 +219,12 @@ in {
               icon = lib.mkForce "#B7C5D3";
               border = lib.mkForce "#B7C5D3";
             };
-            modules = {
-              cputemp.label_background = lib.mkForce "#171D23";
-              weather = {
-                text = lib.mkForce "#99C1F1";
-                icon = lib.mkForce "#99C1F1";
-                border = lib.mkForce "#99C1F1";
-              };
+            modules.weather = {
+              text = lib.mkForce "#99C1F1";
+              icon = lib.mkForce "#99C1F1";
+              border = lib.mkForce "#99C1F1";
             };
+            monitors.cputemp.bar = "#171D23";
           };
         };
         osd = {

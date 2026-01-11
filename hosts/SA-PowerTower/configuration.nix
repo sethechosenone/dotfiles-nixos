@@ -30,5 +30,6 @@
     protonup-qt
     wine-staging
     winetricks
+    heroic
   ];
 }

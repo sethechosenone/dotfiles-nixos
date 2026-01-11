@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lib, ... }: {
   nixpkgs.overlays = [
     (final: prev: {
       openrgb-unstable = prev.openrgb.overrideAttrs (oldAttrs: {
@@ -37,11 +37,15 @@
     services = {
       deepcool-digital-linux.environment.LD_LIBRARY_PATH = "${config.hardware.nvidia.package}/lib";
       systemd-suspend.serviceConfig.Environment = "SYSTEMD_SLEEP_FREEZE_USER_SESSIONS=false";
+      reload-systemd-vconsole-setup.serviceConfig.ExecStart = lib.mkForce (pkgs.writeShellScript "reset-console" ''
+        until test -c /dev/dri/card1; do sleep 1; done
+        ${pkgs.systemd}/lib/systemd/systemd-vconsole-setup
+      '');
       # CHAIN OF COMMANDS NEEDED TO SLEEP:
       # -- before suspend --
       # sleep 1; hyprctl dispatch dpms off; sleep 3
       # -- after suspend --
-      # hyprctl dispatch dpms on; sleep 3; hyprctl reload
+      # hyprctl dispatch dpms on; sleep [some amount of time]; hyprctl reload
       hyprland-pre-suspend = {
         description = "Turn off monitors before suspend";
         before = [ "sleep.target" ];
@@ -67,7 +71,7 @@
           ExecStart = "${pkgs.writeShellScript "hyprland-post-resume" ''
             export HYPRLAND_INSTANCE_SIGNATURE=$(${pkgs.coreutils}/bin/ls /run/user/$UID/hypr/ 2>/dev/null | ${pkgs.coreutils}/bin/head -n1)
             ${pkgs.hyprland}/bin/hyprctl dispatch dpms on
-            sleep 3
+            sleep 1
             ${pkgs.hyprland}/bin/hyprctl reload
           ''}";
         };

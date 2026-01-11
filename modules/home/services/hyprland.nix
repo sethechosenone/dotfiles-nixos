@@ -38,6 +38,7 @@ in {
           popups = true;
         };
       };
+      xwayland.force_zero_scaling = true;
       animations.enabled = true;
       bezier =
         [ "easeIn, 0.55, 0.085, 0.68, 0.53" "easeOut, 0.075, 0.82, 0.165, 1" ];
@@ -52,6 +53,8 @@ in {
         "float on, match:class nm-connection-editor"
         "float on, match:class .blueman-manager-wrapped"
         "float on, match:class .virt-manager-wrapped"
+        "float on, match:title hyprpanel-settings"
+        "fullscreen on, match:class ^steam_app_\\d+$"
       ];
       layerrule = [
         "animation fade, match:namespace ^(logout_dialog)$"
@@ -63,9 +66,12 @@ in {
         pseudotile = true;
         preserve_split = true;
       };
-      input.touchpad = {
-        natural_scroll = true;
-        clickfinger_behavior = true;
+      input = {
+        touchpad = {
+          natural_scroll = true;
+          clickfinger_behavior = true;
+        };
+        touchdevice.output = if hostname == "SA-PowerTower" then "HDMI-A-1" else ""; 
       };
       gesture = "3, horizontal, workspace";
       bind = [
