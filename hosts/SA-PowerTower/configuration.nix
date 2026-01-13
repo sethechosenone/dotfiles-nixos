@@ -31,6 +31,5 @@
     wine-staging
     winetricks
     heroic
-    vk-hdr-layer
   ];
 }
