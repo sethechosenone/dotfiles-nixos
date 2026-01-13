@@ -110,6 +110,7 @@
         metasploit
       ];
       shell = pkgs.zsh;
+      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILbARtxmUmEUaiEOZ50m6eWKbftzndMSxXlapccHI9/m seth@SA-Framework16" ];
     };
     root.shell = pkgs.zsh;
   };

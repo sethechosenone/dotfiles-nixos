@@ -67,7 +67,6 @@
             inherit self inputs;
           };
           modules = [
-            { boot.supportedFilesystems.zfs = lib.mkForce false; }
             nixos-hardware.nixosModules.gigabyte-b650
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix

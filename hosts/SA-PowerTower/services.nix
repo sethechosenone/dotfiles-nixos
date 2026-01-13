@@ -31,6 +31,14 @@
       };
     };
     udev.extraRules = "SUBSYSTEM==\"kvmfr\", OWNER=\"seth\", GROUP=\"kvm\", MODE=\"0660\"";
+    openssh = {
+      enable = true;
+      openFirewall = true;
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
   };
   systemd = {
     tmpfiles.rules = [ "f /dev/shm/looking-glass 0660 seth qemu-libvirtd -" ];
