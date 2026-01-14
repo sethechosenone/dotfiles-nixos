@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ lib, pkgs, ... }: {
+{ lib, pkgs, config, ... }: {
   nix = {
     package = pkgs.nixVersions.stable;
     settings = {
@@ -95,8 +95,10 @@
         "docker"
         "adbusers"
         "wireshark"
+        "kvm"
+      ] ++ lib.optionals (config.networking.hostName == "SA-PowerTower") [
         "i2c"
-      ]; # Enable ‘sudo’ for the user.
+      ];
       packages = with pkgs; [
         tree
         hyprland-qtutils

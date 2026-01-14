@@ -26,9 +26,13 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    openrgb-effects = {
+      url = "github:sethechosenone/openrgb-effects";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, sops-nix, ... }:
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, sops-nix, openrgb-effects, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -69,6 +73,7 @@
           modules = [
             nixos-hardware.nixosModules.gigabyte-b650
             home-manager.nixosModules.home-manager
+            openrgb-effects.nixosModules.openrgb-effects
             stylix.nixosModules.stylix
             ./modules
             ./hosts/SA-PowerTower

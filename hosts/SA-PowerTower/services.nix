@@ -22,6 +22,7 @@
     })
   ];
   services = {
+    openrgb-effects.enable = true;
     hardware = {
       deepcool-digital-linux.enable = true;
       openrgb = {
@@ -30,7 +31,7 @@
         motherboard = "amd";
       };
     };
-    udev.extraRules = "SUBSYSTEM==\"kvmfr\", OWNER=\"seth\", GROUP=\"kvm\", MODE=\"0660\"";
+    udev.extraRules = "SUBSYSTEM==\"kvmfr\", OWNER=\"root\", GROUP=\"kvm\", MODE=\"0660\"";
     openssh = {
       enable = true;
       openFirewall = true;

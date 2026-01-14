@@ -2,15 +2,18 @@
   boot = {
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
-      kernelModules = [ ];
+      kernelModules = [ "vfio_pci" "vfio" "vfio_iommu_type1" ];
     };
-    kernelModules = [ "kvm-amd" "kvmfr" "vfio-pci" "i2c-dev" "i2c-piix4" ];
-    kernelParams = [ "nvidia-drm.modeset=1" "amd_iommu=on" "iommu=pt" "acpi_enforce_resources=lax" ];
-    extraModprobeConfig = ''
-      options kvmfr static_size_mb=32
-      options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/var/tmp
-    '';
-    extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
+    kernelModules = [ "kvm-amd" "kvmfr" "i2c-dev" "i2c-piix4" "vendor-reset" ];
+    kernelParams = [
+      "nvidia-drm.modeset=1" "amd_iommu=on" "iommu=pt" "acpi_enforce_resources=lax"
+      "video=efifb:off"
+    ];
+    extraModprobeConfig = "options kvmfr static_size_mb=32;";
+    extraModulePackages = with config.boot.kernelPackages; [
+      kvmfr
+      vendor-reset
+    ];
     tmp.useTmpfs = true;
   };
   fileSystems = {

@@ -1,9 +1,9 @@
 { config, lib, osConfig, ... }: let
   hostname = osConfig.networking.hostName or "unknown";
   rightBarLayouts = {
-    "SA-Framework16" = [ "cputemp" "network" "bluetooth" "battery" "notifications" ];
-    "SA-Framework13" = [ "cputemp" "network" "bluetooth" "battery" "notifications" ]; 
-    "SA-PowerTower" = [ "cputemp" "network" "bluetooth" "notifications" ];
+    "SA-Framework16" = [ "cputemp" "volume" "network" "bluetooth" "battery" "notifications" ];
+    "SA-Framework13" = [ "cputemp" "volume" "network" "bluetooth" "battery" "notifications" ]; 
+    "SA-PowerTower" = [ "cputemp" "volume" "network" "bluetooth" "notifications" ];
   };
 in {
   programs.hyprpanel = {
@@ -15,9 +15,9 @@ in {
         autoHide = "fullscreen";
         layouts = {
           "0" = {
-            left = [ "dashboard" "workspaces" "systray" "volume" ];
+            left = [ "dashboard" "workspaces" "systray" ];
             middle = [ "clock" "weather" ];
-            right = rightBarLayouts.${hostname} or [ "cputemp" "network" "bluetooth" "notifications" ];
+            right = rightBarLayouts.${hostname} or [ "cputemp" "volume" "network" "bluetooth" "notifications" ];
           };
           "1" = {
             left = [];

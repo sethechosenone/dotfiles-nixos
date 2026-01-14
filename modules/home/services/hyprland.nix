@@ -67,6 +67,7 @@ in {
         preserve_split = true;
       };
       input = {
+        accel_profile = if hostname == "SA-PowerTower" then "flat" else "adaptive";
         touchpad = {
           natural_scroll = true;
           clickfinger_behavior = true;
