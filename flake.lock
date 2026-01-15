@@ -404,11 +404,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768343494,
-        "narHash": "sha256-/QHjPy7HvwvEjhiM6M9IAhBiN1tOe3CIILt9fNotO/Q=",
+        "lastModified": 1768445599,
+        "narHash": "sha256-1JvAvrY3nQHAiz4tF7VbR7P6b9W4lHt+6Sx9Xq8YQJ4=",
         "owner": "sethechosenone",
         "repo": "openrgb-effects",
-        "rev": "7d995aa15d7183b44ee43081b78d5e09f7eea098",
+        "rev": "5d6ed54f2573c3bc5440849f0a0bea7e02f11fb4",
         "type": "github"
       },
       "original": {

@@ -131,6 +131,14 @@ in {
         ", XF86MonBrightnessUp, exec, brightnessctl -s set 5%+"
       ];
       bindm = [ "$mod, mouse:272, movewindow" "$mod, mouse:273, resizewindow" ];
+      workspace = if hostname == "SA-PowerTower" then
+        (builtins.genList (x:
+          let
+            ws = x + 1;
+            monitor = if ws <= 7 then "DP-6" else "HDMI-A-1";
+          in "${toString ws}, monitor:${monitor}"
+        ) 10)
+      else [];
       misc = {
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;
