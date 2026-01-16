@@ -1,4 +1,4 @@
-{
+{ lib, osConfig, ... }: {
   services = {
     hyprpolkitagent.enable = true;
     hyprpaper.enable = true;
@@ -36,10 +36,10 @@
             on-timeout = "hyprctl dispatch dpms off";
             on-resume = "hyprctl dispatch dpms on";
           }
-          {
+          (lib.mkIf (osConfig.networking.hostName == "SA-Framework16" || osConfig.networking.hostName == "SA-Framework13") {
             timeout = 1800;
             on-timeout = "systemctl suspend";
-          }
+          })
         ];
       };
     };

@@ -4,7 +4,7 @@
     ./neovim.nix
 #    ./wofi.nix
     ./firefox.nix
-#    ./vscode.nix
+    ./vscode.nix
     ./discord.nix
   ];
   programs = {
