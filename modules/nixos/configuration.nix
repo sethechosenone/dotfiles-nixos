@@ -44,11 +44,11 @@
           //UEFI Shell
           protocol: efi
           comment: Make sure secure boot is disabled! The nix store for the shell can't be signed
-          image_path: boot():/efi/shell/shell.efi
+          image_path: boot():/limine/efi/shell/shell.efi
           //Memtest86
           protocol: efi
           comment: Test for memory issues
-          image_path: boot():/efi/memtest86/memtest86.efi
+          image_path: boot():/limine/efi/memtest86/memtest86.efi
         '';
       };
       efi.canTouchEfiVariables = true;
