@@ -35,12 +35,20 @@
         enable = true;
         secureBoot.enable = true;
         maxGenerations = 20;
+        additionalFiles = {
+          "efi/shell/shell.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";
+          "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi";
+        };
         extraEntries = ''
           /+Utilities
           //UEFI Shell
           protocol: efi
-          comment: UEFI Shell
-          image_path: boot():/EFI/edk2-uefi-shell/shell.efi
+          comment: Make sure secure boot is disabled! The nix store for the shell can't be signed
+          image_path: boot():/efi/shell/shell.efi
+          //Memtest86
+          protocol: efi
+          comment: Test for memory issues
+          image_path: boot():/efi/memtest86/memtest86.efi
         '';
       };
       efi.canTouchEfiVariables = true;

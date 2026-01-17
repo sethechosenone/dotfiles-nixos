@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
@@ -33,6 +33,7 @@
         "vim.smartRelativeLine" = true;
         "git.autofetch" = true;
         "vscord.app.name" = "VSCodium";
+        "markdown-pdf.executablePath" = "${lib.getExe pkgs.chromium}";
       };
     };
   };
