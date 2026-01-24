@@ -1,7 +1,7 @@
 { pkgs, lib, ... }: {
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium;
+    package = pkgs.vscode-fhs;
     mutableExtensionsDir = true;
     profiles.default = {
       # enableUpdateCheck = false;
@@ -34,6 +34,8 @@
         "git.autofetch" = true;
         "vscord.app.name" = "VSCodium";
         "markdown-pdf.executablePath" = "${lib.getExe pkgs.chromium}";
+        "claudeCode.claudeProcessWrapper" = "${lib.getExe pkgs.claude-code}";
+        "java.jdt.ls.java.home" = "${pkgs.jdk21}/lib/openjdk";
       };
     };
   };
