@@ -31,5 +31,9 @@
     wine-staging
     winetricks
     heroic
+    (hashcat.override {
+      cudaSupport = true;
+    })
+    cudaPackages.cudatoolkit
   ];
 }

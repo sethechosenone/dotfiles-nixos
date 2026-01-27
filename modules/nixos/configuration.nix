@@ -146,6 +146,7 @@
   };
 
   security = {
+    tpm2.enable = true;
     rtkit.enable = true;
     sudo.package = pkgs.sudo.override { withInsults = true; };
     pam.services = {
