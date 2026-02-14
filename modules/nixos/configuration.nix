@@ -58,7 +58,10 @@
     kernelParams = [ "drm.panic_screen=qr_code" ];
   };
 
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [ networkmanager-openvpn ];
+  };
 
   time.timeZone = "America/New_York";
 
@@ -80,13 +83,7 @@
       extraBackends = with pkgs; [ hplipWithPlugin ];
     };
   };
-
   
-  environment.sessionVariables = { 
-    NIXOS_OZONE_WL = "1";
-    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
-  };
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = {
     seth = {
@@ -140,22 +137,31 @@
     systemPackages = with pkgs; [
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
-      glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus android-tools
-      dmidecode  i2c-tools  zip  unzip
+      glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
+      dmidecode  i2c-tools  zip  unzip  libgtop
     ];
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1";
+      ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    };
+    etc."hosts".mode = "0644";
   };
 
   security = {
     tpm2.enable = true;
     rtkit.enable = true;
     sudo.package = pkgs.sudo.override { withInsults = true; };
-    pam.services = {
-      hyprlock.text = ''
-        auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
-        auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
-        auth include login
-      '';
-      polkit-1.fprintAuth = false; # really wonky with hyprpolkitagent unfortunately :(
+    pam = {
+      services = {
+        hyprlock.text = ''
+          auth sufficient ${pkgs.linux-pam}/lib/security/pam_unix.so try_first_pass likeauth nullok
+          auth sufficient ${pkgs.linux-pam}/lib/security/pam_fprintd.so
+          auth include login
+        '';
+        polkit-1.fprintAuth = false; # really wonky with hyprpolkitagent unfortunately :(
+        greetd.fprintAuth = false; # decryption will not take place if fingerprint is used
+      };
+      enableFscrypt = true;
     };
     polkit.enable = true;
   };

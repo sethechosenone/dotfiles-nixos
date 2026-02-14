@@ -6,6 +6,7 @@
     shellAliases = {
       ls = "eza --icons -l";
       view = "bat";
+      run = "source"; # short-hand for executing scripts in same shell, can save performance but is rarely worth it
       edit = "nvim";
       edit-system = "edit /etc/nixos";
       rebuild = "sudo nixos-rebuild switch";
