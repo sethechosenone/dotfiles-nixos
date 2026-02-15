@@ -118,7 +118,7 @@
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILbARtxmUmEUaiEOZ50m6eWKbftzndMSxXlapccHI9/m seth@SA-Framework16"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH9xlfU47R64W8FucsZ+kRq4nTmptXXomUkz4bFJyBE8 seth@SA-Framework16"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPNh0st4w3qchaLTrRHKdI5W2omWKZ+9nUNBgO9e69E4 seth@SA-PowerTower"
       ];
     };
@@ -138,7 +138,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
       glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  libgtop
+      dmidecode  i2c-tools  zip  unzip  libgtop  tpm2-tools  tpm2-tss
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -160,6 +160,7 @@
         '';
         polkit-1.fprintAuth = false; # really wonky with hyprpolkitagent unfortunately :(
         greetd.fprintAuth = false; # decryption will not take place if fingerprint is used
+        fscrypt.fprintAuth = false;
       };
       enableFscrypt = true;
     };
