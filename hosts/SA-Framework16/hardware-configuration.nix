@@ -10,9 +10,13 @@
 
   boot = {
     initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
+      availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" "tpm_crb" ];
       kernelModules = [ "cryptd" ];
       luks.devices."cryptroot".device = "/dev/disk/by-label/NIXLUKS";
+      clevis = {
+        enable = true;
+        devices."cryptroot".secretFile = "/var/lib/secrets/cryptroot.jwe";
+      };
     };
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];

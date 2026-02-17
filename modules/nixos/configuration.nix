@@ -28,7 +28,6 @@
     config.allowUnfree = true;
   };
 
-  # Use the systemd-boot EFI boot loader.
   boot = {
     loader = {
       limine = {
@@ -90,17 +89,9 @@
       isNormalUser = true;
       initialPassword = "change-me-after-install!"; # change this after first login!
       extraGroups = [
-        "wheel"
-        "video"
-        "audio"
-        "networkmanager"
-        "lp"
-        "scanner"
-        "libvirtd"
-        "docker"
-        "adbusers"
-        "wireshark"
-        "kvm"
+        "wheel"  "video"  "audio"  "networkmanager"
+        "lp"  "scanner"  "libvirtd"  "docker"
+        "adbusers"  "wireshark"  "kvm"  "tss"
       ] ++ lib.optionals (config.networking.hostName == "SA-PowerTower") [
         "i2c"
       ];
@@ -138,7 +129,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
       glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  libgtop  tpm2-tools  tpm2-tss
+      dmidecode  i2c-tools  zip  unzip  libgtop  clevis  tpm2-tools
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -148,7 +139,11 @@
   };
 
   security = {
-    tpm2.enable = true;
+    tpm2 = {
+      enable = true;
+      pkcs11.enable = true;
+      tctiEnvironment.enable = true;
+    };
     rtkit.enable = true;
     sudo.package = pkgs.sudo.override { withInsults = true; };
     pam = {
@@ -159,7 +154,7 @@
           auth include login
         '';
         polkit-1.fprintAuth = false; # really wonky with hyprpolkitagent unfortunately :(
-        greetd.fprintAuth = false; # decryption will not take place if fingerprint is used
+        # greetd.fprintAuth = false; # fscrpyt decryption will not take place if fingerprint is used
         fscrypt.fprintAuth = false;
       };
       enableFscrypt = true;

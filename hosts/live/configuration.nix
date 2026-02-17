@@ -46,5 +46,7 @@
   environment.systemPackages = with pkgs; [
     sl
     sbctl
+    binwalk
+    file
   ];
 }
