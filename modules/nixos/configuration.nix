@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ lib, pkgs, config, ... }: {
+{ lib, pkgs, config, inputs, ... }: {
   nix = {
     package = pkgs.nixVersions.stable;
     settings = {
@@ -21,7 +21,38 @@
       mandatoryFeatures = [];
     }];
     distributedBuilds = true;
+    gc = {
+      automatic = true;
+      dates = [ "0 1 * * 0" ];
+    };
   };
+
+  # Automatic monthly system updates for desktop machines
+  system.autoUpgrade = let
+    desktopHosts = [ "SA-Framework13" "SA-Framework16" "SA-PowerTower" ];
+    isDesktop = builtins.elem config.networking.hostName desktopHosts;
+  in lib.mkIf isDesktop {
+    enable = true;
+    flake = inputs.self.outPath;
+    flags = [
+      "--update-input" "nixpkgs"
+      "--update-input" "home-manager"
+      "--update-input" "nixos-hardware"
+      "--update-input" "stylix"
+      "--update-input" "sops-nix"
+      "--update-input" "nixcord"
+      "--update-input" "firefox-addons"
+      "--update-input" "led-matrix-sysinfo"
+      "--update-input" "openrgb-effects"
+      "--commit-lock-file"
+      "-L"
+    ];
+    dates = "monthly";
+    allowReboot = false;
+    operation = "switch";
+    persistent = true;
+  };
+
   nixpkgs = {
     overlays =
       [ (final: prev: { sudo = prev.sudo.override { withInsults = true; }; }) ];
