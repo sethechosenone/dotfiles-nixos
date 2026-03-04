@@ -53,8 +53,9 @@ in {
             hideSeconds = true;
           };
           weather = {
-            key = "adc29dab4102a55634c21f471c3b5c14";
+            key = "6a2dde815f25485b8dc153315260403";
             unit = "imperial";
+            location = "Columbus";
           };
         };
         dashboard= {
