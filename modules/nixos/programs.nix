@@ -15,7 +15,6 @@
       enable = true;
       package = pkgs.wireshark;
     };
-    zoom-us.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
