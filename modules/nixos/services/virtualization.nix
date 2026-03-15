@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   virtualisation = {
+    spiceUSBRedirection.enable = true;
     libvirtd = {
       enable = true;
       onBoot = "ignore";
