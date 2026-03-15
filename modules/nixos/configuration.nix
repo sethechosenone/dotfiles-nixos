@@ -160,7 +160,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
       glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  libgtop  clevis  tpm2-tools
+      dmidecode  i2c-tools  zip  unzip  libgtop  clevis  tpm2-tools  waypipe
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";

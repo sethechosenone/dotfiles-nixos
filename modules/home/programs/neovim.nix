@@ -15,7 +15,7 @@
       set showtabline=1
       set guicursor=
     '';
-    extraLuaConfig = builtins.readFile ./assets/neovim.lua;
+    initLua = builtins.readFile ./assets/neovim.lua;
     plugins = with pkgs.vimPlugins; [
       nvim-tree-lua
       claude-code-nvim

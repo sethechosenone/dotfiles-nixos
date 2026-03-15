@@ -13,8 +13,9 @@
     ghidra.enable = true;
     wireshark = {
       enable = true;
-      package = pkgs.wireshark-qt;
+      package = pkgs.wireshark;
     };
+    zoom-us.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
