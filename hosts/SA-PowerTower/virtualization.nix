@@ -1,7 +1,11 @@
 { pkgs, ... }: {
   virtualisation.libvirtd.hooks.qemu.win11-gaming = pkgs.writeShellScript "win11-gaming" ''
+    VM_NAME="$1"
     OPERATION="$2"
     SUB_OPERATION="$3"
+    if [ "$VM_NAME" != "win11-gaming" ]; then
+      exit 0
+    fi
     if [ "$OPERATION" == "prepare" ] && [ "$SUB_OPERATION" == "begin" ]; then
       umount /mnt/games1
       umount /mnt/games2
