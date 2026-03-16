@@ -1,6 +1,5 @@
 { pkgs, ... }: {
-  virtualisation.libvirtd.hooks.qemu.win11-gaming = ''
-    #!${pkgs.bash}/bin/bash
+  virtualisation.libvirtd.hooks.qemu.win11-gaming = pkgs.writeShellScript "win11-gaming" ''
     OPERATION="$2"
     SUB_OPERATION="$3"
     if [ "$OPERATION" == "prepare" ] && [ "$SUB_OPERATION" == "begin" ]; then
