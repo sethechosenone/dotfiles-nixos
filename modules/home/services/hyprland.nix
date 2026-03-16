@@ -54,6 +54,7 @@ in {
         "float on, match:class .blueman-manager-wrapped"
         "float on, match:class .virt-manager-wrapped"
         "float on, match:title hyprpanel-settings"
+        "float on, match:class steam"
         "fullscreen on, match:class ^steam_app_\\d+$"
       ];
       layerrule = [
