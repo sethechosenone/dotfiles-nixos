@@ -3,6 +3,7 @@
     hyprland.enable = true; # this will allow us to actually log into a hyprland session
     zsh.enable = true; # this is also mentioned in the home-manager config, but it yells at you if this does not exist outside of it
     git.enable = true;
+    zoom-us.enable = true;
     dconf.enable = true;
     gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
     regreet = {
@@ -14,7 +15,6 @@
       enable = true;
       package = pkgs.wireshark;
     };
-    zoom-us.enable = true;
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
