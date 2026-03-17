@@ -14,12 +14,17 @@ in {
       bar = {
         autoHide = "fullscreen";
         layouts = {
+          "HDMI-A-1" = {
+            left = [];
+            middle = [];
+            right = [];
+          };
           "0" = {
             left = [ "dashboard" "workspaces" "systray" ];
             middle = [ "clock" "weather" ];
             right = rightBarLayouts.${hostname} or [ "cputemp" "volume" "network" "bluetooth" "notifications" ];
           };
-          "1" = {
+          "*" = {
             left = [];
             middle = [];
             right = [];
