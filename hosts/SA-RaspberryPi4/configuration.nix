@@ -40,15 +40,23 @@
       };
     };
   };
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "seth.adkins@protonmail.com";
-    certs."sethechosenone.dev" = {
-      domain = "*.sethechosenone.dev";
-      dnsProvider = "cloudflare";
-      credentialFiles."CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_api.path;
-      group = "nginx";
+  security = {
+    acme = {
+      acceptTerms = true;
+      defaults.email = "seth.adkins@protonmail.com";
+      certs."sethechosenone.dev" = {
+        domain = "*.sethechosenone.dev";
+        dnsProvider = "cloudflare";
+        credentialFiles."CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_api.path;
+        group = "nginx";
+      };
     };
+    apparmor = {
+      enable = true;
+      killUnconfinedConfinables = true;
+    };
+    protectKernelImage = true;
+    sudo.execWheelOnly = true;
   };
   users.users = {
     seth = {

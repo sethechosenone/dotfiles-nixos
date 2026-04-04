@@ -182,7 +182,10 @@
     };
     protectKernelImage = true;
     rtkit.enable = true;
-    sudo.package = pkgs.sudo.override { withInsults = true; };
+    sudo = {
+      package = pkgs.sudo.override { withInsults = true; };
+      execWheelOnly = true;
+    };
     pam = {
       services = {
         hyprlock.text = ''
