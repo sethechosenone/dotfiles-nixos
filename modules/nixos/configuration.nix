@@ -8,6 +8,7 @@
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "@wheel" ];
+      allowed-users = [ "root" "@wheel" ];
       substituters = [ "https://cache.nixos.org" ];
       trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
       builders-use-substitutes = true;
@@ -160,7 +161,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
       glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  libgtop  clevis  tpm2-tools  waypipe
+      dmidecode  i2c-tools  zip  unzip  libgtop  clevis  tpm2-tools  waypipe  sops  age
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
@@ -175,6 +176,11 @@
       pkcs11.enable = true;
       tctiEnvironment.enable = true;
     };
+    apparmor = {
+      enable = true;
+      killUnconfinedConfinables = true;
+    };
+    protectKernelImage = true;
     rtkit.enable = true;
     sudo.package = pkgs.sudo.override { withInsults = true; };
     pam = {
@@ -186,7 +192,7 @@
         '';
         polkit-1.fprintAuth = false; # really wonky with hyprpolkitagent unfortunately :(
         # greetd.fprintAuth = false; # fscrpyt decryption will not take place if fingerprint is used
-        fscrypt.fprintAuth = false;
+        fscrypt.fprintAuth = false; # will break passphrase encryption otherwise, learned that the hard way :/
       };
       enableFscrypt = true;
     };
