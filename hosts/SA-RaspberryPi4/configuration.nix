@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   boot = {
     loader.generic-extlinux-compatible.enable = true;
     kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -24,6 +24,7 @@
           autoStart = true;
           image = "pihole/pihole:latest";
           extraOptions = [ "--network=host" ];
+          environment.WEB_PORT = "8081";
         };
         theinfinitewebsite = {
           autoStart = true;
@@ -38,6 +39,24 @@
         };
       };
     };
+  };
+  security = {
+    acme = {
+      acceptTerms = true;
+      defaults.email = "seth.adkins@protonmail.com";
+      certs."sethechosenone.dev" = {
+        domain = "*.sethechosenone.dev";
+        dnsProvider = "cloudflare";
+        credentialFiles."CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_api.path;
+        group = "nginx";
+      };
+    };
+    apparmor = {
+      enable = true;
+      killUnconfinedConfinables = true;
+    };
+    protectKernelImage = true;
+    sudo.execWheelOnly = true;
   };
   users.users = {
     seth = {
@@ -84,7 +103,7 @@
     nameservers = [ "192.168.1.1" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 53 80 ];
+      allowedTCPPorts = [ 22 53 443 ];
       allowedUDPPorts = [ 53 ];
     };
     wireguard.interfaces.wg0 = {
@@ -159,12 +178,21 @@
   sops = {
     defaultSopsFile = ./secrets/environment.yaml;
     age.keyFile = "/var/lib/sops-nix/keys.txt";
-    secrets.theinfinitewebsite_env = {
-      mode = "0400";
-      owner = "root";
+    secrets = {
+      theinfinitewebsite_env = {
+        mode = "0400";
+        owner = "root";
+      };
+      cloudflare_api = {
+        mode = "400";
+        owner = "acme";
+      };
+      vaultwarden = {
+        mode = "400";
+        owner = "vaultwarden";
+      };
     };
   };
-  
   environment.systemPackages = with pkgs; [
     sl
     eza

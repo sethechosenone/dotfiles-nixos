@@ -31,5 +31,6 @@
     };
     udev.packages = with pkgs; [ swayosd ];
     tailscale.enable = true;
+    mullvad-vpn.enable = true;
   };
 }
