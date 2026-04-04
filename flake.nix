@@ -93,6 +93,20 @@
             ./hosts/SA-RaspberryPi4
           ];
         };
+        SA-RaspberryPiZero2W = lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            inherit self inputs;
+          };
+          modules = [
+            (nixpkgs + "/nixos/modules/installer/sd-card/sd-image-aarch64.nix")
+            stylix.nixosModules.stylix # same reason as other raspberry pi
+            home-manager.nixosModules.home-manager
+            ./modules/shell
+            ./modules/nixos/style
+            ./hosts/SA-RaspberryPiZero2W
+          ];
+        };
         installer = lib.nixosSystem {
           inherit system;
           specialArgs = {
