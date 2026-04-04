@@ -4,7 +4,7 @@
     kernelModules = [ "kvm-amd" "kvmfr" "i2c-dev" "i2c-piix4" "vendor-reset" ];
     kernelParams = [
       "amd_iommu=on" "iommu=pt" "acpi_enforce_resources=lax"
-      "video=efifb:off"
+      "video=efifb:off" "amd_iommu=force_isolation"
     ];
     extraModprobeConfig = "options kvmfr static_size_mb=32";
     extraModulePackages = with config.boot.kernelPackages; [
@@ -26,12 +26,12 @@
     "/mnt/games1" = {
       device = "/dev/disk/by-label/games1";
       fsType = "ntfs3";
-      options = [ "uid=1000" "gid=100" "rw" "user" "exec" "umask=000" ];
+      options = [ "uid=1000" "gid=100" "rw" "user" "exec" "umask=000" "nofail" ];
     };
     "/mnt/games2" = {
       device = "/dev/disk/by-label/games2";
       fsType = "ntfs3";
-      options = [ "uid=1000" "gid=100" "rw" "user" "exec" "umask=000" ];
+      options = [ "uid=1000" "gid=100" "rw" "user" "exec" "umask=000" "nofail" ];
     };
   };
   swapDevices = [{ device = "/dev/disk/by-label/swap"; }];

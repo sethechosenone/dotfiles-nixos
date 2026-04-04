@@ -7,17 +7,16 @@
       onShutdown = "shutdown";
       qemu = {
         package = pkgs.qemu_kvm;
-        runAsRoot = true;
         vhostUserPackages = with pkgs; [ virtiofsd ];
         swtpm.enable = true;
         verbatimConfig = ''
+          seccomp_sandbox = 0
           namespaces = []
-          user = "root"
           cgroup_device_acl = [
             "/dev/null", "/dev/full", "/dev/zero",
             "/dev/random", "/dev/urandom",
             "/dev/ptmx", "/dev/kvm",
-            "/dev/kvmfr0"
+            "/dev/kvmfr0", "/dev/nvme1n1"
           ]
         '';
       };

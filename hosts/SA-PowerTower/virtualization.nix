@@ -9,7 +9,7 @@
     if [ "$OPERATION" == "prepare" ] && [ "$SUB_OPERATION" == "begin" ]; then
       set -ex
       ${pkgs.util-linux}/bin/umount /mnt/games1
-      ${pkgs.util-linux}/bin/umount /mnt/games2
+      ${pkgs.util-linux}/bin/umount /mnt/games2 || true
       ${pkgs.systemd}/bin/systemctl stop display-manager.service
       ${pkgs.procps}/bin/pkill -f Hyprland || true
       ${pkgs.procps}/bin/pkill -9 -f Xwayland || true
@@ -21,6 +21,17 @@
       sleep 2
       ${pkgs.kmod}/bin/modprobe vfio vfio_pci vfio_iommu_type1
       ${pkgs.systemd}/bin/systemctl start display-manager.service
+      TIMEOUT=120
+      ELAPSED=0
+      while [ ! -S /run/user/1000/pipewire-0 ]; do
+        if [ $ELAPSED -ge $TIMEOUT ]; then
+          echo "Timed out waiting for PipeWire socket" >&2
+          break
+        fi
+        sleep 1
+        ELAPSED=$((ELAPSED + 1))
+      done
+      sleep 2
     elif [ "$OPERATION" == "release" ] && [ "$SUB_OPERATION" == "end" ]; then
       set -ex
       ${pkgs.systemd}/bin/systemctl stop display-manager.service
