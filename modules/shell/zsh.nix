@@ -10,10 +10,11 @@
       edit = "nvim";
       edit-system = "edit /etc/nixos";
       rebuild = "nixos-rebuild switch --sudo";
-      rebuild-raspi = "nixos-rebuild switch --flake /etc/nixos#SA-RaspberryPi4 --target-host seth@192.168.1.100 --build-host arm-builder --sudo --ask-sudo-password"; 
+      rebuild-raspi4 = "nixos-rebuild switch --flake /etc/nixos#SA-RaspberryPi4 --target-host seth@192.168.1.100 --sudo --ask-sudo-password";
+      rebuild-raspizero = "nixos-rebuild switch --flake /etc/nixos#SA-RaspberryPiZero2W --target-host seth@192.168.7.2 --sudo --ask-sudo-password";
       build-installer = "pushd ~/ISOs && nix build /etc/nixos#installer; popd";
-      build-raspi4-image = "pushd ~ && nix build /etc/nixos#nixosConfigurations.SA-RaspberryPi4.config.system.build.sdImage && popd";
-      build-raspizero-image = "pushd ~ && nix build /etc/nixos#nixosConfigurations.SA-RaspberryPiZero2W.config.system.build.sdImage && popd";
+      build-raspi4-image = "pushd ~ && nix build /etc/nixos#nixosConfigurations.SA-RaspberryPi4.config.system.build.sdImage --builders 'ssh-ng://opc@arm-builder aarch64-linux' && popd";
+      build-raspizero-image = "pushd ~ && nix build /etc/nixos#nixosConfigurations.SA-RaspberryPiZero2W.config.system.build.sdImage --builders 'ssh-ng://opc@arm-builder aarch64-linux' && popd";
     };
     autosuggestions = {
       enable = true;
