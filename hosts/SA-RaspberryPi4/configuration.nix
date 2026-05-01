@@ -47,16 +47,6 @@
     keyMap = lib.mkDefault "us";
   };
   security = {
-    acme = {
-      acceptTerms = true;
-      defaults.email = "seth.adkins@protonmail.com";
-      certs."sethechosenone.dev" = {
-        domain = "*.sethechosenone.dev";
-        dnsProvider = "cloudflare";
-        credentialFiles."CLOUDFLARE_DNS_API_TOKEN_FILE" = config.sops.secrets.cloudflare_api.path;
-        group = "nginx";
-      };
-    };
     apparmor = {
       enable = true;
       killUnconfinedConfinables = true;
@@ -109,7 +99,7 @@
     nameservers = [ "192.168.1.1" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 53 443 ];
+      allowedTCPPorts = [ 22 53 ];
       allowedUDPPorts = [ 53 ];
     };
     wireguard.interfaces.wg0 = {
@@ -189,13 +179,13 @@
         mode = "0400";
         owner = "root";
       };
-      cloudflare_api = {
-        mode = "400";
-        owner = "acme";
-      };
       vaultwarden = {
         mode = "400";
         owner = "vaultwarden";
+      };
+      cloudflare-token = {
+        mode = "400";
+        owner = "root";
       };
     };
   };

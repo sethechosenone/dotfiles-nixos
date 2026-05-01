@@ -88,6 +88,7 @@
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "drm.panic_screen=qr_code" ];
+    initrd.systemd.enable = false;
   };
 
   networking.networkmanager = {

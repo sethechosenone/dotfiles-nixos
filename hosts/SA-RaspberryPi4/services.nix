@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   services = {
     dockerRegistry = {
       enable = true;
@@ -17,23 +17,31 @@
     nginx = {
       enable = true;
       virtualHosts = {
-        "registry.sethechosenone.dev" = {
-          useACMEHost = "sethechosenone.dev";
-          forceSSL = true;
-          locations."/".proxyPass = "http://localhost:5000";
-        };
-        "vault.sethechosenone.dev".useACMEHost = "sethechosenone.dev";
+        "registry.sethechosenone.dev".locations."/".proxyPass = "http://localhost:5000";
+        "vault.sethechosenone.dev".locations."/".proxyPass = "http://localhost:8222";
+        "sethadkins.dev".root = "/var/www/portfolio";
+        "sethechosenone.dev".root = "/var/www/portfolio";
       };
     };
     vaultwarden = {
       enable = true;
-      domain = "vault.sethechosenone.dev";
-      configureNginx = true;
       environmentFile = config.sops.secrets.vaultwarden.path;
       config = {
         ROCKET_PORT = 8222;
-        SIGNUPS_ALLOWED = true;
+        SIGNUPS_ALLOWED = false;
+        DOMAIN = "https://vault.sethechosenone.dev";
+        ROCKET_ADDRESS = "127.0.0.1";
       };
+    };
+  };
+  # cloudflared module is broken so we have to do this
+  systemd.services.cloudflared = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token $TUNNEL_TOKEN";
+      EnvironmentFile = config.sops.secrets.cloudflare-token.path;
+      Restart = "always";
     };
   };
 }
