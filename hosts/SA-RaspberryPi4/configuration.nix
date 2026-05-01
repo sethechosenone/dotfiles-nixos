@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lib, ... }: {
   boot = {
     loader.generic-extlinux-compatible.enable = true;
     kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -39,6 +39,12 @@
         };
       };
     };
+  };
+  console = {
+    packages = [ pkgs.powerline-fonts ];
+    earlySetup = true;
+    font = "ter-powerline-v24b";
+    keyMap = lib.mkDefault "us";
   };
   security = {
     acme = {

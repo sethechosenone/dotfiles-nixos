@@ -14,6 +14,7 @@
       settings.widget.clock.format = "%a %b %d - %I:%M %p";
     };
     ghidra.enable = true;
+    screen.enable = true;
     wireshark = {
       enable = true;
       package = pkgs.wireshark;

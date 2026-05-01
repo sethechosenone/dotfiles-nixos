@@ -29,9 +29,10 @@
       url = "github:sethechosenone/openrgb-effects";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-pi-zero-2.url = "github:plmercereau/nixos-pi-zero-2";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, sops-nix, openrgb-effects, ... }:
+  outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, sops-nix, openrgb-effects, nixos-pi-zero-2, ... }:
     let
       system = "x86_64-linux";
       lib = nixpkgs.lib;
@@ -91,6 +92,21 @@
             ./modules/shell
             ./modules/nixos/style
             ./hosts/SA-RaspberryPi4
+          ];
+        };
+        SA-RaspberryPiZero2W = lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            inherit self inputs;
+          };
+          modules = [
+            nixos-pi-zero-2.nixosModules.sd-image
+            # stylix.nixosModules.stylix # uncomment after initial boot when neovim is re-enabled
+            home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
+            ./modules/shell
+            #./modules/nixos/style
+            ./hosts/SA-RaspberryPiZero2W
           ];
         };
         installer = lib.nixosSystem {

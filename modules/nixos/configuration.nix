@@ -16,6 +16,7 @@
     buildMachines = [{
       hostName = "arm-builder";
       system = "aarch64-linux";
+      sshKey = "/root/.ssh/id_ed25519";
       maxJobs = 4;
       speedFactor = 10;
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
@@ -161,7 +162,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
       glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  libgtop  clevis  tpm2-tools  waypipe  sops  age
+      dmidecode  i2c-tools  zip  unzip  libgtop  clevis  tpm2-tools  waypipe  sops  age  tio
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
