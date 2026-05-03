@@ -8,25 +8,35 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" "tpm_crb" ];
+      kernelModules = [ "cryptd" ];
+      luks.devices."cryptroot".device = "/dev/disk/by-label/NIXLUKS";
+      clevis = {
+        enable = true;
+        devices."cryptroot".secretFile = "/var/lib/secrets/cryptroot.jwe";
+      };
+    };
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+  };
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/2ad779fd-cd7b-46bf-b7bd-be3d02bff910";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/5B95-BA51";
+    { device = "/dev/disk/by-label/boot";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/bb3d2942-3cae-4972-9ac5-77bb0fa774ef"; }
+    [ { device = "/dev/disk/by-label/swap"; }
     ];
+
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

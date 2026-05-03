@@ -30,6 +30,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-pi-zero-2.url = "github:plmercereau/nixos-pi-zero-2";
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprgrass = {
+      url = "github:horriblename/hyprgrass";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, sops-nix, openrgb-effects, nixos-pi-zero-2, ... }:
@@ -38,17 +43,17 @@
       lib = nixpkgs.lib;
     in {
       nixosConfigurations = {
-        SA-Framework13 = lib.nixosSystem {
+        SA-Framework12 = lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit self inputs;
           };
           modules = [
-            nixos-hardware.nixosModules.framework-13th-gen-intel
+            nixos-hardware.nixosModules.framework-12-13th-gen-intel
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
             ./modules
-            ./hosts/SA-Framework13
+            ./hosts/SA-Framework12
           ];
         };
         SA-Framework16 = lib.nixosSystem {

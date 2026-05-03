@@ -1,4 +1,4 @@
-{ osConfig, ... }: let
+{ osConfig, lib, pkgs, inputs, ... }: let
   hostname = osConfig.networking.hostName or "unknown";
   monitorConfig = {
     "SA-PowerTower" = [
@@ -6,16 +6,19 @@
       "HDMI-A-1, 1920x1080@75, 2560x180, 1.0"
     ];
     "SA-Framework16" = "eDP-1, 2560x1600@165, auto, 1.25";
-    "SA-Framework13" = "eDP-1, 2256x1504@60, auto, 1.25";
+    "SA-Framework12" = "eDP-1, 1920x1200@60, auto, 1.25";
   };
 in {
   wayland.windowManager.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    plugins = lib.optionals (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) [ inputs.hyprgrass.packages.${pkgs.stdenv.hostPlatform.system}.hyprgrass ];
     settings = {
       monitor = monitorConfig.${hostname} or "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
       "$menu" = "hyprlauncher";
-      exec-once = "hyprpanel";
+      exec-once = [ "hyprpanel" ] ++ lib.optionals (hostname == "SA-Framework12") [ "iio-hyprland eDP-1" ];
       "$mod" = "SUPER";
       general = {
         gaps_in = 2;
@@ -63,10 +66,7 @@ in {
         "animation fade, match:namespace ^(verification)$"
         "no_anim on, match:namespace ^(hyprpicker)$"
       ];
-      dwindle = {
-        pseudotile = true;
-        preserve_split = true;
-      };
+      dwindle.preserve_split = true;
       input = {
         accel_profile = if hostname == "SA-PowerTower" then "flat" else "adaptive";
         touchpad = {
@@ -82,8 +82,6 @@ in {
         "$mod, Q, killactive, "
         "$mod, L, exec, pidof hyprlock || loginctl lock-session"
         "$mod, R, exec, $menu"
-        "$mod, P, pseudo, "
-        "$mod, J, togglesplit, "
         "$mod, S, togglespecialworkspace, magic"
         "$mod SHIFT, S, movetoworkspace, special:magic"
         "$mod SHIFT, R, submap, resize"
@@ -137,7 +135,7 @@ in {
           primaryMonitor = {
             "SA-PowerTower" = "DP-6";
             "SA-Framework16" = "eDP-1";
-            "SA-Framework13" = "eDP-1";
+            "SA-Framework12" = "eDP-1";
           }.${hostname} or null;
         in
           if primaryMonitor != null then
@@ -147,6 +145,18 @@ in {
               in "${toString ws}, monitor:${primaryMonitor}"
             ) 9)
           else [];
+      hyprgrass-bind = lib.optionals (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) [
+        ", swipe:3:r, workspace, e-1"
+        ", swipe:3:l, workspace, e+1"
+        ", swipe:3:u, fullscreen, 1"
+        ", swipe:3:d, fullscreen, 0"
+      ] ++ lib.optionals (hostname == "SA-Framework12") [
+        ", pinch:3:i, killactive, "
+        ", edge:b:u, exec, pkill wvkbd || wvkbd -L"
+      ];
+      "plugin:touch_gestures" = lib.mkIf (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) {
+        sensitivity = 8.0;
+      };
       misc = {
         mouse_move_enables_dpms = true;
         key_press_enables_dpms = true;

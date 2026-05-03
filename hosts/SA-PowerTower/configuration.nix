@@ -35,5 +35,7 @@
       cudaSupport = true;
     })
     cudaPackages.cudatoolkit
+    scream
+    ntfs3g
   ];
 }
