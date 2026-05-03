@@ -30,6 +30,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-pi-zero-2.url = "github:plmercereau/nixos-pi-zero-2";
+    hyprland.url = "github:hyprwm/Hyprland";
+    hyprgrass = {
+      url = "github:horriblename/hyprgrass";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, sops-nix, openrgb-effects, nixos-pi-zero-2, ... }:
