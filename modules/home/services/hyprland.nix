@@ -1,4 +1,4 @@
-{ osConfig, ... }: let
+{ osConfig, lib, ... }: let
   hostname = osConfig.networking.hostName or "unknown";
   monitorConfig = {
     "SA-PowerTower" = [
@@ -6,7 +6,7 @@
       "HDMI-A-1, 1920x1080@75, 2560x180, 1.0"
     ];
     "SA-Framework16" = "eDP-1, 2560x1600@165, auto, 1.25";
-    "SA-Framework13" = "eDP-1, 2256x1504@60, auto, 1.25";
+    "SA-Framework12" = "eDP-1, 1920x1200@60, auto, 1.25";
   };
 in {
   wayland.windowManager.hyprland = {
@@ -15,7 +15,7 @@ in {
       monitor = monitorConfig.${hostname} or "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
       "$menu" = "hyprlauncher";
-      exec-once = "hyprpanel";
+      exec-once = [ "hyprpanel" ] ++ lib.optionals (hostname == "SA-Framework12") [ "iio-hyprland eDP-1" ];
       "$mod" = "SUPER";
       general = {
         gaps_in = 2;
@@ -137,7 +137,7 @@ in {
           primaryMonitor = {
             "SA-PowerTower" = "DP-6";
             "SA-Framework16" = "eDP-1";
-            "SA-Framework13" = "eDP-1";
+            "SA-Framework12" = "eDP-1";
           }.${hostname} or null;
         in
           if primaryMonitor != null then

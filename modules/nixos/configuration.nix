@@ -31,7 +31,7 @@
 
   # Automatic monthly system updates for desktop machines
   system.autoUpgrade = let
-    desktopHosts = [ "SA-Framework13" "SA-Framework16" "SA-PowerTower" ];
+    desktopHosts = [ "SA-Framework12" "SA-Framework16" "SA-PowerTower" ];
     isDesktop = builtins.elem config.networking.hostName desktopHosts;
   in lib.mkIf isDesktop {
     enable = true;
