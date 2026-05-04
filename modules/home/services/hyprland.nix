@@ -18,7 +18,7 @@ in {
       monitor = monitorConfig.${hostname} or "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
       "$menu" = "hyprlauncher";
-      exec-once = [ "hyprpanel" ] ++ lib.optionals (hostname == "SA-Framework12") [ "iio-hyprland eDP-1" ];
+      exec-once = lib.optionals (hostname == "SA-Framework12") [ "iio-hyprland eDP-1" ];
       "$mod" = "SUPER";
       general = {
         gaps_in = 2;
