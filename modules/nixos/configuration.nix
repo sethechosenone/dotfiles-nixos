@@ -86,9 +86,8 @@
       efi.canTouchEfiVariables = true;
     };
     kernel.sysctl."kernel.sysrq" = 1;
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_12;
     kernelParams = [ "drm.panic_screen=qr_code" ];
-    initrd.systemd.enable = false;
   };
 
   networking.networkmanager = {
@@ -163,7 +162,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
       glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  libgtop  clevis  tpm2-tools  waypipe  sops  age  tio
+      dmidecode  i2c-tools  zip  unzip  libgtop  tpm2-tools  waypipe  sops  age  tio
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";

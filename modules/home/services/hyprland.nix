@@ -56,7 +56,7 @@ in {
         "float on, match:class nm-connection-editor"
         "float on, match:class .blueman-manager-wrapped"
         "float on, match:class .virt-manager-wrapped"
-        "float on, match:title hyprpanel-settings"
+        "float on, match:class com.wayle.settings"
         "float on, match:class steam"
         "fullscreen on, match:class ^steam_app_\\d+$"
       ];
@@ -94,7 +94,7 @@ in {
         "$mod SHIFT, up, movewindow, u"
         "$mod SHIFT, down, movewindow, d"
         #", Caps_Lock, exec, swayosd-client --caps-lock"
-        "$mod, escape, exec, hyprpanel t powerdropdownmenu"
+        "$mod, escape, exec, wayle toggle power" # verify CLI syntax with `wayle --help`
         ", Print, exec, pidof hyprshot || hyprshot -m output -m eDP-1"
         "$mod, Print, exec, pidof hyprshot || hyprshot -m region"
       ] ++ (builtins.concatLists (builtins.genList (x:
