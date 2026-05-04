@@ -5,7 +5,10 @@
 { pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
   networking.hostName = "SA-Framework16";
-  hardware.inputmodule.enable = true;
+  hardware = {
+    inputmodule.enable = true;
+    framework.enableKmod = true;
+  };
   services.led-matrix-sysinfo = {
     enable = true;
     interval = 250;

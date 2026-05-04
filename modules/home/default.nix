@@ -5,7 +5,10 @@
     ../shell/starship-tty.nix
   ];
   home.stateVersion = "23.11";
-  gtk.enable = true;
+  gtk = {
+    enable = true;
+    gtk4.theme = null;
+  };
   programs = {
     direnv = {
       enable = true;

@@ -17,10 +17,10 @@
     };
     ghidra.enable = true;
     screen.enable = true;
-    wireshark = {
-      enable = true;
-      package = pkgs.wireshark;
-    };
+    #wireshark = {
+    #  enable = true;
+    #  package = pkgs.wireshark;
+    #};
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
