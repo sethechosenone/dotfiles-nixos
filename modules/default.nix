@@ -1,4 +1,4 @@
-{ self, inputs, config, ... }: {
+{ self, inputs, ... }: {
   imports = [
     ./nixos
     ./shell
@@ -20,7 +20,7 @@
           bat.enable = true;
           direnv.enable = true;
         };
-        gtk.gtk4.theme = config.gtk.theme;
+        gtk.gtk4.theme = null;
       };
     };
     backupFileExtension = "hm-backup";
