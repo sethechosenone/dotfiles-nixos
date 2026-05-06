@@ -7,7 +7,7 @@
   home.stateVersion = "23.11";
   xdg.configFile = {
     "autostart/nm-applet.desktop".text = "[Desktop Entry]\nHidden=true\n";
-    "autostart/blueman-applet.desktop".text = "[Desktop Entry]\nHidden=true\n";
+    "autostart/blueman.desktop".text = "[Desktop Entry]\nHidden=true\n";
   };
   gtk = {
     enable = true;

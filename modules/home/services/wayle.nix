@@ -108,7 +108,10 @@ in {
           icon-bg-color = "accent";
           label-color   = "accent";
         };
-        dashboard.icon-bg-color = "#62A0EA";
+        dashboard = {
+          icon-bg-color = "#62A0EA";
+          dropdown-logout-command = "uwsm stop";
+        };
       };
     };
   };
