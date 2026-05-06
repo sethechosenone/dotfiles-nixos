@@ -65,8 +65,8 @@ in {
           temp-sensor = "auto";
           format      = "{{ temp_c }}°";
           thresholds  = [
-            { above = 70; icon-color = "status-warning"; label-color = "status-warning"; }
-            { above = 90; icon-color = "status-error"; label-color = "status-error"; }
+            { above = 70; icon-bg-color = "status-warning"; label-color = "status-warning"; }
+            { above = 90; icon-bg-color = "status-error"; label-color = "status-error"; }
           ];
         };
         battery = {
@@ -74,8 +74,8 @@ in {
           icon-bg-color = "accent";
           label-color  = "accent";
           thresholds = [
-            { below = 40; icon-color = "status-warning"; label-color = "status-warning"; }
-            { below = 15; icon-color = "status-error"; label-color = "status-error"; icon-bg-color = "status-error"; }
+            { below = 20; icon-bg-color = "status-warning"; label-color = "status-warning"; }
+            { below = 10; label-color = "status-error"; icon-bg-color = "status-error"; }
           ];
         };
         network = {
@@ -83,6 +83,7 @@ in {
           border-color = "accent";
           icon-bg-color = "accent";
           label-color  = "accent";
+          label-max-length = 16;
         };
         bluetooth = {
           label-show   = true;

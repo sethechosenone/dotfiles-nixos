@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, ... }:
 let
   betterfox = pkgs.fetchFromGitHub {
     owner = "yokoffing";
@@ -9,6 +9,7 @@ let
 in {
   programs.firefox = {
     enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     profiles.default = {
       id = 0;
       isDefault = true;

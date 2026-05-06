@@ -13,5 +13,12 @@
     enable = true;
     interval = 250;
   };
-  environment.systemPackages = with pkgs; [ wireguard-tools ]; 
+  environment.systemPackages = with pkgs; [ wireguard-tools ];
+  # UPower's udev rule requires charge_control_start_threshold to detect charge
+  # limit support, but the Framework 16 EC only exposes the end threshold via
+  # cros_charge_control. This rule sets CHARGE_LIMIT directly so UPower detects
+  # it. The "_" sentinel tells UPower to skip writing the absent start threshold.
+  services.udev.extraRules = ''
+    SUBSYSTEM=="power_supply", KERNEL=="BAT1", ATTR{type}=="Battery", ATTR{charge_control_end_threshold}!="", ENV{CHARGE_LIMIT}="_,100"
+  '';
 }
