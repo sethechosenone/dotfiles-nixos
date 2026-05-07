@@ -57,7 +57,7 @@ in {
             toolbar = true;
             bookmarks = [
               {
-                name = "Nix Package";
+                name = "Nix Packages";
                 keyword = "np";
                 url = "https://search.nixos.org/packages?channel=unstable";
               }
@@ -65,11 +65,6 @@ in {
                 name = "Nix Options";
                 keyword = "no";
                 url = "https://search.nixos.org/options?channel=unstable";
-              }
-              {
-                name = "Home Manager";
-                keyword = "hm";
-                url = "https://nix-community.github.io/home-manager/options.xhtml";
               }
             ];
           }

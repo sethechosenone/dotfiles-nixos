@@ -10,6 +10,7 @@
     git.enable = true;
     zoom-us.enable = true;
     dconf.enable = true;
+    localsend.enable = true;
     gdk-pixbuf.modulePackages = with pkgs; [ librsvg ];
     regreet = {
       enable = true;
@@ -17,10 +18,10 @@
     };
     ghidra.enable = true;
     screen.enable = true;
-    #wireshark = {
-    #  enable = true;
-    #  package = pkgs.wireshark;
-    #};
+    wireshark = {
+      enable = true;
+      package = pkgs.wireshark;
+    };
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;

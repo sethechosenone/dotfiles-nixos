@@ -15,6 +15,7 @@
     pipewire = {
       enable = true;
       wireplumber.enable = true;
+      pulse.enable = true;
     };
     gnome.gnome-keyring.enable = true;
     libinput.enable = true;
