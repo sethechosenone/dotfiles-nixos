@@ -5,9 +5,9 @@
 { pkgs, ... }: {
   imports = [ ./hardware-configuration.nix ];
   networking.hostName = "SA-Framework12";
-  services.iio-sensor-proxy.enable = true;
+  hardware.sensor.iio.enable = true;
+  programs.iio-hyprland.enable = true;
   environment.systemPackages = with pkgs; [
-    iio-hyprland
     wvkbd
     rnote
   ];
