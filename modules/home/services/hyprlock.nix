@@ -35,7 +35,7 @@ in {
           text = "cmd[update:1000] echo \"$(date +\"%-I:%M%p\")\"";
           font_size = 120;
           font_family = "JetBrains Mono Nerd Font Mono ExtraBold";
-          position = "0, -300";
+          position = if hostname == "SA-Framework12" then "0, -200" else "0, -300";
           halign = "center";
           valign = "top";
         }

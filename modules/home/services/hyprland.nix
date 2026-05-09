@@ -74,6 +74,11 @@ in {
           clickfinger_behavior = true;
         };
         touchdevice.output = if hostname == "SA-PowerTower" then "HDMI-A-1" else ""; 
+        tablet.output = if hostname == "SA-Framework12" then "eDP-1" else "";
+      };
+      device = {
+        name = "ilit2901:00-222a:5539-stylus";
+        output = "eDP-1";
       };
       gesture = "3, horizontal, workspace";
       bind = [
@@ -148,14 +153,16 @@ in {
       hyprgrass-bind = lib.optionals (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) [
         ", swipe:3:r, workspace, e-1"
         ", swipe:3:l, workspace, e+1"
-        ", swipe:3:u, fullscreen, 1"
-        ", swipe:3:d, fullscreen, 0"
+        ", swipe:3:u, fullscreen, 0"
+        ", swipe:3:d, fullscreen, 1"
       ] ++ lib.optionals (hostname == "SA-Framework12") [
-        ", pinch:3:i, killactive, "
-        ", edge:b:u, exec, pkill wvkbd || wvkbd -L"
+        ", swipe:2:d, exec, $menu"
+        ", swipe:2:u, exec, pkill $menu"
+        ", swipe:4:u, exec, wvkbd-mobintl"
+        ", swipe:4:d, exec, pkill wvkbd-mobintl"
       ];
       "plugin:touch_gestures" = lib.mkIf (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) {
-        sensitivity = 8.0;
+        sensitivity = if hostname == "SA-Framework12" then 6.0 else 8.0;
       };
       misc = {
         mouse_move_enables_dpms = true;

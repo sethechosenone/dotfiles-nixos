@@ -124,7 +124,7 @@
       extraGroups = [
         "wheel"  "video"  "audio"  "networkmanager"
         "lp"  "scanner"  "libvirtd"  "docker"
-        "adbusers"  "wireshark"  "kvm"  "tss"
+        "adbusers"  "wireshark"  "kvm"  "tss"  "input"
       ] ++ lib.optionals (config.networking.hostName == "SA-PowerTower") [
         "i2c"
       ];
@@ -162,7 +162,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
       glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  libgtop  tpm2-tools  waypipe  sops  age  tio
+      dmidecode  i2c-tools  zip  unzip  libgtop  tpm2-tools  waypipe  sops  age  tio  jq
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
