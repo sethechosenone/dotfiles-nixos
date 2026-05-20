@@ -5,6 +5,7 @@
     ../shell/starship-tty.nix
   ];
   home.stateVersion = "23.11";
+  systemd.user.sessionVariables.HYPRSHOT_DIR = "$HOME/Pictures/Screenshots";
   xdg.configFile = {
     "autostart/nm-applet.desktop".text = "[Desktop Entry]\nHidden=true\n";
     "autostart/blueman.desktop".text = "[Desktop Entry]\nHidden=true\n";

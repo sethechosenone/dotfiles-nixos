@@ -60,7 +60,7 @@
   };
   programs.hyprshot = {
     enable = true;
-    saveLocation = "~/Pictures/Screenshots";
+    saveLocation = "$HOME/Pictures/Screenshots";
   };
   systemd.user.tmpfiles.rules = [
     "d %h/Pictures/Screenshots 0755 - - -"

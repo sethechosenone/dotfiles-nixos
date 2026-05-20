@@ -30,9 +30,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-pi-zero-2.url = "github:plmercereau/nixos-pi-zero-2";
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland = {
+      url = "github:hyprwm/Hyprland/v0.54.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     hyprgrass = {
-      url = "github:horriblename/hyprgrass";
+      url = "github:horriblename/hyprgrass/a2643f311851cdb70c8d742e6edde4112c841463";
       inputs.hyprland.follows = "hyprland";
     };
   };
