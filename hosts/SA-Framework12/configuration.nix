@@ -7,8 +7,19 @@
   networking.hostName = "SA-Framework12";
   hardware.sensor.iio.enable = true;
   programs.iio-hyprland.enable = true;
+  boot.kernelModules = [ "uinput" ];
+  services = {
+    udev.extraRules = ''
+      KERNEL=="uinput", MODE="0660", GROUP="input"
+    '';
+    power-profiles-daemon.enable = true;
+  };
   environment.systemPackages = with pkgs; [
     wvkbd
     rnote
+    xournalpp
+    libinput
+    libwacom
+    evtest
   ];
 }

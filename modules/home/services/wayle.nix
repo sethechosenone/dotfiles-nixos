@@ -2,7 +2,7 @@
   hostname = osConfig.networking.hostName or "unknown";
   rightBarLayouts = {
     "SA-Framework16" = [ "cpu" "volume" "network" "bluetooth" "battery" "notifications" ];
-    "SA-Framework13" = [ "cpu" "volume" "network" "bluetooth" "battery" "notifications" ];
+    "SA-Framework12" = [ "separator" "cpu" "volume" "network" "bluetooth" "battery" "notifications" ];
     "SA-PowerTower"  = [ "cpu" "volume" "network" "bluetooth" "notifications" ];
   };
 in {
@@ -27,7 +27,7 @@ in {
         layout = [
           {
             monitor = "*";
-            left   = [ "dashboard" "hyprland-workspaces" "systray" ];
+            left   = [ "dashboard" "hyprland-workspaces" "systray" ] ++ (if hostname == "SA-Framework12" then [ "separator" ] else []);
             center = [ "clock" "weather" ];
             right  = rightBarLayouts.${hostname} or [ "cpu" "volume" "network" "bluetooth" "notifications" ];
           }
@@ -107,6 +107,11 @@ in {
           border-color  = "accent";
           icon-bg-color = "accent";
           label-color   = "accent";
+        };
+        separator = {
+          size   = 1;
+          length = 1.0;
+          color  = "transparent";
         };
         dashboard = {
           icon-bg-color = "#62A0EA";
