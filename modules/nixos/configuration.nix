@@ -58,7 +58,10 @@
   nixpkgs = {
     overlays =
       [ (final: prev: { sudo = prev.sudo.override { withInsults = true; }; }) ];
-    config.allowUnfree = true;
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [ "python3.13-ecdsa-0.19.2" ]; # remove once fixed upstream
+    };
   };
 
   boot = {
@@ -86,8 +89,8 @@
       efi.canTouchEfiVariables = true;
     };
     kernel.sysctl."kernel.sysrq" = 1;
-    kernelPackages = pkgs.linuxPackages_6_12;
-    kernelParams = [ "drm.panic_screen=qr_code" "init_on_free=1" "init_on_alloc=1" "lockdown=confidentiality"  ];
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "drm.panic_screen=qr_code" "init_on_free=1" "init_on_alloc=1" "lockdown=confidentiality" ];
   };
 
   networking.networkmanager = {
@@ -114,6 +117,7 @@
       enable = true;
       extraBackends = with pkgs; [ hplipWithPlugin ];
     };
+    onlykey.enable = true;
   };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -160,9 +164,9 @@
     ];
     systemPackages = with pkgs; [
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
-      networkmanagerapplet  pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl
-      glib  sl  sbctl  file  usbutils  mpv  imv  ags  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  libgtop  tpm2-tools  waypipe  sops  age  tio  jq
+      pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl  onlykey-cli  onlykey-agent
+      glib  sl  sbctl  file  usbutils  mpv  imv  ripgrep  whois  dig  nautilus  android-tools
+      dmidecode  i2c-tools  zip  unzip  tpm2-tools  waypipe  sops  age  tio  jq  onlykey
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
