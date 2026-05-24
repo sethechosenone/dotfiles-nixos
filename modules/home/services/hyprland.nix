@@ -1,5 +1,14 @@
 { osConfig, lib, pkgs, inputs, ... }: let
   hostname = osConfig.networking.hostName or "unknown";
+  system = pkgs.stdenv.hostPlatform.system;
+  wf-touch-fixed = (pkgs.callPackage "${inputs.hyprgrass}/nix/wf-touch.nix" {}).overrideAttrs (_: {
+    mesonFlags = [ "-Dtests=disabled" ];
+  });
+  hyprgrass-fixed = (inputs.hyprgrass.packages.${system}.hyprgrass.override {
+    wf-touch = wf-touch-fixed;
+  }).overrideAttrs (_: {
+    mesonFlags = [ "-Dtests=disabled" ];
+  });
   monitorConfig = {
     "SA-PowerTower" = [
       "DP-6, 3840x2160@144, 0x0, 1.5"
@@ -13,7 +22,7 @@ in {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    plugins = lib.optionals (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) [ inputs.hyprgrass.packages.${pkgs.stdenv.hostPlatform.system}.hyprgrass ];
+    plugins = lib.optionals (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) [ hyprgrass-fixed ];
     settings = {
       monitor = monitorConfig.${hostname} or "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
