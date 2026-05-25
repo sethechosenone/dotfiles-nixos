@@ -90,7 +90,13 @@
     };
     kernel.sysctl."kernel.sysrq" = 1;
     kernelPackages = pkgs.linuxPackages_latest;
-    kernelParams = [ "drm.panic_screen=qr_code" "init_on_free=1" "init_on_alloc=1" "lockdown=confidentiality" ];
+    kernelParams = [
+      "drm.panic_screen=qr_code"
+      "init_on_free=1"
+      "init_on_alloc=1"
+      "lockdown=confidentiality"
+      "rd.systemd.show_status=true"
+    ];
   };
 
   networking.networkmanager = {

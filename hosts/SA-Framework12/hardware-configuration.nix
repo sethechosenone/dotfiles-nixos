@@ -1,4 +1,4 @@
-{ config, lib, modulesPath, ... }:
+{ config, lib, modulesPath, pkgs, ... }:
 
 {
   imports =
@@ -7,9 +7,28 @@
 
   boot = {
     initrd = {
+      systemd.storePaths = [ "${pkgs.systemd}/lib/udev/fido_id" ];
       availableKernelModules = [ "nvme" "xhci_pci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" "tpm_crb" ];
       kernelModules = [ "cryptd" ];
-      luks.devices."cryptroot".device = "/dev/disk/by-label/NIXLUKS";
+      luks.devices."cryptroot" = {
+        device = "/dev/disk/by-label/NIXLUKS";
+        crypttabExtraOpts = [
+          "fido2-device=/dev/onlykey-fido2"
+          "token-timeout=60"
+        ];
+      };
+      services.udev.packages = [
+        (pkgs.runCommand "udevFido2" {} ''
+          mkdir -p $out/lib/udev/rules.d/
+          cp ${pkgs.systemd}/lib/udev/rules.d/60-fido-id.rules \
+          $out/lib/udev/rules.d/60-fido-id.rules
+          cat > $out/lib/udev/rules.d/61-onlykey-fido2.rules <<'EOF'
+          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="60fc", \
+          ATTRS{bInterfaceNumber}=="01", \
+          ENV{ID_FIDO_TOKEN}="1", SYMLINK+="onlykey-fido2", TAG+="systemd"
+          EOF
+        '')
+      ];
     };
     kernelModules = [ "kvm-intel" ];
     extraModulePackages = [ ];
