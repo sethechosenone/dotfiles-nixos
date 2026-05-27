@@ -173,6 +173,7 @@
       pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl  onlykey-cli  onlykey-agent
       glib  sl  sbctl  file  usbutils  mpv  imv  ripgrep  whois  dig  nautilus  android-tools
       dmidecode  i2c-tools  zip  unzip  tpm2-tools  waypipe  sops  age  tio  jq  onlykey
+      bitwarden-desktop  bitwarden-cli
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
