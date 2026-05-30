@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   services = {
+    logind.settings.Login.HandlePowerKey = "suspend"; # FINALLY
     avahi = {
       enable = true;
       nssmdns4 = true;
