@@ -1,5 +1,6 @@
 keys:
   - &pi age140vtdn6kd0mzm6r086xc24p2fq4rv4fh44lhelh60zr75d433s7svuvh77
+  - &powertower age10fylukdnxx3r9vyz8zkvur64u3drw0m4w2krgadzusnvazzwqgcskdrwvs
 
 creation_rules:
   - path_regex: hosts/SA-RaspberryPi4/secrets/.*\.yaml$
@@ -10,3 +11,7 @@ creation_rules:
     key_groups:
       - age:
           - *pi
+  - path_regex: hosts/SA-PowerTower/secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *powertower

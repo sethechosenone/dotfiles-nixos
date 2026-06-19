@@ -19,9 +19,18 @@
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
+    nvidia-container-toolkit.enable = true;
     i2c.enable = true;
   };
   powerManagement.cpuFreqGovernor = "performance";
+  sops = {
+    defaultSopsFile = ./secrets/environment.yaml;
+    age.keyFile = "/var/lib/sops-nix/keys.txt";
+    secrets.cloudflare-token = {
+      mode = "400";
+      owner = "root";
+    };
+  };
   environment.systemPackages = with pkgs; [
     looking-glass-client
     openrgb-unstable
