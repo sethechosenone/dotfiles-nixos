@@ -1,4 +1,4 @@
-{ osConfig, ... }: let
+{ lib, config, osConfig, ... }: let
   hostname = osConfig.networking.hostName or "unknown";
   rightBarLayouts = {
     "SA-Framework16" = [ "cpu" "volume" "network" "bluetooth" "battery" "notifications" ];
@@ -44,7 +44,10 @@ in {
       wallpaper.engine-enabled = false;
       styling = {
         scale = 0.7;
-        # palette.primary = "#b7c5d3";
+        palette = {
+          yellow = lib.mkForce "#f9f06b";
+          red = lib.mkForce "#${config.lib.stylix.colors.base08}";
+        };
       };
       modules = {
         "hyprland-workspaces" = {
@@ -66,8 +69,8 @@ in {
           temp-sensor = "auto";
           format      = "{{ temp_c }}°";
           thresholds  = [
-            { above = 70; icon-bg-color = "status-warning"; label-color = "status-warning"; }
-            { above = 90; icon-bg-color = "status-error"; label-color = "status-error"; }
+            { above = 70; icon-bg-color = "yellow"; label-color = "yellow"; }
+            { above = 90; icon-bg-color = "red"; label-color = "red"; }
           ];
         };
         battery = {
@@ -75,8 +78,8 @@ in {
           icon-bg-color = "accent";
           label-color  = "accent";
           thresholds = [
-            { below = 20; icon-bg-color = "status-warning"; label-color = "status-warning"; }
-            { below = 10; label-color = "status-error"; icon-bg-color = "status-error"; }
+            { below = 20; icon-bg-color = "yellow"; label-color = "yellow"; }
+            { below = 10; label-color = "red"; icon-bg-color = "red"; }
           ];
         };
         network = {
@@ -97,7 +100,7 @@ in {
           icon-bg-color = "accent";
           label-color   = "accent";
           thresholds    = [
-            { above = 1; icon-bg-color = "blue"; label-color = "blue"; border-color = "blue"; }
+            { above = 1; icon-bg-color = "green"; label-color = "green"; border-color = "green"; }
           ];
         };
         systray = {
