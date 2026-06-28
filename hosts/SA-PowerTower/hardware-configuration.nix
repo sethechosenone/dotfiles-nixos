@@ -26,13 +26,13 @@
     };
     "/mnt/games1" = {
       device = "/dev/disk/by-label/games1";
-      fsType = "ntfs3";
-      options = [ "uid=1000" "gid=100" "rw" "user" "exec" "umask=000" "nofail" ];
+      fsType = "ext4";
+      options = [ "rw" "exec" "nofail" ];
     };
     "/mnt/games2" = {
       device = "/dev/disk/by-label/games2";
-      fsType = "ntfs3";
-      options = [ "uid=1000" "gid=100" "rw" "user" "exec" "umask=000" "nofail" ];
+      fsType = "ext4";
+      options = [ "rw" "exec" "nofail" ];
     };
   };
   swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
