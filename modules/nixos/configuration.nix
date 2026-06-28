@@ -56,8 +56,7 @@
   };
 
   nixpkgs = {
-    overlays =
-      [ (final: prev: { sudo = prev.sudo.override { withInsults = true; }; }) ];
+    overlays = [ (final: prev: { sudo = prev.sudo.override { withInsults = true; }; }) ];
     config = {
       allowUnfree = true;
       permittedInsecurePackages = [ "python3.13-ecdsa-0.19.2" ]; # remove once fixed upstream
@@ -113,7 +112,6 @@
     font = "ter-powerline-v24b";
     keyMap = lib.mkDefault "us";
     useXkbConfig = true; # use xkb.options in tty.
-    earlySetup = true;
   };
 
   hardware = {
@@ -139,16 +137,9 @@
         "i2c"
       ];
       packages = with pkgs; [
-        tree
-        hyprland-qtutils
-        hyprpicker
-        hyprsysteminfo
-        dconf
-        nixpkgs-fmt
-        claude-code
-        libreoffice
-        nmap
-        metasploit
+        tree  hyprland-qtutils  hyprpicker  hyprsysteminfo  dconf  nixpkgs-fmt  claude-code
+        libreoffice  nmap  metasploit  proton-vpn-cli  onlykey  onlykey-cli  onlykey-agent
+        bitwarden-cli  protonmail-desktop
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
@@ -166,14 +157,12 @@
       nil
       rsync
       strace
-      python3
     ];
     systemPackages = with pkgs; [
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
-      pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl  onlykey-cli  onlykey-agent
-      glib  sl  sbctl  file  usbutils  mpv  imv  ripgrep  whois  dig  nautilus  android-tools
-      dmidecode  i2c-tools  zip  unzip  tpm2-tools  waypipe  sops  age  tio  jq  onlykey
-      bitwarden-desktop  bitwarden-cli
+      pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl  glib  sl  sbctl
+      file  usbutils  mpv  imv  ripgrep  rdap  dig  nautilus  android-tools  tio  jq
+      dmidecode  i2c-tools  zip  unzip  tpm2-tools  waypipe  sops  age
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";

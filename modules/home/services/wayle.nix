@@ -6,7 +6,7 @@
     "SA-PowerTower"  = [ "cpu" "volume" "network" "bluetooth" "notifications" ];
   };
 in {
-  imports = [ ./wayle-styling.nix ];
+  # imports = [ ./wayle-styling.nix ];
   services.wayle = {
     enable = true;
     autoInstallDependencies = true;
@@ -44,13 +44,14 @@ in {
       wallpaper.engine-enabled = false;
       styling = {
         scale = 0.7;
-        palette.primary = "#b7c5d3";
+        # palette.primary = "#b7c5d3";
       };
       modules = {
         "hyprland-workspaces" = {
           numbering         = "absolute";
           active-indicator  = "background";
           workspace-padding = 0.9;
+          show-special = false;
         };
         clock.format = "%a %b %d -- %I:%M %p";
         weather = {
@@ -114,7 +115,7 @@ in {
           color  = "transparent";
         };
         dashboard = {
-          icon-bg-color = "#62A0EA";
+          icon-bg-color = "#7AA2F7";
           dropdown-logout-command = "uwsm stop";
         };
       };

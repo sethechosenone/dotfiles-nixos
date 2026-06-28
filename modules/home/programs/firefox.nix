@@ -20,6 +20,8 @@ in {
           bitwarden
           foxyproxy-standard
           ublock-origin
+          simplelogin
+          vimium
         ];
       };
       settings = {

@@ -10,10 +10,7 @@
     "autostart/nm-applet.desktop".text = "[Desktop Entry]\nHidden=true\n";
     "autostart/blueman.desktop".text = "[Desktop Entry]\nHidden=true\n";
   };
-  gtk = {
-    enable = true;
-    gtk4.theme = null;
-  };
+  gtk.enable = true;
   programs = {
     direnv = {
       enable = true;

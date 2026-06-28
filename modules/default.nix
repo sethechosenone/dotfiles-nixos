@@ -20,7 +20,6 @@
           bat.enable = true;
           direnv.enable = true;
         };
-        gtk.gtk4.theme = null;
       };
     };
     backupFileExtension = "hm-backup";

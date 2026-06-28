@@ -4,5 +4,6 @@ config: {
     ./services
     ./configuration.nix
     ./programs.nix
+    ./overlays.nix
   ];
 }

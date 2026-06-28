@@ -1,3 +1,6 @@
 {
-  programs.nixcord.enable = true;
+  programs.nixcord = {
+    enable = true;
+    discord.vencord.enable = true;
+  };
 }

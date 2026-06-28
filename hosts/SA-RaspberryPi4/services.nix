@@ -19,8 +19,20 @@
       virtualHosts = {
         "registry.sethechosenone.dev".locations."/".proxyPass = "http://localhost:5000";
         "vault.sethechosenone.dev".locations."/".proxyPass = "http://localhost:8222";
-        "sethadkins.dev".root = "/var/www/portfolio";
-        "sethechosenone.dev".root = "/var/www/portfolio";
+        "sethadkins.dev" = {
+          root = "/var/www/portfolio";
+          locations."~* \\.js$". extraConfig = ''
+            types { application/javascript js; }
+            default_type application/javascript;
+          '';
+        };
+        "sethechosenone.dev" = {
+          root = "/var/www/portfolio";
+          locations."~* \\.js$". extraConfig = ''
+            types { application/javascript js; }
+            default_type application/javascript;
+          '';
+        };
       };
     };
     vaultwarden = {

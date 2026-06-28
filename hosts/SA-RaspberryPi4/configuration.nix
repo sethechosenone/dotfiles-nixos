@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }: {
+{ pkgs, lib, ... }: {
   boot = {
     loader.generic-extlinux-compatible.enable = true;
     kernel.sysctl."net.ipv4.ip_forward" = 1;
@@ -51,6 +51,7 @@
       enable = true;
       killUnconfinedConfinables = true;
     };
+    pam.enableFscrypt = true;
     protectKernelImage = true;
     sudo.execWheelOnly = true;
   };
