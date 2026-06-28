@@ -5,6 +5,7 @@
     kernelParams = [
       "amd_iommu=on" "iommu=pt" "acpi_enforce_resources=lax"
       "video=efifb:off" "amd_iommu=force_isolation"
+      "usbhid.quirks=0x0B05:0x1AAE:0x00000020"
     ];
     extraModprobeConfig = "options kvmfr static_size_mb=32";
     extraModulePackages = with config.boot.kernelPackages; [

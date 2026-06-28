@@ -2,7 +2,7 @@
   imports = [
     ./configuration.nix
     ./programs.nix
-    ./services.nix
+    ./services
     ./virtualization.nix
   ];
 }

@@ -4,7 +4,7 @@
 
 { lib, pkgs, config, inputs, ... }: {
   nix = {
-    package = pkgs.nixVersions.stable;
+   package = pkgs.nixVersions.stable;
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "@wheel" ];

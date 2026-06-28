@@ -84,6 +84,7 @@
             home-manager.nixosModules.home-manager
             openrgb-effects.nixosModules.openrgb-effects
             stylix.nixosModules.stylix
+            sops-nix.nixosModules.sops
             ./modules
             ./hosts/SA-PowerTower
           ];
