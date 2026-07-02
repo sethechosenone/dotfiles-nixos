@@ -139,7 +139,7 @@
       packages = with pkgs; [
         tree  hyprland-qtutils  hyprpicker  hyprsysteminfo  dconf  nixpkgs-fmt  claude-code
         libreoffice  nmap  metasploit  proton-vpn-cli  onlykey  onlykey-cli  onlykey-agent
-        bitwarden-cli  protonmail-desktop
+        bitwarden-cli  protonmail-desktop proton-vpn
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [

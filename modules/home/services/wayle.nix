@@ -47,6 +47,7 @@ in {
         palette = {
           yellow = lib.mkForce "#f9f06b";
           red = lib.mkForce "#${config.lib.stylix.colors.base08}";
+          surface = lib.mkForce "#${config.lib.stylix.colors.base00}";
         };
       };
       modules = {
