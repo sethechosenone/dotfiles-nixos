@@ -18,10 +18,9 @@ in {
         force = true;
         packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
           bitwarden
-          foxyproxy-standard
           ublock-origin
           simplelogin
-          vimium
+          user-agent-string-switcher
         ];
       };
       settings = {
@@ -46,10 +45,13 @@ in {
         "sidebar.verticalTabs" = true;
         "sidebar.revamp.round-content-area" = true;
         # PRIVACY
+        "privacy.resistFingerprinting" = true;
         "privacy.donottrackheader.enabled" = true;
         "privacy.trackingprotection.enabled" = true;
         "privacy.trackingprotection.socialtracking.enabled" = true;
         "app.normandy.enabled" = false;
+        "network.dns.blockDotOnion" = false;
+        "dom.security.https_only_mode.upgrade_onion" = true;
       };
       bookmarks = {
         force = true;
