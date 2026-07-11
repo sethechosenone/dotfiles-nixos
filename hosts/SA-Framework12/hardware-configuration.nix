@@ -31,6 +31,7 @@
       ];
     };
     kernelModules = [ "kvm-intel" ];
+    kernelParams = [ "intel_iommu=on" ];
     extraModulePackages = [ ];
   };
 
