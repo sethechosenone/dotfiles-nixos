@@ -1,8 +1,0 @@
-warning: Git tree '/etc/nixos' is dirty
-evaluation warning: The default value of `wayland.windowManager.hyprland.configType` has changed from `"hyprlang"` to `"lua"`.
-                    You are currently using the legacy default (`"hyprlang"`) because `home.stateVersion` is less than "26.05".
-                    To silence this warning and keep legacy behavior, set:
-                      wayland.windowManager.hyprland.configType = "hyprlang";
-                    To adopt the new default behavior, set:
-                      wayland.windowManager.hyprland.configType = "lua";
-evaluation warning: stylix: regreet: custom services.greetd.settings.default_session.command value may not work: /nix/store/165rncxlyi4f9pjf1zk3hmj3mh2v881w-dbus-1.16.2/bin/dbus-run-session /nix/store/x9cy2v18yg9rq685sir0zf4ychqr9vxl-cage-0.3.0/bin/cage -s -d -- /nix/store/sr26flm2nkfa12dkrwj2630kqsfakky4-coreutils-9.11/bin/env RUST_BACKTRACE=1 /nix/store/d2zb7zvfjs8hzcnb7w9sfgk68n2iayyj-regreet-0.4.0/bin/regreet
