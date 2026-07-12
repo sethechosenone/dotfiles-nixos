@@ -17,10 +17,14 @@ let
   luksDevice = "/dev/disk/by-label/NIXLUKS";
   # tries=0: unlimited recovery-key attempts once the token mechanisms are
   # exhausted, instead of "Too many attempts" after the shared 3-try budget.
+  # token-timeout is the TOTAL window from "please plug it in" (the monitor's
+  # timer is one-shot, not per-event), and the OnlyKey needs plug + keypad PIN
+  # + the gate service's next poll to fit inside it; when no token ever shows
+  # up it also delays the recovery-key prompt by the same amount.
   luksUnlockOpts = [
     "tpm2-device=auto"
     "fido2-device=/dev/onlykey-fido2"
-    "token-timeout=60"
+    "token-timeout=120"
     "tries=0"
   ];
   # Must be the bin/ path: it's what the generator's compiled-in
@@ -42,6 +46,7 @@ in
         extraBin = {
           qmk_hid = "${pkgs.qmk_hid}/bin/qmk_hid";
           picotool = "${pkgs.picotool}/bin/picotool";
+          fido2-token = "${pkgs.libfido2}/bin/fido2-token";
         };
         # asDropin is required — the unit itself is created by a generator at
         # boot, and a full static unit here would shadow and break it.
@@ -79,6 +84,57 @@ in
               "${initrdCryptsetup} attach 'cryptroot' '${luksDevice}' '-' 'tpm2-device=auto,tries=0'"
             ];
           };
+        };
+        # A freshly plugged OnlyKey is locked and silently drops CTAP
+        # requests -- and neither systemd-cryptsetup nor libfido2 puts any
+        # timeout on the conversation once the device node exists, so if
+        # cryptsetup opens the token before the keypad PIN is entered, the
+        # whole unlock wedges until the key is unplugged (requests sent
+        # while locked are never answered, not even after unlocking).
+        # Therefore udev must NOT create /dev/onlykey-fido2; this service
+        # polls the key with a short-timeout GetInfo and only creates the
+        # symlink once the key actually answers (= unlocked), then pokes
+        # udev so cryptsetup's security-device monitor rescans it.
+        services.onlykey-fido2-gate = {
+          description = "Expose OnlyKey FIDO2 interface once the key is unlocked";
+          wantedBy = [ "initrd.target" ];
+          before = [ "systemd-cryptsetup@cryptroot.service" ];
+          unitConfig.DefaultDependencies = false;
+          serviceConfig = {
+            Type = "simple";
+            Restart = "always";
+            RestartSec = 1;
+            StandardOutput = "journal";
+            StandardError = "journal";
+          };
+          script = ''
+            link=/dev/onlykey-fido2
+            while true; do
+              # key unplugged: drop the dangling symlink so cryptsetup goes
+              # back to waiting instead of erroring on a dead node
+              if [ -L "$link" ] && [ ! -e "$link" ]; then
+                rm -f "$link"
+              fi
+              if [ ! -e "$link" ]; then
+                for h in /sys/class/hidraw/hidraw*; do
+                  [ -e "$h" ] || continue
+                  hid=$(readlink -f "$h/device" 2>/dev/null) || continue
+                  case "$(basename "$hid")" in
+                    0003:1D50:60FC.*) ;;
+                    *) continue ;;
+                  esac
+                  [ "$(cat "$hid/../bInterfaceNumber" 2>/dev/null)" = "01" ] || continue
+                  node="/dev/$(basename "$h")"
+                  if timeout 2 fido2-token -I "$node" > /dev/null 2>&1; then
+                    ln -sf "$(basename "$h")" "$link"
+                    echo "OnlyKey answered, exposing $node as $link"
+                    udevadm trigger --action=change "$h" || true
+                  fi
+                done
+              fi
+              sleep 1
+            done
+          '';
         };
         services.measure-keyboard = {
           description = "Verify keyboard firmware integrity";
@@ -171,15 +227,15 @@ in
         crypttabExtraOpts = luksUnlockOpts;
       };
       services.udev.packages = [
+        # fido_id tags FIDO hidraw interfaces "security-device", which is
+        # the tag systemd-cryptsetup's plug-it-in monitor listens for. The
+        # /dev/onlykey-fido2 symlink itself is deliberately NOT managed by
+        # udev but by the onlykey-fido2-gate service: it must only appear
+        # once the key is unlocked and answering CTAP requests.
         (pkgs.runCommand "udevFido2" {} ''
           mkdir -p $out/lib/udev/rules.d/
           cp ${pkgs.systemd}/lib/udev/rules.d/60-fido-id.rules \
           $out/lib/udev/rules.d/60-fido-id.rules
-          cat > $out/lib/udev/rules.d/61-onlykey-fido2.rules <<'EOF'
-          SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1d50", ATTRS{idProduct}=="60fc", \
-          ATTRS{bInterfaceNumber}=="01", \
-          ENV{ID_FIDO_TOKEN}="1", SYMLINK+="onlykey-fido2", TAG+="systemd"
-          EOF
         '')
       ];
     };
