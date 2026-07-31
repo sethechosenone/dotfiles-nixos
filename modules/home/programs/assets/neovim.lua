@@ -86,30 +86,26 @@ vim.lsp.config.tsserver = {
   root_markers = { 'package.json', 'tsconfig.json', 'jsconfig.json', '.git' },
 }
 
-local filetype_to_lsp = {
-  nix = 'nil_ls',
-  python = 'pyright',
-  rust = 'rust_analyzer',
-  go = 'gopls',
-  gomod = 'gopls',
-  gowork = 'gopls',
-  gotmpl = 'gopls',
-  javascript = 'tsserver',
-  javascriptreact = 'tsserver',
-  typescript = 'tsserver',
-  typescriptreact = 'tsserver',
+vim.lsp.config.clangd = {
+  cmd = { 'clangd' },
+  filetypes = { 'c', 'cpp' },
+  root_markers = { 'compile_commands.json', 'compile_flags.txt', '.git' },
 }
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = vim.tbl_keys(filetype_to_lsp),
-  callback = function(args)
-    local lsp_name = filetype_to_lsp[args.match]
-    local config = vim.lsp.config[lsp_name]
-    if config and vim.fn.executable(config.cmd[1]) == 1 then
-      vim.lsp.enable(lsp_name)
-    end
-  end,
-})
+local lsp_executables = {
+  nil_ls = 'nil',
+  pyright = 'pyright-langserver',
+  rust_analyzer = 'rust-analyzer',
+  gopls = 'gopls',
+  tsserver = 'typescript-language-server',
+  clangd = 'clangd',
+}
+
+for server, cmd in pairs(lsp_executables) do
+  if vim.fn.executable(cmd) == 1 then
+    vim.lsp.enable(server)
+  end
+end
 
 -- Completion setup
 require('blink-cmp').setup({
@@ -227,8 +223,8 @@ vim.api.nvim_set_keymap('n', '<leader>dr', ':lua require("dap").repl.open()<CR>'
 vim.api.nvim_set_keymap('n', '<leader>dl', ':lua require("dap").run_last()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>dd', ':lua vim.diagnostic.setloclist()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>de', ':lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '[d', ':lua vim.diagnostic.goto_prev()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', ']d', ':lua vim.diagnostic.goto_next()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '[d', ':lua vim.diagnostic.jump({count=-1, float=true})<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', ']d', ':lua vim.diagnostic.jump({count=1, float=true})<CR>', { noremap = true, silent = true })
 
 -- D* = advanced debug (powerful options)
 vim.api.nvim_set_keymap('n', '<leader>Db', ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))<CR>', { noremap = true, silent = true })

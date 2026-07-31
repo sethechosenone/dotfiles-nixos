@@ -28,7 +28,7 @@
         };
         theinfinitewebsite = {
           autoStart = true;
-          image = "192.168.1.100:5000/infinitewebsite:latest";
+          image = "192.168.40.100:5000/infinitewebsite:latest";
           environmentFiles = [ "/run/secrets/theinfinitewebsite_env" ];
           extraOptions = [
             "--cap-drop=ALL"
@@ -100,7 +100,7 @@
     nameservers = [ "192.168.1.1" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 53 ];
+      allowedTCPPorts = [ 22 53 1025 1143 ];
       allowedUDPPorts = [ 53 ];
     };
     wireguard.interfaces.wg0 = {
@@ -196,5 +196,6 @@
     bat
     kitty.terminfo
     wireguard-tools
+    pass
   ];
 }

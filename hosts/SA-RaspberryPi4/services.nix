@@ -16,6 +16,16 @@
     };
     nginx = {
       enable = true;
+      streamConfig = ''
+        server {
+          listen 192.168.1.100:1143;
+          proxy_pass 127.0.0.1:1143;
+        }
+        server {
+          listen 192.168.1.100:1025;
+          proxy_pass 127.0.0.1:1025;
+        }
+      '';
       virtualHosts = {
         "registry.sethechosenone.dev".locations."/".proxyPass = "http://localhost:5000";
         "vault.sethechosenone.dev".locations."/".proxyPass = "http://localhost:8222";
@@ -45,6 +55,17 @@
         ROCKET_ADDRESS = "127.0.0.1";
       };
     };
+    protonmail-bridge = {
+      enable = true;
+      path = with pkgs; [ pass gnupg pinentry-curses ];
+    };
+  };
+  users.users.seth.linger = true;
+  # protonmail-bridge's upstream module only wires it to graphical-session.target,
+  # which never fires on a headless box; add default.target so it starts at boot.
+  systemd.user.services.protonmail-bridge = {
+    wantedBy = [ "default.target" ];
+    after = [ "default.target" ];
   };
   # cloudflared module is broken so we have to do this
   systemd.services.cloudflared = {
