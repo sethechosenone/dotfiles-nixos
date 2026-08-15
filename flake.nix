@@ -32,14 +32,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-pi-zero-2.url = "github:plmercereau/nixos-pi-zero-2";
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.54.3";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprgrass = {
-      url = "github:horriblename/hyprgrass/a2643f311851cdb70c8d742e6edde4112c841463";
-      inputs.hyprland.follows = "hyprland";
-    };
   };
 
   outputs = inputs @ { self, nixpkgs, home-manager, nixos-hardware, stylix, led-matrix-sysinfo, secure-efi-shell, sops-nix, openrgb-effects, nixos-pi-zero-2, ... }:
@@ -57,6 +49,7 @@
             nixos-hardware.nixosModules.framework-12-13th-gen-intel
             home-manager.nixosModules.home-manager
             stylix.nixosModules.stylix
+            secure-efi-shell.nixosModules.secure-efi-shell
             ./modules
             ./hosts/SA-Framework12
           ];
@@ -87,6 +80,7 @@
             openrgb-effects.nixosModules.openrgb-effects
             stylix.nixosModules.stylix
             sops-nix.nixosModules.sops
+            secure-efi-shell.nixosModules.secure-efi-shell
             ./modules
             ./hosts/SA-PowerTower
           ];

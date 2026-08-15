@@ -100,6 +100,7 @@
       enable = true;
       addBootEntry = false; # we're doing it ourselves
     };
+    plymouth.enable = true;
   };
 
   networking.networkmanager = {
@@ -142,8 +143,8 @@
       ];
       packages = with pkgs; [
         tree  hyprland-qtutils  hyprpicker  hyprsysteminfo  dconf  nixpkgs-fmt
-        nmap  metasploit  proton-vpn-cli  onlykey  onlykey-cli  onlykey-agent
-        bitwarden-cli  protonmail-desktop proton-vpn  libreoffice 
+        nmap  metasploit  onlykey  onlykey-cli  onlykey-agent
+        protonmail-desktop proton-vpn  libreoffice  signal-cli 
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
@@ -166,7 +167,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl  glib  sl  sbctl
       file  usbutils  mpv  imv  ripgrep  rdap  dig  nautilus  android-tools  tio  jq
-      dmidecode  i2c-tools  zip  unzip  tpm2-tools  waypipe  sops  age
+      dmidecode  i2c-tools  zip  unzip  tpm2-tools  sops  age
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";

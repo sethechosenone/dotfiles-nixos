@@ -131,6 +131,7 @@
   systemd.services.cloudflared = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     serviceConfig = {
       ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token $TUNNEL_TOKEN";
       EnvironmentFile = config.sops.secrets.cloudflare-token.path;

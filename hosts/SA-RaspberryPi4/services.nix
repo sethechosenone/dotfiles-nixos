@@ -45,6 +45,15 @@
         };
       };
     };
+    github-runners.portfolio = {
+      enable = true;
+      url = "https://github.com/sethechosenone/portfolio";
+      tokenFile = "/etc/github-runner-portfolio-token"; # see note below
+      user = "github-runner";
+      group = "github-runner";
+      extraPackages = [ pkgs.nodejs_22 pkgs.rsync ];
+      serviceOverrides.ReadWritePaths = [ "/var/www/portfolio" ];
+    };
     vaultwarden = {
       enable = true;
       environmentFile = config.sops.secrets.vaultwarden.path;
@@ -63,18 +72,21 @@
   users.users.seth.linger = true;
   # protonmail-bridge's upstream module only wires it to graphical-session.target,
   # which never fires on a headless box; add default.target so it starts at boot.
-  systemd.user.services.protonmail-bridge = {
-    wantedBy = [ "default.target" ];
-    after = [ "default.target" ];
-  };
-  # cloudflared module is broken so we have to do this
-  systemd.services.cloudflared = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network-online.target" ];
-    serviceConfig = {
-      ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token $TUNNEL_TOKEN";
-      EnvironmentFile = config.sops.secrets.cloudflare-token.path;
-      Restart = "always";
+  systemd = {
+    user.services.protonmail-bridge = {
+      wantedBy = [ "default.target" ];
+      after = [ "default.target" ];
+    };
+    # cloudflared module is broken so we have to do this
+    services.cloudflared = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.cloudflared}/bin/cloudflared tunnel --no-autoupdate run --token $TUNNEL_TOKEN";
+        EnvironmentFile = config.sops.secrets.cloudflare-token.path;
+        Restart = "always";
+      };
     };
   };
 }

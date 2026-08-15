@@ -1,6 +1,14 @@
 { ... }:
 {
   nixpkgs.overlays = [
+    # wf-recorder 0.6.0 uses the deprecated AVCodec.sample_fmts field directly,
+    # which ffmpeg 9 (now the nixpkgs default) removed outright. ffmpeg 7/8 still
+    # carry it (deprecated but present), so build wf-recorder against ffmpeg_7
+    # until upstream ports to avcodec_get_supported_config().
+    (final: prev: {
+      wf-recorder = prev.wf-recorder.override { ffmpeg = final.ffmpeg_7; };
+    })
+
     # onlykey-agent's package.nix uses overridePythonAttrs to build lib-agent
     # (libagent 1.0.6), but overridePythonAttrs concatenates propagatedBuildInputs
     # rather than replacing them. This causes bech32 to appear twice in the closure
