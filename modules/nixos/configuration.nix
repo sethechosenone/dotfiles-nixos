@@ -115,8 +115,24 @@
   console = {
     packages = [ pkgs.powerline-fonts ];
     font = "ter-powerline-v24b";
+    earlySetup = true;
     keyMap = lib.mkDefault "us";
     useXkbConfig = true; # use xkb.options in tty.
+  };
+
+  # systemd-vconsole-setup loses the race against plymouthd for control of
+  # the VT ("All allocated virtual consoles are busy, will not configure
+  # key mapping and font"), so our console font never actually gets applied.
+  # Re-run it once Plymouth releases the console.
+  systemd.services.restore-console-font-after-plymouth = {
+    description = "Restore console font after Plymouth releases the VT";
+    after = [ "plymouth-quit.service" ];
+    wants = [ "plymouth-quit.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${config.systemd.package}/bin/systemctl restart systemd-vconsole-setup.service";
+    };
   };
 
   hardware = {
