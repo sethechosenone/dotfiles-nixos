@@ -116,5 +116,27 @@
           };
         };
     })
+
+    # nixpkgs ships hyprgrass 2026-06-10 against hyprland 0.56.2, but that
+    # version predates the 0.56 API reshuffle (Monitor moved, warpCursorTo
+    # removed, etc.). Pin to the Aug-2026 HEAD which targets 0.56.x.
+    # Remove this overlay once nixpkgs catches up.
+    (final: prev: {
+      hyprlandPlugins = prev.hyprlandPlugins // {
+        hyprgrass = prev.hyprlandPlugins.hyprgrass.overrideAttrs (_old: {
+          version = "0.8.2-unstable-2026-08-13";
+          src = final.fetchFromGitHub {
+            owner = "horriblename";
+            repo = "hyprgrass";
+            rev = "56473e9e0b2da34bb3b871e90f40b3fc3d41ba9b";
+            hash = "sha256-WNayKYvQl3MGPx61UX7y5n9zxvC+MgwRDwql7uwHriQ=";
+          };
+          postPatch = ''
+            sed -i '/exceeds_tolerance/s/ override//' src/gestures/Actions.hpp
+          '';
+          doCheck = false;
+        });
+      };
+    })
   ];
 }
