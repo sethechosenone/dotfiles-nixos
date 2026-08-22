@@ -1,5 +1,14 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   virtualisation = {
+    vmVariant = {
+      virtualisation = {
+        cores = 4;
+        memorySize = 4096;
+        graphics = false;
+      };
+      networking.hostName = lib.mkForce "SA-VMTest";
+      users.users.seth.initialPassword = lib.mkForce "vmtest";
+    };
     spiceUSBRedirection.enable = true;
     libvirtd = {
       enable = true;

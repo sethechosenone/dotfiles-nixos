@@ -1,14 +1,5 @@
-{ osConfig, lib, pkgs, inputs, ... }: let
+{ osConfig, lib, pkgs, ... }: let
   hostname = osConfig.networking.hostName or "unknown";
-  system = pkgs.stdenv.hostPlatform.system;
-  wf-touch-fixed = (pkgs.callPackage "${inputs.hyprgrass}/nix/wf-touch.nix" {}).overrideAttrs (_: {
-    mesonFlags = [ "-Dtests=disabled" ];
-  });
-  hyprgrass-fixed = (inputs.hyprgrass.packages.${system}.hyprgrass.override {
-    wf-touch = wf-touch-fixed;
-  }).overrideAttrs (_: {
-    mesonFlags = [ "-Dtests=disabled" ];
-  });
   monitorConfig = {
     "SA-PowerTower" = [
       "DP-6, 3840x2160@144, 0x0, 1.5"
@@ -20,9 +11,7 @@
 in {
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
-    plugins = lib.optionals (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) [ hyprgrass-fixed ];
+    plugins = lib.optionals (builtins.elem hostname [ "SA-Framework12" "SA-PowerTower" ]) [ pkgs.hyprlandPlugins.hyprgrass ];
     settings = {
       monitor = monitorConfig.${hostname} or "eDP-1, 2560x1600@165, auto, 1.25";
       "$terminal" = "kitty";
@@ -65,6 +54,7 @@ in {
         "float on, match:class nm-connection-editor"
         "float on, match:class .blueman-manager-wrapped"
         "float on, match:class .virt-manager-wrapped"
+        "float on, match:class ^(QEMU)$"
         "float on, match:class com.wayle.settings"
         "float on, match:class steam"
         "fullscreen on, match:class ^steam_app_\\d+$"

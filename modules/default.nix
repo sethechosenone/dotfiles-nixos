@@ -14,7 +14,10 @@
           home/programs/neovim.nix
           shell/starship-tty.nix
         ];
-        home.stateVersion = "23.11";
+        home = {
+          stateVersion = "23.11";
+          pointerCursor.enable = true; # we're never logging in as root, but this shuts up the warning
+        };
         programs = {
           eza.enable = true;
           bat.enable = true;

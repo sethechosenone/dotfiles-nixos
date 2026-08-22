@@ -30,36 +30,39 @@
   };
 
   # Automatic monthly system updates for desktop machines
-  system.autoUpgrade = let
-    desktopHosts = [ "SA-Framework12" "SA-Framework16" "SA-PowerTower" ];
-    isDesktop = builtins.elem config.networking.hostName desktopHosts;
-  in lib.mkIf isDesktop {
-    enable = true;
-    flake = inputs.self.outPath;
-    flags = [
-      "--update-input" "nixpkgs"
-      "--update-input" "home-manager"
-      "--update-input" "nixos-hardware"
-      "--update-input" "stylix"
-      "--update-input" "sops-nix"
-      "--update-input" "nixcord"
-      "--update-input" "firefox-addons"
-      "--update-input" "led-matrix-sysinfo"
-      "--update-input" "openrgb-effects"
-      "--commit-lock-file"
-      "-L"
-    ];
-    dates = "monthly";
-    allowReboot = false;
-    operation = "switch";
-    persistent = true;
+  system = {
+    autoUpgrade = let
+      desktopHosts = [ "SA-Framework12" "SA-Framework16" "SA-PowerTower" ];
+      isDesktop = builtins.elem config.networking.hostName desktopHosts;
+    in lib.mkIf isDesktop {
+      enable = true;
+      flake = inputs.self.outPath;
+      flags = [
+        "--update-input" "nixpkgs"
+        "--update-input" "home-manager"
+        "--update-input" "nixos-hardware"
+        "--update-input" "stylix"
+        "--update-input" "sops-nix"
+        "--update-input" "nixcord"
+        "--update-input" "firefox-addons"
+        "--update-input" "led-matrix-sysinfo"
+        "--update-input" "openrgb-effects"
+        "--commit-lock-file"
+        "-L"
+      ];
+      dates = "monthly";
+      allowReboot = false;
+      operation = "switch";
+      persistent = true;
+    };
+    activationScripts.sign-memtest = "${pkgs.sbctl}/bin/sbctl sign /boot/efi/memtest86plus/memtest86plus.efi || true";
   };
 
   nixpkgs = {
     overlays = [ (final: prev: { sudo = prev.sudo.override { withInsults = true; }; }) ];
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [ "python3.13-ecdsa-0.19.2" ]; # remove once fixed upstream
+      permittedInsecurePackages = [ "python3.14-ecdsa-0.19.2" ]; # remove once fixed upstream
     };
   };
 
@@ -69,20 +72,17 @@
         enable = true;
         secureBoot.enable = true;
         maxGenerations = 20;
-        additionalFiles = {
-          "efi/shell/shell.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";
-          "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi";
-        };
+        additionalFiles."efi/memtest86plus/memtest86plus.efi" = pkgs.memtest86plus.efi;
         extraEntries = ''
           /+Utilities
+          //MemTest86+
+          protocol: efi
+          comment: Diagnose system memory issues and stress-test RAM modules
+          image_path: boot():/efi/memtest86plus/memtest86plus.efi
           //UEFI Shell
           protocol: efi
-          comment: Make sure secure boot is disabled before using any EFI utilites! -- Access the UEFI shell for troubleshooting and development
-          image_path: boot():/limine/efi/shell/shell.efi
-          //Memtest86
-          protocol: efi
-          comment: Make sure secure boot is disabled before using any EFI utilites! -- Diagnose system memory issues and stress-test RAM modules
-          image_path: boot():/limine/efi/memtest86/memtest86.efi
+          comment: Command-line shell for running UEFI applications (requires secure boot)
+          image_path: boot():/efi/shell/shell.efi
         '';
       };
       efi.canTouchEfiVariables = true;
@@ -96,6 +96,11 @@
       "lockdown=confidentiality"
       "rd.systemd.show_status=true"
     ];
+    secure-efi-shell = {
+      enable = true;
+      addBootEntry = false; # we're doing it ourselves
+    };
+    plymouth.enable = true;
   };
 
   networking.networkmanager = {
@@ -110,8 +115,24 @@
   console = {
     packages = [ pkgs.powerline-fonts ];
     font = "ter-powerline-v24b";
+    earlySetup = true;
     keyMap = lib.mkDefault "us";
     useXkbConfig = true; # use xkb.options in tty.
+  };
+
+  # systemd-vconsole-setup loses the race against plymouthd for control of
+  # the VT ("All allocated virtual consoles are busy, will not configure
+  # key mapping and font"), so our console font never actually gets applied.
+  # Re-run it once Plymouth releases the console.
+  systemd.services.restore-console-font-after-plymouth = {
+    description = "Restore console font after Plymouth releases the VT";
+    after = [ "plymouth-quit.service" ];
+    wants = [ "plymouth-quit.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${config.systemd.package}/bin/systemctl restart systemd-vconsole-setup.service";
+    };
   };
 
   hardware = {
@@ -137,9 +158,9 @@
         "i2c"
       ];
       packages = with pkgs; [
-        tree  hyprland-qtutils  hyprpicker  hyprsysteminfo  dconf  nixpkgs-fmt  claude-code
-        libreoffice  nmap  metasploit  proton-vpn-cli  onlykey  onlykey-cli  onlykey-agent
-        bitwarden-cli  protonmail-desktop proton-vpn
+        tree  hyprland-qtutils  hyprpicker  hyprsysteminfo  dconf  nixpkgs-fmt
+        nmap  metasploit  onlykey  onlykey-cli  onlykey-agent
+        protonmail-desktop proton-vpn  libreoffice  signal-cli 
       ];
       shell = pkgs.zsh;
       openssh.authorizedKeys.keys = [
@@ -162,7 +183,7 @@
       wget  meson  wayland-protocols  wayland-utils  wl-clipboard  wlroots  wf-recorder
       pavucontrol  pamixer  man-pages  man-pages-posix  brightnessctl  glib  sl  sbctl
       file  usbutils  mpv  imv  ripgrep  rdap  dig  nautilus  android-tools  tio  jq
-      dmidecode  i2c-tools  zip  unzip  tpm2-tools  waypipe  sops  age
+      dmidecode  i2c-tools  zip  unzip  tpm2-tools  sops  age
     ];
     sessionVariables = {
       NIXOS_OZONE_WL = "1";

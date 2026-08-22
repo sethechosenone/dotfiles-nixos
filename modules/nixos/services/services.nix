@@ -34,5 +34,9 @@
     udev.packages = with pkgs; [ swayosd ];
     tailscale.enable = true;
     mullvad-vpn.enable = true;
+    displayManager.regreet = {
+      enable = true;
+      settings.widget.clock.format = "%a %b %d - %I:%M %p";
+    };
   };
 }

@@ -77,7 +77,12 @@
       shell = pkgs.zsh;
     };
     root.shell = pkgs.zsh;
+    github-runner = {
+      isSystemUser = true;
+      group = "github-runner";
+    };
   };
+  users.groups.github-runner = {}; # create github-runner group
   home-manager = {
     useUserPackages = true;
     useGlobalPkgs = true;
@@ -100,7 +105,7 @@
     nameservers = [ "192.168.1.1" ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 53 ];
+      allowedTCPPorts = [ 22 53 1025 1143 ];
       allowedUDPPorts = [ 53 ];
     };
     wireguard.interfaces.wg0 = {
@@ -133,43 +138,45 @@
       '';
     };
   };
-  systemd.services.docker-firewall = {
-    description = "Docker container firewall rules";
-    after = [ "docker.service" ];
-    requires = [ "docker.service" ];
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.iptables ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
+  systemd = {
+    services.docker-firewall = {
+      description = "Docker container firewall rules";
+      after = [ "docker.service" ];
+      requires = [ "docker.service" ];
+      wantedBy = [ "multi-user.target" ];
+      path = [ pkgs.iptables ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        # Wait for Docker to be fully ready
+        sleep 2
+        # Clean up old rules
+        # Flush DOCKER-USER chain
+        iptables -F DOCKER-USER 2>/dev/null || true
+        # Remove any existing docker0 INPUT rules
+        while iptables -D INPUT -i docker0 -j DROP 2>/dev/null; do :; done
+        while iptables -D INPUT -i docker0 -p tcp --dport 53 -j ACCEPT 2>/dev/null; do :; done
+        while iptables -D INPUT -i docker0 -p udp --dport 53 -j ACCEPT 2>/dev/null; do :; done
+        # FORWARD chain rules (via DOCKER-USER) - for traffic to other devices
+        # Allow DNS to LAN (before blocking LAN access)
+        iptables -A DOCKER-USER -p udp -s 172.17.0.0/16 -d 192.168.1.0/24 --dport 53 -j ACCEPT
+        iptables -A DOCKER-USER -p tcp -s 172.17.0.0/16 -d 192.168.1.0/24 --dport 53 -j ACCEPT
+        # Block Docker containers from accessing other LAN services
+        iptables -A DOCKER-USER -s 172.17.0.0/16 -d 192.168.1.0/24 -j DROP
+        # Allow Docker containers to internet
+        iptables -A DOCKER-USER -s 172.17.0.0/16 -j ACCEPT
+        # Return to main chain
+        iptables -A DOCKER-USER -j RETURN
+        # INPUT chain rules - for traffic to the host itself
+        # Drop everything from containers to host (executed first, ends up last)
+        iptables -I INPUT -i docker0 -j DROP
+        # Allow DNS from containers to host (executed after, ends up before DROP)
+        iptables -I INPUT -i docker0 -p tcp --dport 53 -j ACCEPT
+        iptables -I INPUT -i docker0 -p udp --dport 53 -j ACCEPT
+      '';
     };
-    script = ''
-      # Wait for Docker to be fully ready
-      sleep 2
-      # Clean up old rules
-      # Flush DOCKER-USER chain
-      iptables -F DOCKER-USER 2>/dev/null || true
-      # Remove any existing docker0 INPUT rules
-      while iptables -D INPUT -i docker0 -j DROP 2>/dev/null; do :; done
-      while iptables -D INPUT -i docker0 -p tcp --dport 53 -j ACCEPT 2>/dev/null; do :; done
-      while iptables -D INPUT -i docker0 -p udp --dport 53 -j ACCEPT 2>/dev/null; do :; done
-      # FORWARD chain rules (via DOCKER-USER) - for traffic to other devices
-      # Allow DNS to LAN (before blocking LAN access)
-      iptables -A DOCKER-USER -p udp -s 172.17.0.0/16 -d 192.168.1.0/24 --dport 53 -j ACCEPT
-      iptables -A DOCKER-USER -p tcp -s 172.17.0.0/16 -d 192.168.1.0/24 --dport 53 -j ACCEPT
-      # Block Docker containers from accessing other LAN services
-      iptables -A DOCKER-USER -s 172.17.0.0/16 -d 192.168.1.0/24 -j DROP
-      # Allow Docker containers to internet
-      iptables -A DOCKER-USER -s 172.17.0.0/16 -j ACCEPT
-      # Return to main chain
-      iptables -A DOCKER-USER -j RETURN
-      # INPUT chain rules - for traffic to the host itself
-      # Drop everything from containers to host (executed first, ends up last)
-      iptables -I INPUT -i docker0 -j DROP
-      # Allow DNS from containers to host (executed after, ends up before DROP)
-      iptables -I INPUT -i docker0 -p tcp --dport 53 -j ACCEPT
-      iptables -I INPUT -i docker0 -p udp --dport 53 -j ACCEPT
-    '';
   };
   system.stateVersion = "25.11";
   sops = {
@@ -196,5 +203,6 @@
     bat
     kitty.terminfo
     wireguard-tools
+    pass
   ];
 }
