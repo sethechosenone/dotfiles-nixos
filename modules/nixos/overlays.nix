@@ -121,20 +121,43 @@
     # version predates the 0.56 API reshuffle (Monitor moved, warpCursorTo
     # removed, etc.). Pin to the Aug-2026 HEAD which targets 0.56.x.
     # Remove this overlay once nixpkgs catches up.
+    #
+    # We must also build against hyprgrass's *vendored* wf-touch submodule
+    # rather than nixpkgs' wf-touch package. hyprgrass pins wf-touch
+    # 8974eb0; nixpkgs ships 2026-07-18, which:
+    #   - made gesture_action_t::exceeds_tolerance non-virtual (nixpkgs
+    #     papers over the resulting compile error by sed'ing out `override`)
+    #   - added a mandatory timer_interface_t that must be installed via
+    #     gesture_t::set_timer() before use.
+    # hyprgrass never calls set_timer() (it drives long-press timing itself
+    # through wl_event_loop), so assert(priv->timer) in gesture_t::reset()
+    # aborts on the first finger-down -- i.e. Hyprland dies on every
+    # touchscreen tap. hyprgrass's meson prefers a system `wftouch`
+    # pkg-config dep, so dropping wf-touch from buildInputs makes it fall
+    # back to the correct submodule.
     (final: prev: {
       hyprlandPlugins = prev.hyprlandPlugins // {
-        hyprgrass = prev.hyprlandPlugins.hyprgrass.overrideAttrs (_old: {
+        hyprgrass = prev.hyprlandPlugins.hyprgrass.overrideAttrs (old: {
           version = "0.8.2-unstable-2026-08-13";
           src = final.fetchFromGitHub {
             owner = "horriblename";
             repo = "hyprgrass";
             rev = "56473e9e0b2da34bb3b871e90f40b3fc3d41ba9b";
-            hash = "sha256-WNayKYvQl3MGPx61UX7y5n9zxvC+MgwRDwql7uwHriQ=";
+            fetchSubmodules = true;
+            hash = "sha256-wXZ0c/iq6zplYJtd/kSJipKlW64fPypgDNfBYSvyBbg=";
           };
-          postPatch = ''
-            sed -i '/exceeds_tolerance/s/ override//' src/gestures/Actions.hpp
-          '';
-          doCheck = false;
+          # The vendored wf-touch declares exceeds_tolerance virtual, so the
+          # nixpkgs `override`-stripping sed is both unnecessary and harmful.
+          postPatch = "";
+          # glm came in transitively via nixpkgs' wf-touch; the vendored
+          # subproject needs it declared directly.
+          buildInputs = builtins.filter (
+            p: !(prev.lib.hasInfix "wf-touch" (p.name or ""))
+          ) old.buildInputs ++ [ final.glm ];
+          # Keep the test suite on: it exercises the gesture state machine and
+          # is what catches a wf-touch mismatch at build time instead of at
+          # the first touch.
+          doCheck = true;
         });
       };
     })
