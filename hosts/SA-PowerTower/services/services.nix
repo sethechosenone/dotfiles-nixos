@@ -7,7 +7,7 @@
           owner = "CalcProgrammer1";
           repo = "OpenRGB";
           rev = "master";
-          hash = "sha256-gaThBFioRSj/d7pOexCvufkMoXUA868NFOccGRMDW40=";
+          hash = "sha256-XhDDQODuuwo6aDPWEhXMd1fF9Y3MRodGwX70bXwiA78=";
         };
         patches = [];
         postPatch = "patchShebangs scripts/build-udev-rules.sh";
