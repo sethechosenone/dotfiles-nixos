@@ -22,6 +22,13 @@
           eza.enable = true;
           bat.enable = true;
           direnv.enable = true;
+          zsh = {
+            enable = true;
+            shellAliases = {
+              ls = "eza --icons -l";
+              edit = "nvim";
+            };
+          };
         };
       };
     };
